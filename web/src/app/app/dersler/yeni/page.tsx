@@ -6,7 +6,8 @@ import { PageHeader } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { LESSON_KIND_LABEL } from "@/lib/constants";
 import { getRegulation, regInt } from "@/lib/regulation";
-import { LessonForm } from "./LessonForm";
+import { LessonForm } from "../LessonForm";
+import { lessonFormAction } from "@/app/actions/lessons";
 
 export const metadata: Metadata = { title: "Yeni direksiyon dersi" };
 
@@ -65,6 +66,7 @@ export default async function NewLessonPage({ searchParams }: PageProps<"/app/de
             start: str("saat") ?? "14:00",
           }}
           durationMinutes={minutes}
+          submitAction={lessonFormAction}
         />
       </div>
     </>

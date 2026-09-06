@@ -77,9 +77,13 @@ ilerleme) · **Kursiyer detayı** (süreç çizelgesi, direksiyon gelişim puanl
 en uygun saat önerileri) · **Ders oluşturma** (eğitmen/araç/kursiyer uygunluğu anlık kontrol,
 çakışmada engelleme, denetim kaydı).
 
+**Ders yaşam döngüsü tamamlandı:** ders listesi (zaman/durum/eğitmen süzgeçleri) · ders detayı ·
+düzenleme (dersin kendisi çakışma sayılmaz) · iptal (neden + mevzuattaki süreye göre "geç iptal"
+kaydı) · gelmedi · yeniden planlama · ders sonu değerlendirmesi (11 gelişim alanı + eğitmen notu).
+Her durum değişikliği denetim kaydına yazılır.
+
 **Sırada:** teorik · sınavlar · eğitmenler · araçlar · finans · CRM · belgeler · mesajlar ·
-raporlar · mevzuat ayarları ekranı · ders düzenleme ve iptal · mobil (eğitmen/kursiyer) ·
-süper admin konsolu.
+raporlar · mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) · süper admin konsolu.
 
 ### Takvim hakkında
 
@@ -87,6 +91,16 @@ Varsayılan görünüm **Gün**: sütunlar direksiyon eğitmenleridir, teorik de
 toplanır. Kursun darboğazı araç değil eğitmen olduğu için doluluk da eğitmen kapasitesine göre
 ölçülür. **Hafta** görünümü genel bakış içindir; aynı saatte birden çok ders varsa gün sütunu
 şeritlere bölünür.
+
+### Ders yaşam döngüsü
+
+`PLANNED → DONE` (değerlendirmeyle), `→ CANCELLED` (neden ve geç iptal kaydıyla), `→ NO_SHOW`.
+İptal ve gelmedi durumları `Yeniden planla` ile `PLANNED`'a döner; tamamlanmış ders düzenlenemez
+ve geri alınamaz. Düzenlemede uygunluk kontrolü dersin kendisini dışarıda bırakır
+(`excludeLessonId`), böylece dersi kendi saatiyle kaydetmek çakışma saymaz.
+
+Rol ayrımı: düzenleme ve iptal `lesson.write`, ders sonu değerlendirmesi `lesson.review` ister.
+Direksiyon eğitmeni yalnızca değerlendirme girebilir; dersi düzenleyemez ya da iptal edemez.
 
 ### Ders formu
 

@@ -2,18 +2,23 @@
 import { useActionState, useState, useTransition } from "react";
 import { Icon } from "@/components/icons";
 import { Badge } from "@/components/ui";
-import { checkAvailabilityAction, lessonFormAction } from "@/app/actions/lessons";
+import { checkAvailabilityAction } from "@/app/actions/lessons";
 import { emptyLessonState, type LessonFormState } from "@/lib/lesson-form";
 
 type Option = { id: string; label: string; sub?: string };
 
-export function LessonForm({ students, instructors, vehicles, kinds, defaults, durationMinutes }: {
+export function LessonForm({ students, instructors, vehicles, kinds, defaults, durationMinutes, submitAction, lessonId, submitLabel = "Dersi oluştur", cancelHref = "/app/takvim" }: {
   students: Option[]; instructors: Option[]; vehicles: Option[];
   kinds: { key: string; label: string }[];
-  defaults: { studentId?: string; instructorId?: string; vehicleId?: string; date: string; start: string };
+  defaults: { studentId?: string; instructorId?: string; vehicleId?: string; kind?: string; date: string; start: string; end?: string; note?: string };
   durationMinutes: number;
+  /** Oluşturma ya da güncelleme aksiyonu; ikisi de aynı imzayı taşır. */
+  submitAction: (prev: LessonFormState, formData: FormData) => Promise<LessonFormState>;
+  lessonId?: string;
+  submitLabel?: string;
+  cancelHref?: string;
 }) {
-  const [createState, action, creating] = useActionState(lessonFormAction, emptyLessonState);
+  const [createState, action, creating] = useActionState(submitAction, emptyLessonState);
   const [checkState, setCheckState] = useState<LessonFormState>(emptyLessonState);
   const [checking, startCheck] = useTransition();
 
@@ -23,8 +28,11 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
 
   // Başlangıç saatinden türetilen bitiş; kullanıcı elle değiştirirse serbest kalır.
   const [start, setStart] = useState(defaults.start);
+  // Dersin kendi süresi korunur: düzenlemede 60 dakikalık bir ders 90'a çekilmez.
+  // Başlangıç değişince bitiş bu süreye göre kayar; kullanıcı bitişi elle yazarsa serbest kalır.
+  const [durationState] = useState(() => (defaults.end ? minutesBetween(defaults.start, defaults.end) : durationMinutes) || durationMinutes);
   const [endOverride, setEndOverride] = useState<string | null>(null);
-  const end = endOverride ?? addMinutes(start, durationMinutes);
+  const end = endOverride ?? addMinutes(start, durationState);
 
   /**
    * Uygunluk sorgusu formu GÖNDERMEZ: React 19 aksiyon tamamlanınca formu sıfırlıyor
@@ -45,26 +53,27 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
 
   return (
     <form action={action} className="contents">
+      {lessonId && <input type="hidden" name="lessonId" value={lessonId} />}
 
       <div className="card p-[22px] flex flex-col gap-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Select label="Kursiyer" name="studentId" options={students} defaultValue={back?.studentId ?? defaults.studentId} onChange={onSelect} className="md:col-span-2" required />
           <Select label="Eğitmen" name="instructorId" options={instructors} defaultValue={back?.instructorId ?? defaults.instructorId} onChange={onSelect} required />
           <Select label="Araç" name="vehicleId" options={vehicles} defaultValue={back?.vehicleId ?? defaults.vehicleId} onChange={onSelect} required />
-          <Select label="Ders türü" name="kind" options={kinds.map((k) => ({ id: k.key, label: k.label }))} defaultValue={back?.kind ?? kinds[0]?.key} onChange={onSelect} />
+          <Select label="Ders türü" name="kind" options={kinds.map((k) => ({ id: k.key, label: k.label }))} defaultValue={back?.kind ?? defaults.kind ?? kinds[0]?.key} onChange={onSelect} />
           <Field label="Tarih">
             <input type="date" name="date" defaultValue={back?.date ?? defaults.date} onChange={(e) => check(e.currentTarget)} className="input" required />
           </Field>
           <Field label="Başlangıç">
             <input type="time" name="start" value={start} onChange={(e) => setStart(e.target.value)} onBlur={(e) => check(e.currentTarget)} className="input" required />
           </Field>
-          <Field label="Bitiş" hint={`${durationMinutes} dk · mevzuat ayarından gelir`}>
+          <Field label="Bitiş" hint={`${durationState} dk${durationState === durationMinutes ? " · mevzuat ayarından gelir" : ""}`}>
             <input type="time" name="end" value={end} onChange={(e) => setEndOverride(e.target.value)} onBlur={(e) => check(e.currentTarget)} className="input" required />
           </Field>
         </div>
 
         <Field label="Not (opsiyonel)">
-          <textarea name="note" rows={2} className="input" placeholder="Park ve yokuşta kalkış çalışılacak." defaultValue={back?.note ?? ""} />
+          <textarea name="note" rows={2} className="input" placeholder="Park ve yokuşta kalkış çalışılacak." defaultValue={back?.note ?? defaults.note ?? ""} />
         </Field>
 
         <div className="border border-border rounded-md px-4 pt-3 pb-3.5">
@@ -117,9 +126,9 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
         <div className="flex items-center gap-2.5 pt-1 flex-wrap">
           <button type="button" onClick={(e) => check(e.currentTarget)} className="btn btn-ghost btn-sm"><Icon name="refresh" size={15} />Uygunluğu yeniden kontrol et</button>
           <div className="ml-auto flex gap-2.5">
-            <a href="/app/takvim" className="btn btn-secondary btn-sm">Vazgeç</a>
+            <a href={cancelHref} className="btn btn-secondary btn-sm">Vazgeç</a>
             <button type="submit" className="btn btn-primary btn-sm" disabled={pending}>
-              <Icon name="check" size={15} />{pending ? "Kontrol ediliyor…" : "Dersi oluştur"}
+              <Icon name="check" size={15} />{pending ? "Kontrol ediliyor…" : submitLabel}
             </button>
           </div>
         </div>
@@ -151,6 +160,12 @@ function Select({ label, name, options, defaultValue, onChange, className = "", 
       </select>
     </Field>
   );
+}
+
+function minutesBetween(from: string, to: string) {
+  const [fh, fm] = from.split(":").map(Number);
+  const [th, tm] = to.split(":").map(Number);
+  return (th || 0) * 60 + (tm || 0) - ((fh || 0) * 60 + (fm || 0));
 }
 
 function addMinutes(hhmm: string, minutes: number) {
