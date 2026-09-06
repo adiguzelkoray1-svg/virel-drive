@@ -1,0 +1,128 @@
+/* ============================================================
+   virel — marka token'ları
+   Global CSS'e ekleyin. Sitede sabit hex kullanmayın, hep var(--virel-*).
+   ============================================================ */
+
+:root {
+  /* ---- Marka renkleri ---- */
+  --virel-mint:       #2ED3A8;
+  --virel-turquoise:  #00A9BF;
+  --virel-blue:       #0067C4;   /* ana aksiyon rengi */
+  --virel-navy:       #0E2436;
+
+  --virel-gradient:   linear-gradient(90deg, #2ED3A8 0%, #00A9BF 46%, #0067C4 100%);
+
+  /* ---- Mavi skalası (buton / link durumları) ---- */
+  --virel-blue-050:   #E8F1FB;   /* çok açık zemin */
+  --virel-blue-100:   #CFE2F7;
+  --virel-blue-300:   #5AA9F0;   /* koyu zeminde link/vurgu */
+  --virel-blue-500:   #0067C4;   /* = --virel-blue */
+  --virel-blue-700:   #00559F;   /* hover */
+  --virel-blue-800:   #004380;   /* active / pressed */
+
+  /* ---- Yüzey ve metin (açık tema) ---- */
+  --virel-bg:            #F4F7F8;
+  --virel-surface:       #FFFFFF;
+  --virel-surface-2:     #F3F7F9;
+  --virel-border:        #E7EEF2;
+  --virel-border-strong: #CFDCE4;
+  --virel-text:          #0E2436;
+  --virel-text-2:        #42586A;
+  --virel-text-muted:    #78909F;
+  --virel-on-brand:      #FFFFFF;   /* mavi/gradyan zemin üstündeki metin */
+
+  /* ---- Anlamsal renkler (marka renginden AYRI) ---- */
+  --virel-success: #12A87C;
+  --virel-warning: #D9713C;
+  --virel-danger:  #D1453B;
+  --virel-info:    #0067C4;
+  --virel-success-bg: #E6F7F1;
+  --virel-warning-bg: #FDF0E8;
+  --virel-danger-bg:  #FCECEB;
+
+  /* ---- Tipografi ---- */
+  --virel-font-display: Quicksand, 'Avenir Next', 'Century Gothic', 'Trebuchet MS', system-ui, sans-serif;
+  --virel-font-body:    Karla, 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
+  --virel-font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --virel-text-display: 3.5rem;    /* 56 — hero */
+  --virel-text-h1:      2.25rem;   /* 36 */
+  --virel-text-h2:      1.75rem;   /* 28 */
+  --virel-text-h3:      1.375rem;  /* 22 */
+  --virel-text-lg:      1.125rem;  /* 18 */
+  --virel-text-base:    1rem;      /* 16 — gövde */
+  --virel-text-sm:      0.875rem;  /* 14 */
+  --virel-text-xs:      0.75rem;   /* 12 — etiket */
+
+  --virel-leading-tight: 1.06;
+  --virel-leading-snug:  1.25;
+  --virel-leading-body:  1.6;
+  --virel-tracking-display: -0.02em;
+  --virel-tracking-label:    0.14em;
+
+  /* ---- Yarıçap ---- */
+  --virel-radius-sm:   8px;
+  --virel-radius:     14px;
+  --virel-radius-lg:  22px;
+  --virel-radius-pill: 999px;
+
+  /* ---- Gölge ---- */
+  --virel-shadow-sm: 0 1px 2px rgba(14,36,54,.06);
+  --virel-shadow:    0 1px 2px rgba(14,36,54,.05), 0 12px 32px -18px rgba(14,36,54,.28);
+  --virel-shadow-lg: 0 30px 60px -22px rgba(14,36,54,.34);
+
+  /* ---- Logo minimum genişlikleri ---- */
+  --virel-logo-min-horizontal: 90px;
+  --virel-logo-min-vertical:   70px;
+  --virel-logo-min-mark:       20px;
+}
+
+/* ---- Koyu tema ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --virel-bg:            #0A1A26;
+    --virel-surface:       #0F212D;
+    --virel-surface-2:     #0C1D28;
+    --virel-border:        #1B3240;
+    --virel-border-strong: #28495B;
+    --virel-text:          #E8F1F5;
+    --virel-text-2:        #A9BEC9;
+    --virel-text-muted:    #7B94A2;
+    --virel-info:          #5AA9F0;
+    --virel-success-bg: #0D2C24;
+    --virel-warning-bg: #2E1D14;
+    --virel-danger-bg:  #2E1513;
+  }
+}
+:root[data-theme="dark"] {
+  --virel-bg:            #0A1A26;
+  --virel-surface:       #0F212D;
+  --virel-surface-2:     #0C1D28;
+  --virel-border:        #1B3240;
+  --virel-border-strong: #28495B;
+  --virel-text:          #E8F1F5;
+  --virel-text-2:        #A9BEC9;
+  --virel-text-muted:    #7B94A2;
+  --virel-info:          #5AA9F0;
+  --virel-success-bg: #0D2C24;
+  --virel-warning-bg: #2E1D14;
+  --virel-danger-bg:  #2E1513;
+}
+
+/* ---- Yardımcı sınıflar ---- */
+.virel-gradient-text {
+  background: var(--virel-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.virel-gradient-bg { background: var(--virel-gradient); color: var(--virel-on-brand); }
+
+.virel-label {
+  font-family: var(--virel-font-body);
+  font-size: var(--virel-text-xs);
+  font-weight: 700;
+  letter-spacing: var(--virel-tracking-label);
+  text-transform: uppercase;
+  color: var(--virel-text-muted);
+}

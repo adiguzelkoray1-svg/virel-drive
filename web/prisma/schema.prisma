@@ -1,0 +1,469 @@
+// Virel Drive — çok kiracılı veri modeli (sürücü kursları)
+// PostgreSQL. Durum alanları String + sabitler (src/lib/constants.ts).
+// Mevzuata bağlı sayılar koda gömülmez: LicenseClassRule + RegulationSetting.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------- Kiracı (sürücü kursu) ----------
+model School {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  city         String?
+  district     String?
+  phone        String?
+  email        String?
+  address      String?
+  taxNumber    String?
+  taxOffice    String?
+  mebCode      String?   // kurum kodu
+  timezone     String    @default("Europe/Istanbul")
+  currency     String    @default("TRY")
+  status       String    @default("PENDING") // PENDING | TRIAL | ACTIVE | PAST_DUE | SUSPENDED | DELETED
+  plan         String    @default("TRIAL")   // TRIAL | STARTER | PRO | ENTERPRISE
+  trialEndsAt  DateTime?
+  userLimit    Int       @default(3)
+  studentLimit Int       @default(150)
+  approvedAt   DateTime?
+  kvkkAcceptedAt DateTime?
+  settings     String?   // JSON: çalışma saatleri, derslikler, fatura öneki
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  users        User[]
+  students     Student[]
+  leads        Lead[]
+  instructors  Instructor[]
+  vehicles     Vehicle[]
+  vehicleCosts VehicleCost[]
+  theoryLessons TheoryLesson[]
+  attendances  Attendance[]
+  drivingLessons DrivingLesson[]
+  skillRatings SkillRating[]
+  exams        Exam[]
+  documents    Document[]
+  paymentPlans PaymentPlan[]
+  installments Installment[]
+  payments     Payment[]
+  expenses     Expense[]
+  messages     MessageLog[]
+  classRules   LicenseClassRule[]
+  regulations  RegulationSetting[]
+  auditLogs    AuditLog[]
+
+  @@index([status])
+}
+
+// ---------- Kullanıcı ----------
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         String    @default("SECRETARY") // SUPER_ADMIN | OWNER | MANAGER | SECRETARY | THEORY_TEACHER | DRIVING_INSTRUCTOR | ACCOUNTANT | STUDENT
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  schoolId     String?
+  school       School?   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  instructor   Instructor?
+  student      Student?
+  auditLogs    AuditLog[]
+
+  @@index([schoolId, role])
+}
+
+// ---------- Kursiyer ----------
+model Student {
+  id             String    @id @default(cuid())
+  schoolId       String
+  school         School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  userId         String?   @unique
+  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  fileNo         String?   // dosya numarası
+  firstName      String
+  lastName       String
+  phone          String
+  email          String?
+  nationalId     String?   // TC — KVKK: erişim denetim kaydına yazılır
+  birthDate      DateTime?
+  address        String?
+  photoUrl       String?
+
+  licenseClass   String    // B | A2 | A | C | D ... (LicenseClassRule.code)
+  stage          String    @default("PRE_REGISTRATION") // PRE_REGISTRATION | DOCUMENTS | THEORY | ETEST_WAITING | DRIVING | DRIVING_EXAM | GRADUATED
+  status         String    @default("ACTIVE")           // ACTIVE | PASSIVE | GRADUATED | CANCELLED
+  registeredAt   DateTime  @default(now())
+  graduatedAt    DateTime?
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  documents      Document[]
+  attendances    Attendance[]
+  drivingLessons DrivingLesson[]
+  exams          Exam[]
+  paymentPlan    PaymentPlan?
+  payments       Payment[]
+  messages       MessageLog[]
+
+  @@index([schoolId, status])
+  @@index([schoolId, stage])
+  @@index([schoolId, phone])
+}
+
+// ---------- CRM / ön kayıt ----------
+model Lead {
+  id            String    @id @default(cuid())
+  schoolId      String
+  school        School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  name          String
+  phone         String
+  email         String?
+  licenseClass  String?
+  source        String    @default("OTHER") // INSTAGRAM | WEB | REFERRAL | PHONE | WALK_IN | OTHER
+  stage         String    @default("NEW")   // NEW | INFORMED | QUOTED | FOLLOW_UP | MEETING | WON | LOST
+  lostReason    String?
+  nextFollowUpAt DateTime?
+  lastContactAt DateTime?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([schoolId, stage])
+  @@index([schoolId, nextFollowUpAt])
+}
+
+// ---------- Evrak ----------
+model Document {
+  id          String    @id @default(cuid())
+  schoolId    String
+  school      School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  type        String    // NATIONAL_ID | DIPLOMA | HEALTH_REPORT | CRIMINAL_RECORD | PHOTO | DRIVER_CONSENT | BLOOD_TYPE
+  status      String    @default("PENDING") // PENDING | REVIEW | OK | MISSING
+  fileUrl     String?
+  validUntil  DateTime?
+  verifiedAt  DateTime?
+  note        String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([studentId, type])
+  @@index([schoolId, status])
+}
+
+// ---------- Eğitmen ----------
+model Instructor {
+  id             String   @id @default(cuid())
+  schoolId       String
+  school         School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  userId         String?  @unique
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  name           String
+  phone          String?
+  branch         String   @default("DRIVING") // DRIVING | THEORY
+  licenseClasses String   @default("B")       // virgülle: "B,A2"
+  subjects       String?                      // teorik: "TRAFFIC,FIRST_AID"
+  weeklyCapacity Int      @default(40)        // saat
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  drivingLessons DrivingLesson[]
+  theoryLessons  TheoryLesson[]
+  vehicles       Vehicle[]
+
+  @@index([schoolId, branch])
+}
+
+// ---------- Araç ----------
+model Vehicle {
+  id            String    @id @default(cuid())
+  schoolId      String
+  school        School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  plate         String
+  brand         String?
+  model         String?
+  year          Int?
+  licenseClass  String    @default("B")
+  usage         String    @default("TRAINING") // TRAINING | EXAM
+  status        String    @default("ACTIVE")   // ACTIVE | MAINTENANCE | PASSIVE
+  km            Int       @default(0)
+  fuelType      String?
+  insuranceUntil DateTime?
+  inspectionUntil DateTime?
+  nextServiceKm Int?
+  instructorId  String?
+  instructor    Instructor? @relation(fields: [instructorId], references: [id], onDelete: SetNull)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  drivingLessons DrivingLesson[]
+  costs          VehicleCost[]
+
+  @@unique([schoolId, plate])
+  @@index([schoolId, status])
+}
+
+model VehicleCost {
+  id         String   @id @default(cuid())
+  schoolId   String
+  school     School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  vehicleId  String
+  vehicle    Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  type       String   // FUEL | SERVICE | TIRE | INSURANCE | INSPECTION | REPAIR | OTHER
+  amount     Int      // kuruş
+  km         Int?
+  note       String?
+  occurredAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([schoolId, occurredAt])
+  @@index([vehicleId, type])
+}
+
+// ---------- Teorik eğitim ----------
+model TheoryLesson {
+  id           String   @id @default(cuid())
+  schoolId     String
+  school       School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  category     String   // TRAFFIC | FIRST_AID | ENGINE | ETHICS
+  topic        String
+  term         String?  // "2026/3"
+  room         String?
+  instructorId String?
+  instructor   Instructor? @relation(fields: [instructorId], references: [id], onDelete: SetNull)
+  startsAt     DateTime
+  endsAt       DateTime
+  status       String   @default("PLANNED") // PLANNED | LIVE | DONE | CANCELLED
+  note         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  attendances  Attendance[]
+
+  @@index([schoolId, startsAt])
+}
+
+model Attendance {
+  id             String   @id @default(cuid())
+  schoolId       String
+  school         School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  theoryLessonId String
+  theoryLesson   TheoryLesson @relation(fields: [theoryLessonId], references: [id], onDelete: Cascade)
+  studentId      String
+  student        Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  present        Boolean  @default(true)
+  excused        Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@unique([theoryLessonId, studentId])
+  @@index([schoolId, studentId])
+}
+
+// ---------- Direksiyon eğitimi ----------
+model DrivingLesson {
+  id           String   @id @default(cuid())
+  schoolId     String
+  school       School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  instructorId String
+  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Restrict)
+  vehicleId    String
+  vehicle      Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
+
+  startsAt     DateTime
+  endsAt       DateTime
+  kind         String   @default("CITY") // CITY | PARKING | HILL | HIGHWAY | EXAM_PREP
+  status       String   @default("PLANNED") // PLANNED | LIVE | DONE | CANCELLED | NO_SHOW
+  note         String?
+  reviewNote   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  ratings      SkillRating[]
+
+  @@index([schoolId, startsAt])
+  @@index([instructorId, startsAt])
+  @@index([vehicleId, startsAt])
+  @@index([studentId, startsAt])
+}
+
+model SkillRating {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  lessonId  String
+  lesson    DrivingLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  skill     String   // START_STOP | CLUTCH | GEARS | MIRRORS | LANE | JUNCTION | PARKING | REVERSE | HILL_START | TRAFFIC | SAFETY
+  score     Int      // 1..5
+  createdAt DateTime @default(now())
+
+  @@unique([lessonId, skill])
+}
+
+// ---------- Sınavlar ----------
+model Exam {
+  id          String    @id @default(cuid())
+  schoolId    String
+  school      School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  type        String    // ETEST | DRIVING
+  attemptNo   Int       @default(1)
+  scheduledAt DateTime?
+  place       String?
+  status      String    @default("PLANNED") // PLANNED | APPLIED | DONE | CANCELLED
+  result      String?   // PASSED | FAILED
+  score       Int?
+  failReason  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([schoolId, type, scheduledAt])
+  @@index([studentId, type])
+}
+
+// ---------- Finans ----------
+model PaymentPlan {
+  id          String   @id @default(cuid())
+  schoolId    String
+  school      School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId   String   @unique
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  total       Int      // kuruş
+  downPayment Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  installments Installment[]
+}
+
+model Installment {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  planId    String
+  plan      PaymentPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  seq       Int
+  label     String?  // "Peşinat", "1. taksit"
+  amount    Int
+  dueAt     DateTime
+  paidAt    DateTime?
+  status    String   @default("PENDING") // PENDING | PAID | OVERDUE | CANCELLED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments  Payment[]
+
+  @@index([schoolId, status, dueAt])
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  schoolId      String
+  school        School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId     String
+  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  installmentId String?
+  installment   Installment? @relation(fields: [installmentId], references: [id], onDelete: SetNull)
+  amount        Int
+  method        String   @default("CASH") // CASH | CARD | TRANSFER | ONLINE
+  receivedAt    DateTime @default(now())
+  note          String?
+  createdAt     DateTime @default(now())
+
+  @@index([schoolId, receivedAt])
+}
+
+model Expense {
+  id         String   @id @default(cuid())
+  schoolId   String
+  school     School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  category   String   // RENT | SALARY | VEHICLE | UTILITY | MARKETING | OTHER
+  amount     Int
+  note       String?
+  occurredAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([schoolId, occurredAt])
+}
+
+// ---------- Mesaj ----------
+model MessageLog {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId String?
+  student   Student? @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  channel   String   // WHATSAPP | SMS | EMAIL | PUSH
+  template  String?
+  body      String
+  direction String   @default("OUT") // OUT | IN
+  status    String   @default("QUEUED") // QUEUED | SENT | DELIVERED | READ | FAILED
+  sentAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([schoolId, createdAt])
+}
+
+// ---------- Mevzuat ve kurs ayarları ----------
+model LicenseClassRule {
+  id             String   @id @default(cuid())
+  schoolId       String
+  school         School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  code           String   // B | A2 | C | D | A
+  vehicleKind    String   // Otomobil | Motosiklet | Kamyon | Otobüs
+  drivingHours   Int      // zorunlu direksiyon saati
+  theoryLessons  Int      // zorunlu teorik ders sayısı
+  examAttempts   Int      @default(4)
+  passScore      Int      @default(70)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([schoolId, code])
+}
+
+/// Serbest anahtar/değer: ders süresi, günlük azami ders, devam oranı, iptal süresi vb.
+model RegulationSetting {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  key       String
+  value     String
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, key])
+}
+
+// ---------- Denetim ----------
+model AuditLog {
+  id        String   @id @default(cuid())
+  schoolId  String?
+  school    School?  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  target    String?
+  meta      String?
+  createdAt DateTime @default(now())
+
+  @@index([schoolId, createdAt])
+}

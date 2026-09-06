@@ -1,0 +1,93 @@
+# Virel Drive — uygulama
+
+Next.js 16 (App Router) + Prisma 7 + PostgreSQL. Tasarım kaynağı: `../tasarim/` artboard'ları.
+
+## Kurulum
+
+```bash
+createdb virel_drive
+cp .env.example .env       # DATABASE_URL ve AUTH_SECRET doldurun
+npm install
+npm run db:migrate
+npm run db:seed
+npm run dev                # http://localhost:3002
+```
+
+`AUTH_SECRET` üretmek için:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+```
+
+## Demo hesaplar
+
+Seed sonrası tüm hesapların şifresi `virel1234`.
+
+| E-posta | Rol | Ne görür |
+|---|---|---|
+| `ahmet@yildizsurucukursu.com` | Kurs Sahibi | Her şey |
+| `sekreter@yildizsurucukursu.com` | Sekreter | Kursiyer, takvim, evrak, tahsilat |
+| `muhasebe@yildizsurucukursu.com` | Muhasebe | Finans ve raporlar |
+| `mehmet@yildizsurucukursu.com` | Direksiyon Eğitmeni | Kendi dersleri — **finans yok** |
+| `selin@yildizsurucukursu.com` | Teorik Öğretmen | Ders programı ve yoklama |
+| `quickfactt@gmail.com` | Süper Admin | Platform (henüz yapılmadı) |
+
+Rol farkını görmek için eğitmen hesabıyla girin: kenar çubuğunda Finans, CRM, Raporlar ve
+Ayarlar görünmez; dashboard'da tahsilat kartı yerine rol açıklaması çıkar.
+
+## Mimari
+
+```
+src/lib/
+  prisma.ts        Tembel PrismaClient (pg adaptörü)
+  auth.ts          bcrypt + JWT çerez oturumu, requireSchoolUser (kiracı bağlamı), audit
+  jwt.ts           jose ile imzalama/doğrulama
+  permissions.ts   Rol → yetki matrisi (can())
+  constants.ts     Durum/rol etiketleri, mevzuat varsayılanları, tasarım sabitleri
+  regulation.ts    Mevzuat ayarlarını okuma/yazma (koda gömülü sayı yok)
+  availability.ts  Eğitmen + araç + kursiyer uygunluk kontrolü (çakışma nedeni metniyle)
+  dashboard.ts     Operasyon uyarıları, bugünkü program, tahsilat, haftalık yoğunluk
+  format.ts        ₺, tarih, saat, telefon maskesi, baş harf
+src/components/    ui.tsx (tasarım sistemi bileşenleri), icons.tsx (69 ikon), shell/
+src/app/
+  (auth)/giris     Giriş
+  app/             Kurs uygulaması (kabuk + dashboard + kursiyerler)
+  api/auth/cikis   Çıkış
+```
+
+### Çok kiracılılık
+
+Her sorgu `schoolId` ile sınırlanır; `requireSchoolUser()` bu bağlamı verir.
+Bir kursun kullanıcısı başka kursun verisini göremez.
+
+### Mevzuat
+
+Ders süresi, günlük azami ders, devam oranı, sınav hakkı, başarı barajı ve sertifika sınıfı
+kuralları `RegulationSetting` + `LicenseClassRule` tablolarındadır; kodda sabit değildir.
+`src/lib/constants.ts` içindeki `REGULATION_DEFAULTS` yalnızca yeni kurs açılırken yazılan
+başlangıç değeridir.
+
+## Durum
+
+**Hazır:** veri modeli (23 tablo) ve migrasyon · demo verisi · kimlik doğrulama ve roller ·
+uygulama kabuğu (yetkiye göre filtrelenen menü) · Dashboard (gerçek veriyle: KPI, bugünkü
+program, dikkat gerektirenler, haftalık yoğunluk, tahsilat) · Kursiyerler listesi (filtre,
+arama, sayfalama, ilerleme).
+
+**Sırada:** kursiyer detayı · takvim ve ders oluşturma (uygunluk kontrolü `availability.ts`
+içinde hazır, arayüzü yok) · teorik · sınavlar · eğitmenler · araçlar · finans · CRM ·
+belgeler · mesajlar · raporlar · mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) ·
+süper admin konsolu.
+
+## Komutlar
+
+```bash
+npm run dev        # geliştirme sunucusu (3002)
+npm run typecheck  # tsc --noEmit
+npm run db:migrate # şema değişikliği sonrası migrasyon
+npm run db:seed    # demo verisini sıfırla ve yeniden yükle
+npm run db:studio  # Prisma Studio
+```
+
+> `db:seed` tüm tabloları siler ve yeniden yazar. Kullanıcı kimlikleri değiştiği için
+> açık oturumlar geçersiz olur; tekrar giriş yapmanız gerekir.

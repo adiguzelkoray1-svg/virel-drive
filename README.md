@@ -12,11 +12,18 @@ Bu ürün bir "öğrenci kayıt programı" değildir. Kapsam, sürecin tamamıd�
 
 ## İçerik
 
+- `web/` — çalışan uygulama (Next.js 16 + Prisma + PostgreSQL). Kurulum ve durum için `web/README.md`.
 - `tasarim/` — ekranları üreten kaynak kod ve `.dc.html` artboard'ları.
 - `marka/` — virel-brand-kit (renk/tipografi token'ları, logo, favicon). **Kaynaktır; yeniden çizilmez, yeniden seçilmez.**
 - `tasarim/canvas.json` — artboard yerleşimi (4 sayfa: Kurs Uygulaması · Mobil · Landing · Tasarım Sistemi).
 
-### Yeniden üretmek
+### Uygulamayı çalıştırmak
+
+```bash
+cd web && npm install && npm run db:migrate && npm run db:seed && npm run dev
+```
+
+### Artboard'ları yeniden üretmek
 
 ```bash
 cd tasarim && for f in build_*.py; do python3 "$f"; done
