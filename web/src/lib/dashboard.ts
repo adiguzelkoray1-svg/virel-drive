@@ -125,7 +125,7 @@ export async function todaySchedule(schoolId: string) {
       id: l.id, type: "theory" as const, startsAt: l.startsAt, endsAt: l.endsAt, status: l.status,
       title: `Teorik · ${l.topic}`,
       meta: `${l.instructor?.name ?? "Öğretmen"} · ${l.room ?? "Derslik"} · ${l._count.attendances} kursiyer`,
-      href: `/app/teorik`,
+      href: `/app/teorik/${l.id}`,
     })),
   ].sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime());
 

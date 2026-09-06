@@ -82,8 +82,12 @@ düzenleme (dersin kendisi çakışma sayılmaz) · iptal (neden + mevzuattaki s
 kaydı) · gelmedi · yeniden planlama · ders sonu değerlendirmesi (11 gelişim alanı + eğitmen notu).
 Her durum değişikliği denetim kaydına yazılır.
 
-**Sırada:** teorik · sınavlar · eğitmenler · araçlar · finans · CRM · belgeler · mesajlar ·
-raporlar · mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) · süper admin konsolu.
+**Teorik eğitim ve yoklama tamamlandı:** dönem programı (kategori ilerlemesi, yaklaşan/geçmiş/
+yoklama bekleyen süzgeçleri) · ders detayı · yoklama alma · devam riski listesi · ders planlama
+ve düzenleme (öğretmen ve derslik çakışma kontrolüyle) · ders iptali.
+
+**Sırada:** sınavlar · eğitmenler · araçlar · finans · CRM · belgeler · mesajlar · raporlar ·
+mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) · süper admin konsolu.
 
 ### Takvim hakkında
 
@@ -101,6 +105,17 @@ ve geri alınamaz. Düzenlemede uygunluk kontrolü dersin kendisini dışarıda 
 
 Rol ayrımı: düzenleme ve iptal `lesson.write`, ders sonu değerlendirmesi `lesson.review` ister.
 Direksiyon eğitmeni yalnızca değerlendirme girebilir; dersi düzenleyemez ya da iptal edemez.
+
+### Teorik eğitim ve yoklama
+
+Devam oranı `Attendance` satırlarından hesaplanır; sınır (`theoryAttendanceMinPercent`, varsayılan
+%85) mevzuat ayarındadır ve sınırın altına inen kursiyer teorik ekranında "devam riski" olarak
+listelenir. Yoklama formu herkesi varsayılan olarak "var" kabul eder — eğitmen yalnızca gelmeyeni
+işaretler; kaydedince ders isteğe bağlı olarak tamamlanmış sayılır.
+
+Teorik derste çakışma kontrolü aynı öğretmen ve aynı derslik üzerinden yapılır. Kontrol turunda
+yalnızca zaman alanları doğrulanır (konu ve kategori kaydetmede zorunludur), böylece form
+doldurulurken çakışma anında görünür.
 
 ### Ders formu
 

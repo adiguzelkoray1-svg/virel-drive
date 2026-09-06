@@ -210,6 +210,7 @@ async function main() {
   // kursiyer kartındaki "Teorik" göstergesi ve süreç çizelgesi böylece doğru okunur.
   const theoryStudents = students.filter((s) => ["THEORY", "ETEST_WAITING", "DRIVING", "DRIVING_EXAM", "GRADUATED"].includes(s.stage));
   const term = "2026/3";
+  let rosterCursor = 0;
   for (let w = -6; w <= 3; w++) {
     for (const [i, cat] of THEORY_CATEGORIES.entries()) {
       if (w > 0 && i > 1) continue;
@@ -225,8 +226,14 @@ async function main() {
         },
       });
       if (day <= 0) {
+        // Bir derslikte ~28 kursiyer olur; tüm dönem kursiyerlerini tek derse yazmak gerçekçi değil.
+        // Sınıf mevcudu ders başına kaydırılarak seçilir, böylece herkesin devam geçmişi oluşur.
+        const size = Math.min(28, theoryStudents.length);
+        const offset = (rosterCursor += 7) % Math.max(1, theoryStudents.length);
+        const roster = Array.from({ length: size }, (_, k) => theoryStudents[(offset + k) % theoryStudents.length]);
         await prisma.attendance.createMany({
-          data: theoryStudents.map((s) => ({ schoolId: school.id, theoryLessonId: lesson.id, studentId: s.id, present: rnd() > 0.09 })),
+          data: roster.map((s) => ({ schoolId: school.id, theoryLessonId: lesson.id, studentId: s.id, present: rnd() > 0.07 })),
+          skipDuplicates: true,
         });
       }
     }

@@ -106,7 +106,7 @@ export async function weekCalendar(schoolId: string, weekStart: Date, filter?: {
     ...theory.map((l): CalendarEvent => ({
       lane: 0, lanes: 1,
       id: l.id, kind: "theory", day: dayOf(l.startsAt), startsAt: l.startsAt, endsAt: l.endsAt,
-      title: l.topic.split(" · ")[0], meta: `${l.room ?? "Derslik"} · ${l._count.attendances} kursiyer`, href: "/app/teorik",
+      title: l.topic.split(" · ")[0], meta: `${l.room ?? "Derslik"} · ${l._count.attendances} kursiyer`, href: `/app/teorik/${l.id}`,
     })),
     ...exams.filter((e) => e.scheduledAt).map((e): CalendarEvent => ({
       lane: 0, lanes: 1,
@@ -227,7 +227,7 @@ export async function dayCalendar(schoolId: string, day: Date) {
       lane: 0, lanes: 1, column: indexOf.get("theory") ?? columns.length - 1,
       id: l.id, kind: "theory", day: 0, startsAt: l.startsAt, endsAt: l.endsAt,
       title: l.topic, meta: `${l.room ?? "Derslik"} · ${l.instructor?.name ?? ""} · ${l._count.attendances} kursiyer`,
-      href: "/app/teorik",
+      href: `/app/teorik/${l.id}`,
     })),
   ];
 
