@@ -90,8 +90,17 @@ ve düzenleme (öğretmen ve derslik çakışma kontrolüyle) · ders iptali.
 listesi · sınav planlama (hak ve eğitim şartı otomatik kontrolü, istisnai "yine de kaydet" onayı) ·
 sonuç kaydı (geçince kursiyer sürecini otomatik ilerletir) · sınav iptali.
 
-**Sırada:** eğitmenler · araçlar · finans · CRM · belgeler · mesajlar · raporlar ·
-mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) · süper admin konsolu.
+**Eğitmenler tamamlandı:** liste (branş süzgeci, haftalık yük, kursiyer sayısı, sınav başarısı) ·
+eğitmen detayı (haftalık doluluk, yaklaşan/geçmiş dersler, atanmış araçlar, kursiyerler) ·
+ekleme/düzenleme (branşa göre ehliyet sınıfı ya da ders kategorisi) · izinli/aktif işaretleme.
+
+**Araçlar tamamlandı:** kart görünümü (kilometre, kullanım, eğitmen, muayene, haftalık doluluk,
+bakım uyarısı) · ay seçicili maliyet tablosu (yakıt/bakım/lastik/sigorta/tamir, km başına maliyet) ·
+araç detayı (yaklaşan dersler, gider geçmişi) · gider ekleme (kilometreyi de günceller) ·
+bakıma alma/çıkarma (etkilenen planlı ders sayısını bildirir).
+
+**Sırada:** finans · CRM · belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
+mobil (eğitmen/kursiyer) · süper admin konsolu.
 
 ### Takvim hakkında
 
@@ -139,6 +148,31 @@ Uygunluk sorgusu formu göndermez; `checkAvailabilityAction` doğrudan çağrıl
 React 19 bir form aksiyonu tamamlandığında formu sıfırlıyor ve her kontrol turunda seçimler
 kayboluyordu. Oluşturma yolu form aksiyonudur ve hata dönerse alanlar sunucudan geri gelen
 değerlerle doldurulur.
+
+### Eğitmenler ve araçlar
+
+Eğitmenin haftalık yükü, branşına göre direksiyon ya da teorik derslerinden hesaplanır ve
+`weeklyCapacity` ile oranlanır. Sınav başarı oranı **yaklaşıktır**: bir kursiyer birden çok
+eğitmenle ders yapabildiği ve sınavı hangi eğitmenin kazandırdığı veriden çıkarılamadığı için,
+kursiyerin sınavı ders yaptığı her eğitmenin oranına sayılır.
+
+Araçta km başına maliyet, o ay yapılan **ders saati × 25 km** varsayımıyla hesaplanır (gerçek
+kilometre sayacı okuması her fişte bulunmuyor). Ayda 10 saatten az kullanılan araçta oran hiç
+gösterilmez: tek bir sigorta kalemi ₺250/km gibi anlamsız bir değer üretebiliyordu. Maliyet
+tablosu ay seçicilidir — ayın ilk günlerinde giderler tam ay, kilometre birkaç günlük olduğu
+için sabit "bu ay" görünümü yanıltıcıydı.
+
+Bakıma alınan araç derse atanamaz (`lib/availability.ts` bunu zaten reddediyor); bakıma alma
+ekranı, o araca bağlı kaç planlı dersin taşınması gerektiğini söyler.
+
+### Kural: `"use server"` dosyaları yalnızca async fonksiyon dışa aktarır
+
+Bir aksiyon dosyasından sabit ya da tip DEĞERİ (ör. `emptyXState`) dışa aktarmak sayfayı
+çalışma zamanında 500'e düşürür: *A "use server" file can only export async functions, found
+object.* Hata sayfayı derlerken değil, o aksiyonu içe aktaran sayfa render edilirken çıktığı
+için typecheck/lint bunu yakalamaz. Bu yüzden form durum tipleri ve başlangıç sabitleri ayrı
+bir modülde tutulur: `lib/lesson-form.ts`, `lib/theory-form.ts`, `lib/exam-form.ts`,
+`lib/instructor-form.ts`. Yeni bir form aksiyonu yazarken aynı düzeni izleyin.
 
 ### `<select>` alanları ve form.reset() — üç formu etkileyen ortak hata
 

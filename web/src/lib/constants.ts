@@ -148,6 +148,13 @@ export const VEHICLE_STATUS_LABEL: Record<string, { label: string; kind: BadgeKi
 export const VEHICLE_COST_LABEL: Record<string, string> = {
   FUEL: "Yakıt", SERVICE: "Bakım", TIRE: "Lastik", INSURANCE: "Sigorta", INSPECTION: "Muayene", REPAIR: "Tamir", OTHER: "Diğer",
 };
+export const VEHICLE_USAGE_LABEL: Record<string, string> = { TRAINING: "Eğitim aracı", EXAM: "Sınav aracı" };
+
+// ---------- Eğitmen ----------
+export const INSTRUCTOR_BRANCH_LABEL: Record<string, string> = { DRIVING: "Direksiyon Eğitmeni", THEORY: "Teorik Öğretmen" };
+/** Eğitmenin sınıf/branş listesi virgülle saklanır ("B,A2"); okunurken bölünür. */
+export const splitCsv = (value: string | null | undefined) => (value ?? "").split(",").map((v) => v.trim()).filter(Boolean);
+export const joinCsv = (values: string[]) => values.join(",");
 
 /**
  * Mevzuata bağlı değerler koda gömülmez; kurs bazında RegulationSetting'te tutulur.

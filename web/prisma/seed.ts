@@ -133,23 +133,6 @@ async function main() {
   }
   const vehiclesFor = (cls: string) => vehicles.filter((v) => v.licenseClass === cls && v.status === "ACTIVE");
 
-  // ---------- Araç maliyetleri ----------
-  const COST_TYPES = ["FUEL", "SERVICE", "TIRE", "INSURANCE", "REPAIR"] as const;
-  for (const v of vehicles) {
-    for (let m = 0; m < 3; m++) {
-      for (const type of COST_TYPES) {
-        if (type !== "FUEL" && rnd() > 0.45) continue;
-        await prisma.vehicleCost.create({
-          data: {
-            schoolId: school.id, vehicleId: v.id, type,
-            amount: type === "FUEL" ? int(3000, 18000) * 100 : int(800, 12000) * 100,
-            km: v.km - m * int(1500, 4000), occurredAt: at(today, -(m * 30 + int(1, 25)), 12),
-          },
-        });
-      }
-    }
-  }
-
   // ---------- Kursiyerler ----------
   type Row = { stage: string; status: string; n: number };
   const DIST: Row[] = [
@@ -242,11 +225,27 @@ async function main() {
   // ---------- Direksiyon dersleri ----------
   const drivingPool = students.filter((s) => ["DRIVING", "DRIVING_EXAM"].includes(s.stage));
   const HOURS = [8.5, 9, 10, 11, 11.5, 13, 13.5, 14, 15, 15.5, 16, 17];
+  // Her eğitmenin kendi aracı vardır; ders o araçla yapılır.
+  const instructorVehicle = drivers.map((d) => vehicles.find((v) => v.instructorId === d.id && v.status === "ACTIVE") ?? vehicles.find((v) => v.status === "ACTIVE")!);
+  /**
+   * Kursiyerin birincil eğitmeni. Gerçek kursta kursiyer hep aynı eğitmenle çalışır; her dersi
+   * rastgele bir eğitmene atamak "her eğitmenin 100+ kursiyeri var" gibi anlamsız istatistikler
+   * üretiyordu. Derslerin ~%15'i (izin/nöbet devri) başka eğitmene düşer.
+   */
+  const primaryInstructor = new Map<string, number>();
+  const instructorOf = (studentId: string) => {
+    if (!primaryInstructor.has(studentId)) primaryInstructor.set(studentId, primaryInstructor.size % drivers.length);
+    return primaryInstructor.get(studentId)!;
+  };
 
   async function lesson(studentId: string, cls: string, dayOffset: number, hour: number, status: string, instructorIdx?: number) {
     const pool = vehiclesFor(cls).length ? vehiclesFor(cls) : vehiclesFor("B");
-    const inst = drivers[instructorIdx ?? int(0, drivers.length - 1)];
-    const veh = pool[int(0, pool.length - 1)];
+    // Eğitmen belirtilmemişse kursiyerin birincil eğitmeni; ~%15 ihtimalle devir alan başka eğitmen.
+    const idx = instructorIdx ?? (rnd() > 0.85 ? int(0, drivers.length - 1) : instructorOf(studentId));
+    const inst = drivers[idx];
+    // Sınıfı uyuyorsa eğitmenin kendi aracı, değilse sınıfa uygun bir araç.
+    const own = instructorVehicle[idx];
+    const veh = own && pool.some((v) => v.id === own.id) ? own : pool[int(0, pool.length - 1)];
     const startsAt = at(today, dayOffset, Math.floor(hour), (hour % 1) * 60);
     const l = await prisma.drivingLesson.create({
       data: {
@@ -264,14 +263,22 @@ async function main() {
     return l;
   }
 
-  // Geçmiş ders birikimi (yapılandırılmış haftanın dışında kalsın diye 20–120 gün öncesi)
-  for (const s of drivingPool) {
+  // Geçmiş ders birikimi (yapılandırılmış haftanın dışında kalsın diye 20–120 gün öncesi).
+  // Mezunlar da dahildir: eğitim geçmişi mezuniyetle silinmez. Aksi hâlde "bu eğitmenin
+  // kursiyerleri" ve eğitmen başarı oranı gibi geriye dönük istatistikler mezunları hiç
+  // göremez — mezunların tamamı sınavı geçtiği için başarı oranı yanlışlıkla %0 çıkardı.
+  const historyPool = students.filter((s) => ["DRIVING", "DRIVING_EXAM", "GRADUATED"].includes(s.stage));
+  for (const s of historyPool) {
     if (s.id === ayse.id) continue; // Ayşe'nin birikimi elle kuruluyor (8 ders)
     const need = hoursOf(s.licenseClass);
-    // DRIVING_EXAM: eğitim bitmiş. DRIVING: haftalık program da ders eklediği için birikim yarıya kadar.
+    // Eğitimi biten aşamalar (DRIVING_EXAM, GRADUATED) zorunlu saati tamamlamıştır.
+    // DRIVING: haftalık program da ders eklediği için birikim yarıya kadar.
     const lessonsNeeded = Math.round((need * 60) / 90);
-    const done = s.stage === "DRIVING_EXAM" ? lessonsNeeded : int(1, Math.max(2, Math.floor(lessonsNeeded / 2)));
-    for (let i = 0; i < done; i++) await lesson(s.id, s.licenseClass, -int(20, 120), pick(HOURS), "DONE");
+    const done = s.stage === "DRIVING" ? int(1, Math.max(2, Math.floor(lessonsNeeded / 2))) : lessonsNeeded;
+    // Mezunlar daha eski tarihlere yayılır (kayıt–mezuniyet aralığı gerçekçi kalsın).
+    const from = s.stage === "GRADUATED" ? 90 : 20;
+    const to = s.stage === "GRADUATED" ? 240 : 120;
+    for (let i = 0; i < done; i++) await lesson(s.id, s.licenseClass, -int(from, to), pick(HOURS), "DONE");
   }
   for (let i = 0; i < 8; i++) await lesson(ayse.id, "B", -(25 + i * 6), pick(HOURS), "DONE", 0);
 
@@ -285,7 +292,6 @@ async function main() {
   // Ayşe programa girmez: tasarımdaki 8/14 saat örneği bozulmasın.
   const activeDriving = students.filter((s) => s.stage === "DRIVING" && s.id !== ayse.id);
   const now = new Date();
-  const instructorVehicle = drivers.map((d) => vehicles.find((v) => v.instructorId === d.id && v.status === "ACTIVE") ?? vehicles.find((v) => v.status === "ACTIVE")!);
   let cursor = 0;
   for (let day = -7; day <= 7; day++) {
     const dow = at(today, day, 12).getDay();
@@ -328,6 +334,49 @@ async function main() {
   await prisma.drivingLesson.create({
     data: { schoolId: school.id, studentId: clashStudent.id, instructorId: drivers[1].id, vehicleId: instructorVehicle[0].id, startsAt: clashStart, endsAt: plusMin(clashStart, 90), kind: "CITY", status: "PLANNED", note: "Araç çakışması — demo" },
   });
+
+  // ---------- Araç maliyetleri ----------
+  // Giderler derslerden SONRA üretilir: yakıt, aracın o ay gerçekten yaptığı ders saatine
+  // orantılıdır. Aksi hâlde "km başına maliyet" raporu, ders yoğunluğundan bağımsız üretilen
+  // giderler yüzünden ₺60/km gibi anlamsız değerler gösteriyordu.
+  const KM_PER_LESSON_HOUR = 25;   // şehir içi direksiyon eğitimi ortalaması
+  const FUEL_COST_PER_KM = 315;    // kuruş (≈7 L/100km × ≈₺45/L)
+  for (const v of vehicles) {
+    for (let m = 0; m < 3; m++) {
+      const monthStart = new Date(today.getFullYear(), today.getMonth() - m, 1);
+      const monthEnd = new Date(today.getFullYear(), today.getMonth() - m + 1, 1);
+      const monthLessons = await prisma.drivingLesson.findMany({
+        where: { schoolId: school.id, vehicleId: v.id, status: "DONE", startsAt: { gte: monthStart, lt: monthEnd } },
+        select: { startsAt: true, endsAt: true },
+      });
+      const hours = monthLessons.reduce((sum, l) => sum + (l.endsAt.getTime() - l.startsAt.getTime()) / 3_600_000, 0);
+      const monthKm = Math.round(hours * KM_PER_LESSON_HOUR);
+      // Bu ay için gün, bugünü aşmasın: ileri tarihli gider fişi gerçekçi değil.
+      const maxDay = m === 0 ? Math.max(1, today.getDate() - 1) : 26;
+      const day = (offset: number) => at(monthStart, Math.min(offset, maxDay), 12);
+
+      if (monthKm > 0) {
+        await prisma.vehicleCost.create({
+          data: {
+            schoolId: school.id, vehicleId: v.id, type: "FUEL",
+            amount: Math.round(monthKm * FUEL_COST_PER_KM * (0.9 + rnd() * 0.2)),
+            km: v.km - m * monthKm, occurredAt: day(int(1, 26)), note: `${monthKm} km`,
+          },
+        });
+      }
+      // Sabit/periyodik kalemler: her ay çıkmaz, tutarları da yakıtın yanında küçük kalır.
+      for (const [type, min, max, chance] of [["SERVICE", 1800, 6500, 0.35], ["TIRE", 2500, 7000, 0.12],
+                                              ["INSURANCE", 1200, 3200, 0.25], ["REPAIR", 900, 4800, 0.18]] as const) {
+        if (rnd() > chance) continue;
+        await prisma.vehicleCost.create({
+          data: {
+            schoolId: school.id, vehicleId: v.id, type, amount: int(min, max) * 100,
+            km: v.km - m * Math.max(500, monthKm), occurredAt: day(int(1, 26)),
+          },
+        });
+      }
+    }
+  }
 
   // ---------- Sınavlar ----------
   for (const s of students) {
