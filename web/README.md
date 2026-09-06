@@ -70,14 +70,30 @@ başlangıç değeridir.
 ## Durum
 
 **Hazır:** veri modeli (23 tablo) ve migrasyon · demo verisi · kimlik doğrulama ve roller ·
-uygulama kabuğu (yetkiye göre filtrelenen menü) · Dashboard (gerçek veriyle: KPI, bugünkü
-program, dikkat gerektirenler, haftalık yoğunluk, tahsilat) · Kursiyerler listesi (filtre,
-arama, sayfalama, ilerleme).
+uygulama kabuğu (yetkiye göre filtrelenen menü) · Dashboard (KPI, bugünkü program, dikkat
+gerektirenler, haftalık yoğunluk, tahsilat) · Kursiyerler listesi (filtre, arama, sayfalama,
+ilerleme) · **Kursiyer detayı** (süreç çizelgesi, direksiyon gelişim puanları, son dersler,
+ödeme planı, evraklar, sınav hakları) · **Takvim** (gün ve hafta görünümü, çakışma tespiti,
+en uygun saat önerileri) · **Ders oluşturma** (eğitmen/araç/kursiyer uygunluğu anlık kontrol,
+çakışmada engelleme, denetim kaydı).
 
-**Sırada:** kursiyer detayı · takvim ve ders oluşturma (uygunluk kontrolü `availability.ts`
-içinde hazır, arayüzü yok) · teorik · sınavlar · eğitmenler · araçlar · finans · CRM ·
-belgeler · mesajlar · raporlar · mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) ·
+**Sırada:** teorik · sınavlar · eğitmenler · araçlar · finans · CRM · belgeler · mesajlar ·
+raporlar · mevzuat ayarları ekranı · ders düzenleme ve iptal · mobil (eğitmen/kursiyer) ·
 süper admin konsolu.
+
+### Takvim hakkında
+
+Varsayılan görünüm **Gün**: sütunlar direksiyon eğitmenleridir, teorik dersler ayrı sütunda
+toplanır. Kursun darboğazı araç değil eğitmen olduğu için doluluk da eğitmen kapasitesine göre
+ölçülür. **Hafta** görünümü genel bakış içindir; aynı saatte birden çok ders varsa gün sütunu
+şeritlere bölünür.
+
+### Ders formu
+
+Uygunluk sorgusu formu göndermez; `checkAvailabilityAction` doğrudan çağrılır. Sebebi:
+React 19 bir form aksiyonu tamamlandığında formu sıfırlıyor ve her kontrol turunda seçimler
+kayboluyordu. Oluşturma yolu form aksiyonudur ve hata dönerse alanlar sunucudan geri gelen
+değerlerle doldurulur.
 
 ## Komutlar
 

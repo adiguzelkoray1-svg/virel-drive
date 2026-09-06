@@ -4,7 +4,7 @@ import { requireSchoolUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
 import { Badge, Card, PageHeader, ProgressBar } from "@/components/ui";
-import { operationalAlerts, todaySchedule, financeSummary, weeklyLessonLoad, startOfDay, endOfDay, addDays } from "@/lib/dashboard";
+import { operationalAlerts, todaySchedule, financeSummary, weeklyLessonLoad, startOfDay, addDays } from "@/lib/dashboard";
 import { LESSON_STATUS_LABEL } from "@/lib/constants";
 import { money, time, dateLong } from "@/lib/format";
 import { can } from "@/lib/permissions";

@@ -206,7 +206,9 @@ async function main() {
   }
 
   // ---------- Teorik eğitim ----------
-  const theoryStudents = students.filter((s) => s.stage === "THEORY");
+  // Teorik eğitimi tamamlamış aşamalar da geçmiş derslere katılmış sayılır:
+  // kursiyer kartındaki "Teorik" göstergesi ve süreç çizelgesi böylece doğru okunur.
+  const theoryStudents = students.filter((s) => ["THEORY", "ETEST_WAITING", "DRIVING", "DRIVING_EXAM", "GRADUATED"].includes(s.stage));
   const term = "2026/3";
   for (let w = -6; w <= 3; w++) {
     for (const [i, cat] of THEORY_CATEGORIES.entries()) {
@@ -223,9 +225,9 @@ async function main() {
         },
       });
       if (day <= 0) {
-        for (const s of theoryStudents) {
-          await prisma.attendance.create({ data: { schoolId: school.id, theoryLessonId: lesson.id, studentId: s.id, present: rnd() > 0.09 } });
-        }
+        await prisma.attendance.createMany({
+          data: theoryStudents.map((s) => ({ schoolId: school.id, theoryLessonId: lesson.id, studentId: s.id, present: rnd() > 0.09 })),
+        });
       }
     }
   }
@@ -257,8 +259,11 @@ async function main() {
 
   // Geçmiş ders birikimi (yapılandırılmış haftanın dışında kalsın diye 20–120 gün öncesi)
   for (const s of drivingPool) {
+    if (s.id === ayse.id) continue; // Ayşe'nin birikimi elle kuruluyor (8 ders)
     const need = hoursOf(s.licenseClass);
-    const done = s.stage === "DRIVING_EXAM" ? need : int(2, Math.max(3, need - 3));
+    // DRIVING_EXAM: eğitim bitmiş. DRIVING: haftalık program da ders eklediği için birikim yarıya kadar.
+    const lessonsNeeded = Math.round((need * 60) / 90);
+    const done = s.stage === "DRIVING_EXAM" ? lessonsNeeded : int(1, Math.max(2, Math.floor(lessonsNeeded / 2)));
     for (let i = 0; i < done; i++) await lesson(s.id, s.licenseClass, -int(20, 120), pick(HOURS), "DONE");
   }
   for (let i = 0; i < 8; i++) await lesson(ayse.id, "B", -(25 + i * 6), pick(HOURS), "DONE", 0);
@@ -270,7 +275,8 @@ async function main() {
    */
   const SLOTS = [9, 11, 13, 15, 17];
   // Sınav aşamasındaki kursiyerin eğitimi bitmiştir; haftalık programa yalnızca eğitimi süren kursiyerler girer.
-  const activeDriving = students.filter((s) => s.stage === "DRIVING");
+  // Ayşe programa girmez: tasarımdaki 8/14 saat örneği bozulmasın.
+  const activeDriving = students.filter((s) => s.stage === "DRIVING" && s.id !== ayse.id);
   const now = new Date();
   const instructorVehicle = drivers.map((d) => vehicles.find((v) => v.instructorId === d.id && v.status === "ACTIVE") ?? vehicles.find((v) => v.status === "ACTIVE")!);
   let cursor = 0;

@@ -105,7 +105,7 @@ export function EmptyState({ icon = "folder", title, desc, action }: { icon?: Ic
   );
 }
 
-export function PageHeader({ title, sub, children }: { title: string; sub?: string; children?: ReactNode }) {
+export function PageHeader({ title, sub, children }: { title: string; sub?: ReactNode; children?: ReactNode }) {
   return (
     <div className="flex items-end justify-between gap-4 flex-wrap">
       <div className="flex flex-col gap-1">

@@ -31,18 +31,25 @@ export default async function StudentsPage({ searchParams }: PageProps<"/app/kur
   const q = typeof sp.q === "string" ? sp.q.trim() : "";
   const page = Math.max(1, Number(sp.sayfa) || 1);
 
+  const now = new Date();
   const filter = FILTERS.find((f) => f.key === filterKey) ?? FILTERS[0];
+  // Telefon araması yalnızca rakam girildiğinde uygulanır: boş bir `contains: ""` her kaydı eşler.
+  const digits = q.replace(/\D/g, "");
+  const words = q.split(/\s+/).filter(Boolean);
   const where = {
     schoolId,
     ...filter.where,
+    // Ad ve soyad ayrı sütunlarda; "Ayşe Yılmaz" gibi tam ad araması her kelimeyi ayrı eşler.
     ...(q
       ? {
-          OR: [
-            { firstName: { contains: q, mode: "insensitive" as const } },
-            { lastName: { contains: q, mode: "insensitive" as const } },
-            { phone: { contains: q.replace(/\D/g, "") } },
-            { fileNo: { contains: q, mode: "insensitive" as const } },
-          ],
+          AND: words.map((w) => ({
+            OR: [
+              { firstName: { contains: w, mode: "insensitive" as const } },
+              { lastName: { contains: w, mode: "insensitive" as const } },
+              { fileNo: { contains: w, mode: "insensitive" as const } },
+              ...(digits.length >= 3 ? [{ phone: { contains: digits } }] : []),
+            ],
+          })),
         }
       : {}),
   };
@@ -83,7 +90,10 @@ export default async function StudentsPage({ searchParams }: PageProps<"/app/kur
     const p = new URLSearchParams();
     if (filterKey !== "tumu") p.set("filtre", filterKey);
     if (q) p.set("q", q);
-    for (const [k, v] of Object.entries(over)) v ? p.set(k, String(v)) : p.delete(k);
+    for (const [k, v] of Object.entries(over)) {
+      if (v) p.set(k, String(v));
+      else p.delete(k);
+    }
     const s = p.toString();
     return s ? `/app/kursiyerler?${s}` : "/app/kursiyerler";
   };
@@ -145,11 +155,11 @@ export default async function StudentsPage({ searchParams }: PageProps<"/app/kur
                   : { label: "—", kind: "neutral" as const };
 
               const inst = s.paymentPlan?.installments ?? [];
-              const overdue = inst.filter((i) => i.status !== "PAID" && i.dueAt < new Date());
+              const overdue = inst.filter((i) => i.status !== "PAID" && i.dueAt < now);
               const pay = !s.paymentPlan
                 ? { label: "Plan yok", kind: "neutral" as const }
                 : overdue.length
-                  ? { label: `${Math.round((Date.now() - Math.min(...overdue.map((o) => o.dueAt.getTime()))) / 86_400_000)} gün gecikti`, kind: "danger" as const }
+                  ? { label: `${Math.round((now.getTime() - Math.min(...overdue.map((o) => o.dueAt.getTime()))) / 86_400_000)} gün gecikti`, kind: "danger" as const }
                   : inst.every((i) => i.status === "PAID")
                     ? { label: "Tamamlandı", kind: "success" as const }
                     : { label: "Güncel", kind: "success" as const };
