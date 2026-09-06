@@ -1,0 +1,45 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Kurs Uygulaması" },
+    { "id": "page-2", "name": "Mobil" },
+    { "id": "page-3", "name": "Landing" },
+    { "id": "page-4", "name": "Tasarım Sistemi" }
+  ],
+  "artboards": [
+    { "file": "Login.dc.html",            "x": 0,    "y": 0,    "w": 1440, "h": 900,  "title": "1 · Giriş", "page": "page-1" },
+    { "file": "Main.dc.html",             "x": 1560, "y": 0,    "w": 1440, "h": 1180, "title": "2 · Dashboard", "page": "page-1" },
+    { "file": "Calendar.dc.html",         "x": 3120, "y": 0,    "w": 1440, "h": 1080, "title": "3 · Takvim (direksiyon planlama)", "page": "page-1" },
+    { "file": "NewLesson.dc.html",        "x": 4680, "y": 0,    "w": 1440, "h": 900,  "title": "4 · Yeni ders (uygunluk kontrolü)", "page": "page-1" },
+    { "file": "Students.dc.html",         "x": 0,    "y": 1300, "w": 1440, "h": 940,  "title": "5 · Kursiyerler", "page": "page-1" },
+    { "file": "StudentProfile.dc.html",   "x": 1560, "y": 1300, "w": 1440, "h": 1300, "title": "6 · Kursiyer detayı", "page": "page-1" },
+    { "file": "Theory.dc.html",           "x": 3120, "y": 1300, "w": 1440, "h": 1050, "title": "7 · Teorik eğitim", "page": "page-1" },
+    { "file": "Exams.dc.html",            "x": 4680, "y": 1300, "w": 1440, "h": 1120, "title": "8 · Sınavlar", "page": "page-1" },
+    { "file": "Instructors.dc.html",      "x": 0,    "y": 2720, "w": 1440, "h": 1320, "title": "9 · Eğitmenler", "page": "page-1" },
+    { "file": "Vehicles.dc.html",         "x": 1560, "y": 2720, "w": 1440, "h": 1430, "title": "10 · Araçlar ve maliyet", "page": "page-1" },
+    { "file": "Finance.dc.html",          "x": 3120, "y": 2720, "w": 1440, "h": 1380, "title": "11 · Finans", "page": "page-1" },
+    { "file": "CRM.dc.html",              "x": 4680, "y": 2720, "w": 1440, "h": 1260, "title": "12 · CRM / ön kayıt", "page": "page-1" },
+    { "file": "Documents.dc.html",        "x": 0,    "y": 4270, "w": 1440, "h": 1330, "title": "13 · Belgeler", "page": "page-1" },
+    { "file": "Messages.dc.html",         "x": 1560, "y": 4270, "w": 1440, "h": 1060, "title": "14 · Mesajlar", "page": "page-1" },
+    { "file": "Reports.dc.html",          "x": 3120, "y": 4270, "w": 1440, "h": 1360, "title": "15 · Kurs performans merkezi", "page": "page-1" },
+    { "file": "Settings.dc.html",         "x": 4680, "y": 4270, "w": 1440, "h": 1580, "title": "16 · Mevzuat ve kurs ayarları", "page": "page-1" },
+
+    { "file": "InstructorToday.dc.html",  "x": 0,   "y": 0, "w": 390, "h": 844, "title": "Eğitmen · Bugün", "page": "page-2" },
+    { "file": "InstructorReview.dc.html", "x": 480, "y": 0, "w": 390, "h": 844, "title": "Eğitmen · Ders değerlendirmesi", "page": "page-2" },
+    { "file": "StudentHome.dc.html",      "x": 960, "y": 0, "w": 390, "h": 844, "title": "Kursiyer · Ana sayfa", "page": "page-2" },
+    { "file": "StudentProgress.dc.html",  "x": 1440,"y": 0, "w": 390, "h": 844, "title": "Kursiyer · İlerlemem", "page": "page-2" },
+
+    { "file": "Landing.dc.html",          "x": 0, "y": 0, "w": 1440, "h": 5320, "title": "Landing · drive.virel.com.tr", "print": "flow", "page": "page-3" },
+    { "file": "DesignSystem.dc.html",     "x": 0, "y": 0, "w": 1440, "h": 5040, "title": "Tasarım sistemi", "print": "flow", "page": "page-4" }
+  ],
+  "annotations": [
+    { "id": "brand-note", "x": 6240, "y": 0, "w": 440, "page": "page-1",
+      "text": "Marka\n\nVirel Drive, Virel Vet ve Virel Eğitim ile aynı marka tokenlarını kullanır: --virel-blue #0067C4, Quicksand (başlık/sayı) + Karla (gövde). Brief'teki mor (#6C5CE7) bilinçli olarak uygulanmadı; kullanıcı talebi 'Virel markasını bozma' yönündedir.\n\nGradyan yalnızca logo, uygulama ikonu, giriş paneli, ilerleme çubuğu ve landing hero'da kullanılır." },
+    { "id": "ops-note", "x": 6240, "y": 1300, "w": 440, "page": "page-1",
+      "text": "Operasyon merkezi\n\nDashboard klasik KPI dizisi değildir: KPI + Bugün zaman çizelgesi + Dikkat gerektirenler birlikte çalışır. Çakışma, gecikmiş ödeme, eksik evrak ve yaklaşan bakım aynı ekranda toplanır.\n\nTakvimde ders oluşturulurken eğitmen, araç ve kursiyer uygunluğu birlikte kontrol edilir; çakışma varsa ders oluşturulmaz." },
+    { "id": "law-note", "x": 6240, "y": 4270, "w": 440, "page": "page-1",
+      "text": "Mevzuat\n\nDers süreleri, sınav hakları, sertifika sınıfları, devam oranı ve belge listesi koda gömülmez; Ayarlar › Mevzuat ve Kurs Ayarları üzerinden yapılandırılır.\n\nMEBBİS / Özel MTSK entegrasyonu yalnızca resmî ve izin verilen bir API varsa yapılır. Sahte entegrasyon gösterilmez; yerine Excel içe/dışa aktarma ve manuel giriş tasarlandı." },
+    { "id": "mobile-note", "x": 1920, "y": 0, "w": 380, "page": "page-2",
+      "text": "Mobil\n\nMasaüstünün küçültülmüşü değil. Eğitmen yalnızca kendi gününü görür ve ders sonu değerlendirmesini telefondan girer; kursiyer kendi sürecini personele sormadan takip eder.\n\n44px dokunma hedefi, tek elle kullanım, alt gezinme. Gerçek cihazın durum çubuğu için üstte boşluk bırakıldı." }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}

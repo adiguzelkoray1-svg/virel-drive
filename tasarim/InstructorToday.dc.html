@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: Karla, Helvetica Neue, Segoe UI, system-ui, sans-serif; color: #0E2436; background: #F4F7F8; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.5; }
+    a { color: #0067C4; text-decoration: none; } a:hover { color: #00559F; }
+    * { box-sizing: border-box; }
+    .card { background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 14px; box-shadow: 0 1px 2px rgba(14,36,54,0.05), 0 12px 32px -18px rgba(14,36,54,0.28); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 700; border: 1px solid transparent; white-space: nowrap; line-height: 1; }
+    .btn-primary { background: #0067C4; color: #FFFFFF; box-shadow: 0 1px 2px rgba(14,36,54,0.06); }
+    .btn-secondary { background: #FFFFFF; color: #0E2436; border-color: #E7EEF2; }
+    .btn-outline { background: transparent; color: #0067C4; border-color: #0067C4; }
+    .btn-ghost { background: transparent; color: #00559F; }
+    .btn-danger { background: #FCECEB; color: #D1453B; }
+    .btn-sm { height: 34px; padding: 0 12px; font-size: 13px; }
+    .btn-xs { height: 30px; padding: 0 10px; font-size: 13px; }
+    .btn-disabled { opacity: 0.45; }
+    .ibtn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #E7EEF2; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; color: #42586A; }
+    .ibtn-primary { background: #0067C4; border-color: #0067C4; color: #FFFFFF; }
+    .ibtn-soft { background: #E8F1FB; border-color: #E8F1FB; color: #00559F; }
+    .ibtn-ghost { border-color: transparent; background: transparent; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; line-height: 1; color: #0E2436; }
+    .b-success { background: #E6F7F1; } .b-success .dot { background: #12A87C; }
+    .b-warning { background: #FDF0E8; } .b-warning .dot { background: #D9713C; }
+    .b-danger { background: #FCECEB; } .b-danger .dot { background: #D1453B; }
+    .b-info { background: #E8F1FB; } .b-info .dot { background: #0067C4; }
+    .b-brand { background: #E8F1FB; color: #00559F; } .b-brand .dot { background: #0067C4; }
+    .b-neutral { background: #F3F7F9; color: #42586A; } .b-neutral .dot { background: #78909F; }
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex-shrink: 0; }
+    .input { height: 42px; border: 1px solid #E7EEF2; border-radius: 8px; padding: 0 12px; font-size: 14px; display: flex; align-items: center; gap: 8px; background: #FFFFFF; color: #78909F; }
+    .input-focus { border-color: #0067C4; box-shadow: 0 0 0 3px #CFE2F7; color: #0E2436; }
+    .input-error { border-color: #D1453B; box-shadow: 0 0 0 3px rgba(209,69,59,0.16); color: #0E2436; }
+    .input-disabled { background: #F4F7F8; color: #78909F; }
+    .label { font-size: 13px; font-weight: 600; color: #42586A; }
+    .hint { font-size: 12px; color: #78909F; }
+    .nav { display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 12px; border-radius: 8px; color: #42586A; font-size: 14px; font-weight: 600; }
+    .nav svg { color: #78909F; flex-shrink: 0; }
+    .nav-active { background: #E8F1FB; color: #0E2436; }
+    .nav-active svg { color: #0067C4; }
+    .h-page { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    .h-section { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+    .h-card { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .t-sec { color: #42586A; } .t-muted { color: #78909F; } .t-sm { font-size: 12px; } .t-xs { font-size: 12px; } .t-13 { font-size: 13px; }
+    .kpi { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .avatar { border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; letter-spacing: -0.01em; font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; }
+    .tab { height: 40px; display: inline-flex; align-items: center; padding: 0 4px; font-size: 14px; font-weight: 600; color: #42586A; border-bottom: 2px solid transparent; }
+    .tab-active { color: #00559F; border-bottom-color: #0067C4; }
+    .seg { display: inline-flex; background: #F3F7F9; border-radius: 8px; padding: 3px; gap: 2px; }
+    .seg span { height: 28px; padding: 0 12px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #42586A; display: inline-flex; align-items: center; }
+    .seg .seg-on { background: #FFFFFF; color: #0E2436; box-shadow: 0 1px 2px rgba(14,36,54,0.10); }
+    .row { display: flex; align-items: center; }
+    .th { font-size: 12px; font-weight: 700; color: #78909F; letter-spacing: 0.02em; }
+    .td { font-size: 13px; color: #0E2436; }
+    .divider { height: 1px; background: #E7EEF2; }
+    .kbd { font-size: 11px; color: #78909F; border: 1px solid #E7EEF2; border-radius: 5px; padding: 1px 5px; background: #F4F7F8; line-height: 1.4; font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+
+    .bar { height: 8px; border-radius: 999px; background: #E7EEF2; overflow: hidden; }
+    .bar > i { display: block; height: 100%; border-radius: 999px; background: #0067C4; }
+    .bar-grad > i { background: linear-gradient(90deg, #00A9BF, #0067C4); }
+    .bar-thin { height: 6px; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid #E7EEF2; background: #FFFFFF; font-size: 13px; font-weight: 500; color: #42586A; white-space: nowrap; }
+    .chip-on { background: #E8F1FB; border-color: #CFE2F7; color: #00559F; font-weight: 600; }
+    .slot { border-radius: 8px; padding: 7px 9px; font-size: 12px; line-height: 1.35; border-left: 3px solid; overflow: hidden; }
+    .slot-drive { background: #E8F1FB; border-color: #0067C4; color: #0E2436; }
+    .slot-theory { background: #E6F7F1; border-color: #12A87C; color: #0E2436; }
+    .slot-exam { background: #FDF0E8; border-color: #D9713C; color: #0E2436; }
+    .slot-busy { background: #F3F7F9; border-color: #CFDCE4; color: #78909F; }
+    .slot-clash { background: #FCECEB; border-color: #D1453B; color: #0E2436; }
+    .tick { width: 22px; height: 22px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tick-done { background: #E6F7F1; color: #12A87C; }
+    .tick-now { background: #E8F1FB; color: #0067C4; }
+    .tick-todo { background: #F3F7F9; color: #78909F; border: 1px dashed #CFDCE4; }
+    .stat-lbl { font-size: 12px; color: #78909F; font-weight: 600; letter-spacing: 0.01em; }
+    .num { font-variant-numeric: tabular-nums; }
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; overflow: hidden; background: #FFFFFF;">
+<div style="width: 390px; height: 844px; background: #F4F7F8; display: flex; flex-direction: column; overflow: hidden;">
+<div style="height: 52px; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 22px 6px; flex-shrink: 0;">
+      <span style="font-size: 13px; font-weight: 700; color: #0E2436;" class="num">09:41</span>
+      <div style="display: flex; gap: 5px; align-items: center; opacity: .85;">
+        <span style="width: 16px; height: 9px; border: 1.4px solid #0E2436; border-radius: 3px; display: block;"></span>
+      </div></div>
+<div style="padding: 8px 20px 16px; display: flex; align-items: center; gap: 10px;">
+  <div class="avatar" style="width: 38px; height: 38px; background: #E6F7F1; color: #12A87C; font-size: 14px;">MÖ</div>
+  <div style="display: flex; flex-direction: column;">
+    <span class="t-13 t-muted">Günaydın</span>
+    <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 700;">Mehmet Öz</span></div>
+  <div class="ibtn" style="margin-left: auto;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></svg></div>
+</div>
+<div style="padding: 0 20px 14px; display: flex; gap: 10px;">
+  <div style="flex: 1; background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 12px; padding: 12px;">
+    <div class="stat-lbl">Bugün</div><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 22px; font-weight: 700;" class="num">4 ders</div></div>
+  <div style="flex: 1; background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 12px; padding: 12px;">
+    <div class="stat-lbl">Bu hafta</div><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 22px; font-weight: 700;" class="num">34 saat</div></div>
+</div>
+<div style="padding: 6px 20px 10px; display: flex; align-items: center; gap: 8px;">
+  <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600;">Bugün</span>
+  <span class="t-13 t-muted">4 Eylül, Cuma</span>
+  <span class="t-13" style="margin-left: auto; font-weight: 600; color: #00559F;">Takvim</span>
+</div>
+<div style="flex-grow: 1; padding: 0 20px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+  <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; opacity: .62;">
+      <div style="display: flex; flex-direction: column; width: 54px; flex-shrink: 0;">
+        <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600;" class="num">09:00</span>
+        <span class="t-13 t-muted num">10:30</span></div>
+      <div class="avatar" style="width: 34px; height: 34px; background: #E8F1FB; color: #00559F; font-size: 13px;">AY</div>
+      <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+        <span style="font-size: 14px; font-weight: 600;">Ayşe Yılmaz</span>
+        <span class="t-13 t-muted num">B · 06 ABC 123</span></div>
+      <div style="margin-left: auto;"><span class="badge b-success"><span class="dot"></span>Tamamlandı</span></div></div><div style="background: #FFFFFF; border: 1.5px solid #0067C4; border-radius: 14px; padding: 16px; box-shadow: 0 12px 30px -18px rgba(0,103,196,.5);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 22px; font-weight: 700;" class="num">11:00</span>
+            <span class="t-13 t-sec num">–12:30</span>
+            <span style="margin-left: auto;"><span class="badge b-brand"><span class="dot"></span>Sıradaki</span></span></div>
+          <div style="display: flex; align-items: center; gap: 11px; margin-top: 14px;">
+            <div class="avatar" style="width: 40px; height: 40px; background: #E6F7F1; color: #12A87C; font-size: 15px;">EA</div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 15px; font-weight: 600;">Emre Aydın</span>
+              <span class="t-13 t-muted">B sınıfı · 6/14 saat · <span class="num">06 ABC 123</span></span></div></div>
+          <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <div class="btn btn-primary" style="flex-grow: 1; height: 44px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg>Dersi tamamla</div>
+            <div class="ibtn" style="width: 44px; height: 44px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></div></div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; ">
+      <div style="display: flex; flex-direction: column; width: 54px; flex-shrink: 0;">
+        <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600;" class="num">14:00</span>
+        <span class="t-13 t-muted num">15:30</span></div>
+      <div class="avatar" style="width: 34px; height: 34px; background: #FCECEB; color: #D1453B; font-size: 13px;">DU</div>
+      <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+        <span style="font-size: 14px; font-weight: 600;">Deniz Ulu</span>
+        <span class="t-13 t-muted num">B · 06 ABC 123</span></div>
+      <div style="margin-left: auto;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M9 6l6 6-6 6"/></svg></div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; ">
+      <div style="display: flex; flex-direction: column; width: 54px; flex-shrink: 0;">
+        <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600;" class="num">16:00</span>
+        <span class="t-13 t-muted num">17:30</span></div>
+      <div class="avatar" style="width: 34px; height: 34px; background: #E8F1FB; color: #00559F; font-size: 13px;">MK</div>
+      <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+        <span style="font-size: 14px; font-weight: 600;">Merve Koç</span>
+        <span class="t-13 t-muted num">B · 06 ABC 123</span></div>
+      <div style="margin-left: auto;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M9 6l6 6-6 6"/></svg></div></div>
+  <div style="display: flex; align-items: center; gap: 9px; padding: 12px 14px; border-radius: 12px; background: #E8F1FB;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #00559F;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span class="t-13" style="color: #00559F; line-height: 1.45;">06 ABC 123 bakımına 420 km kaldı.</span></div>
+</div>
+<div style="border-top: 1px solid #E7EEF2; background: #FFFFFF; display: flex; padding: 0 6px 18px; flex-shrink: 0;"><div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-grow: 1; padding: 8px 0;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #0067C4;"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      <span style="font-size: 11px; font-weight: 600; color: #0067C4;">Bugün</span></div><div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-grow: 1; padding: 8px 0;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+      <span style="font-size: 11px; font-weight: 500; color: #78909F;">Takvim</span></div><div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-grow: 1; padding: 8px 0;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M22 20a7 7 0 0 0-5-6.7"/></svg>
+      <span style="font-size: 11px; font-weight: 500; color: #78909F;">Kursiyerler</span></div><div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex-grow: 1; padding: 8px 0;">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+      <span style="font-size: 11px; font-weight: 500; color: #78909F;">Profil</span></div></div></div>
+</div>
+</x-dc>
+</body>
+</html>

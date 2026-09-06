@@ -1,0 +1,402 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: Karla, Helvetica Neue, Segoe UI, system-ui, sans-serif; color: #0E2436; background: #F4F7F8; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.5; }
+    a { color: #0067C4; text-decoration: none; } a:hover { color: #00559F; }
+    * { box-sizing: border-box; }
+    .card { background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 14px; box-shadow: 0 1px 2px rgba(14,36,54,0.05), 0 12px 32px -18px rgba(14,36,54,0.28); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 700; border: 1px solid transparent; white-space: nowrap; line-height: 1; }
+    .btn-primary { background: #0067C4; color: #FFFFFF; box-shadow: 0 1px 2px rgba(14,36,54,0.06); }
+    .btn-secondary { background: #FFFFFF; color: #0E2436; border-color: #E7EEF2; }
+    .btn-outline { background: transparent; color: #0067C4; border-color: #0067C4; }
+    .btn-ghost { background: transparent; color: #00559F; }
+    .btn-danger { background: #FCECEB; color: #D1453B; }
+    .btn-sm { height: 34px; padding: 0 12px; font-size: 13px; }
+    .btn-xs { height: 30px; padding: 0 10px; font-size: 13px; }
+    .btn-disabled { opacity: 0.45; }
+    .ibtn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #E7EEF2; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; color: #42586A; }
+    .ibtn-primary { background: #0067C4; border-color: #0067C4; color: #FFFFFF; }
+    .ibtn-soft { background: #E8F1FB; border-color: #E8F1FB; color: #00559F; }
+    .ibtn-ghost { border-color: transparent; background: transparent; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; line-height: 1; color: #0E2436; }
+    .b-success { background: #E6F7F1; } .b-success .dot { background: #12A87C; }
+    .b-warning { background: #FDF0E8; } .b-warning .dot { background: #D9713C; }
+    .b-danger { background: #FCECEB; } .b-danger .dot { background: #D1453B; }
+    .b-info { background: #E8F1FB; } .b-info .dot { background: #0067C4; }
+    .b-brand { background: #E8F1FB; color: #00559F; } .b-brand .dot { background: #0067C4; }
+    .b-neutral { background: #F3F7F9; color: #42586A; } .b-neutral .dot { background: #78909F; }
+    .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex-shrink: 0; }
+    .input { height: 42px; border: 1px solid #E7EEF2; border-radius: 8px; padding: 0 12px; font-size: 14px; display: flex; align-items: center; gap: 8px; background: #FFFFFF; color: #78909F; }
+    .input-focus { border-color: #0067C4; box-shadow: 0 0 0 3px #CFE2F7; color: #0E2436; }
+    .input-error { border-color: #D1453B; box-shadow: 0 0 0 3px rgba(209,69,59,0.16); color: #0E2436; }
+    .input-disabled { background: #F4F7F8; color: #78909F; }
+    .label { font-size: 13px; font-weight: 600; color: #42586A; }
+    .hint { font-size: 12px; color: #78909F; }
+    .nav { display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 12px; border-radius: 8px; color: #42586A; font-size: 14px; font-weight: 600; }
+    .nav svg { color: #78909F; flex-shrink: 0; }
+    .nav-active { background: #E8F1FB; color: #0E2436; }
+    .nav-active svg { color: #0067C4; }
+    .h-page { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    .h-section { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+    .h-card { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; line-height: 1.3; }
+    .t-sec { color: #42586A; } .t-muted { color: #78909F; } .t-sm { font-size: 12px; } .t-xs { font-size: 12px; } .t-13 { font-size: 13px; }
+    .kpi { font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .avatar { border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; letter-spacing: -0.01em; font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; }
+    .tab { height: 40px; display: inline-flex; align-items: center; padding: 0 4px; font-size: 14px; font-weight: 600; color: #42586A; border-bottom: 2px solid transparent; }
+    .tab-active { color: #00559F; border-bottom-color: #0067C4; }
+    .seg { display: inline-flex; background: #F3F7F9; border-radius: 8px; padding: 3px; gap: 2px; }
+    .seg span { height: 28px; padding: 0 12px; border-radius: 6px; font-size: 13px; font-weight: 600; color: #42586A; display: inline-flex; align-items: center; }
+    .seg .seg-on { background: #FFFFFF; color: #0E2436; box-shadow: 0 1px 2px rgba(14,36,54,0.10); }
+    .row { display: flex; align-items: center; }
+    .th { font-size: 12px; font-weight: 700; color: #78909F; letter-spacing: 0.02em; }
+    .td { font-size: 13px; color: #0E2436; }
+    .divider { height: 1px; background: #E7EEF2; }
+    .kbd { font-size: 11px; color: #78909F; border: 1px solid #E7EEF2; border-radius: 5px; padding: 1px 5px; background: #F4F7F8; line-height: 1.4; font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+
+    .bar { height: 8px; border-radius: 999px; background: #E7EEF2; overflow: hidden; }
+    .bar > i { display: block; height: 100%; border-radius: 999px; background: #0067C4; }
+    .bar-grad > i { background: linear-gradient(90deg, #00A9BF, #0067C4); }
+    .bar-thin { height: 6px; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid #E7EEF2; background: #FFFFFF; font-size: 13px; font-weight: 500; color: #42586A; white-space: nowrap; }
+    .chip-on { background: #E8F1FB; border-color: #CFE2F7; color: #00559F; font-weight: 600; }
+    .slot { border-radius: 8px; padding: 7px 9px; font-size: 12px; line-height: 1.35; border-left: 3px solid; overflow: hidden; }
+    .slot-drive { background: #E8F1FB; border-color: #0067C4; color: #0E2436; }
+    .slot-theory { background: #E6F7F1; border-color: #12A87C; color: #0E2436; }
+    .slot-exam { background: #FDF0E8; border-color: #D9713C; color: #0E2436; }
+    .slot-busy { background: #F3F7F9; border-color: #CFDCE4; color: #78909F; }
+    .slot-clash { background: #FCECEB; border-color: #D1453B; color: #0E2436; }
+    .tick { width: 22px; height: 22px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tick-done { background: #E6F7F1; color: #12A87C; }
+    .tick-now { background: #E8F1FB; color: #0067C4; }
+    .tick-todo { background: #F3F7F9; color: #78909F; border: 1px dashed #CFDCE4; }
+    .stat-lbl { font-size: 12px; color: #78909F; font-weight: 600; letter-spacing: 0.01em; }
+    .num { font-variant-numeric: tabular-nums; }
+</style>
+</helmet>
+<div style="width: 1440px; height: 5320px; overflow: hidden; background: #FFFFFF;">
+
+<div style="height: 72px; border-bottom: 1px solid #E7EEF2; background: rgba(255,255,255,0.9); display: flex; align-items: center;">
+  <div style="width: 1140px; margin: 0 auto; display: flex; align-items: center; gap: 34px;">
+    <div style="display: flex; align-items: baseline; gap: 8px;"><svg width="99.8" height="26" viewBox="0 0 703.54 183.3" role="img" aria-label="virel" style="display: block; flex-shrink: 0;"><defs><linearGradient id="virel-gm" gradientUnits="userSpaceOnUse" x1="70" y1="0" x2="930" y2="0"><stop offset="0" stop-color="#2ED3A8"/><stop offset="0.46" stop-color="#00A9BF"/><stop offset="1" stop-color="#0067C4"/></linearGradient><linearGradient id="virel-gw" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="445" y2="0"><stop offset="0" stop-color="#2ED3A8"/><stop offset="0.46" stop-color="#00A9BF"/><stop offset="1" stop-color="#0067C4"/></linearGradient></defs><g transform="translate(0,0) scale(0.25179) translate(-70,-82)"><g fill="none" stroke="url(#virel-gm)" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"><path d="M 120 170 L 500 760 L 880 170"/></g><circle cx="500" cy="166" r="84" fill="url(#virel-gm)"/></g><g transform="translate(258.536,21.15) translate(0,-65)"><g fill="none" stroke="url(#virel-gw)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 100 L 46 200 L 86 100"/><path d="M 144 106 L 144 194"/><path d="M 206 106 L 206 194"/><path d="M 206 152 C 206 120 223 106 255 106"/><path d="M 297 150 L 385 150"/><path d="M 385 150 A 44 44 0 1 0 376.6 175.86"/><path d="M 439 72 L 439 194"/></g><circle cx="144" cy="75" r="10" fill="url(#virel-gw)"/></g></svg><span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600; color: #42586A;">drive</span></div>
+    <div style="display: flex; gap: 26px;"><span style="font-size: 14px; font-weight: 500; color: #42586A;">Ürün</span><span style="font-size: 14px; font-weight: 500; color: #42586A;">Modüller</span><span style="font-size: 14px; font-weight: 500; color: #42586A;">Mobil</span><span style="font-size: 14px; font-weight: 500; color: #42586A;">Fiyatlandırma</span><span style="font-size: 14px; font-weight: 500; color: #42586A;">Virel ekosistemi</span></div>
+    <div style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+      <div class="btn btn-secondary btn-sm" style="">Giriş yap</div><div class="btn btn-primary btn-sm" style="">Demo talep et</div>
+    </div>
+  </div>
+</div>
+<section style="background: linear-gradient(180deg, #FFFFFF 0%, #F4F7F8 100%); padding: 92px 0 0;">
+  <div style="width: 1140px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
+    <div style="display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 14px; border-radius: 999px; background: #E8F1FB; color: #00559F; font-size: 13px; font-weight: 600;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg>Virel dikey SaaS ailesinin yeni üyesi</div>
+    <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Driving schools, simplified.</div>
+    <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; color: #42586A; margin-top: 14px;">Sürücü kursunuzun tüm operasyonu. Tek yerde.</div>
+    <div style="font-size: 18px; line-height: 1.7; color: #42586A; max-width: 680px; margin-top: 20px;">
+      Kursiyerlerden direksiyon derslerine, sınavlardan ödemelere kadar tüm süreci Virel Drive ile yönetin.</div>
+    <div style="display: flex; gap: 12px; margin-top: 30px;">
+      <div class="btn btn-primary" style="height: 48px; padding: 0 24px; font-size: 15px;">Demo talep et</div>
+      <div class="btn btn-secondary" style="height: 48px; padding: 0 24px; font-size: 15px;">Giriş yap</div>
+    </div>
+    <div style="font-size: 13px; color: #78909F; margin-top: 14px;">Kurulum ücreti yok · 14 gün deneme · verileriniz kurs bazında izole</div>
+    <div style="margin-top: 56px;">
+<div style="width: 1000px; border-radius: 18px; border: 1px solid #E7EEF2; background: #F4F7F8; box-shadow: 0 40px 90px -40px rgba(14,36,54,.45); overflow: hidden;">
+  <div style="height: 38px; background: #FFFFFF; border-bottom: 1px solid #E7EEF2; display: flex; align-items: center; padding: 0 14px; gap: 7px;">
+    <span style="width: 9px; height: 9px; border-radius: 999px; background: #E7EEF2;"></span>
+    <span style="width: 9px; height: 9px; border-radius: 999px; background: #E7EEF2;"></span>
+    <span style="width: 9px; height: 9px; border-radius: 999px; background: #E7EEF2;"></span>
+    <div style="margin: 0 auto; font-size: 11px; color: #78909F;">yildizsurucukursu.virel.com.tr</div>
+  </div>
+  <div style="display: flex; height: 460px;">
+    <div style="width: 168px; background: #FFFFFF; border-right: 1px solid #E7EEF2; padding: 14px 10px; flex-shrink: 0;">
+      <div style="padding: 2px 6px 14px;"><svg width="72.9" height="19" viewBox="0 0 703.54 183.3" role="img" aria-label="virel" style="display: block; flex-shrink: 0;"><defs><linearGradient id="virel-gm" gradientUnits="userSpaceOnUse" x1="70" y1="0" x2="930" y2="0"><stop offset="0" stop-color="#2ED3A8"/><stop offset="0.46" stop-color="#00A9BF"/><stop offset="1" stop-color="#0067C4"/></linearGradient><linearGradient id="virel-gw" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="445" y2="0"><stop offset="0" stop-color="#2ED3A8"/><stop offset="0.46" stop-color="#00A9BF"/><stop offset="1" stop-color="#0067C4"/></linearGradient></defs><g transform="translate(0,0) scale(0.25179) translate(-70,-82)"><g fill="none" stroke="url(#virel-gm)" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"><path d="M 120 170 L 500 760 L 880 170"/></g><circle cx="500" cy="166" r="84" fill="url(#virel-gm)"/></g><g transform="translate(258.536,21.15) translate(0,-65)"><g fill="none" stroke="url(#virel-gw)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 100 L 46 200 L 86 100"/><path d="M 144 106 L 144 194"/><path d="M 206 106 L 206 194"/><path d="M 206 152 C 206 120 223 106 255 106"/><path d="M 297 150 L 385 150"/><path d="M 385 150 A 44 44 0 1 0 376.6 175.86"/><path d="M 439 72 L 439 194"/></g><circle cx="144" cy="75" r="10" fill="url(#virel-gw)"/></g></svg></div>
+      <div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; color: #0E2436; background: #E8F1FB;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #0067C4;"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Dashboard</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Takvim</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg>Direksiyon</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5zM4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><path d="M8 7.5h7M8 11h5"/></svg>Teorik</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M8 3h8a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M8.5 13l2 2 4-4.5"/></svg>Sınavlar</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M22 20a7 7 0 0 0-5-6.7"/></svg>Kursiyerler</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M3 16v-3.2L5 7h14l2 5.8V16M3 16h18M3 16v2.5h3V16M18 16v2.5h3V16"/><circle cx="7.5" cy="12.6" r="1.1"/><circle cx="16.5" cy="12.6" r="1.1"/></svg>Araçlar</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M3 7a2 2 0 0 1 2-2h14v4M3 7v10a2 2 0 0 0 2 2h16v-8H3z"/><circle cx="17" cy="14" r="1"/></svg>Finans</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>CRM</div><div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 8px; border-radius: 6px; font-size: 11.5px; font-weight: 500; color: #42586A; background: transparent;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><path d="M3 21h18M6 17v-5M11 17V7M16 17v-9"/></svg>Raporlar</div>
+    </div>
+    <div style="flex-grow: 1; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 700;">İyi akşamlar, Ahmet.</span>
+        <span style="font-size: 12px; color: #78909F;">Kursunuzun bugünkü operasyon özeti.</span></div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+        <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 12px 14px;">
+      <div style="font-size: 11px; font-weight: 600; color: #78909F;">Aktif kursiyer</div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px;" class="num">124</div>
+      <div style="font-size: 11px; color: #78909F; margin-top: 2px;">bu ay +9</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 12px 14px;">
+      <div style="font-size: 11px; font-weight: 600; color: #78909F;">Bugünkü ders</div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px;" class="num">7</div>
+      <div style="font-size: 11px; color: #78909F; margin-top: 2px;">2 tamamlandı</div></div>
+        <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 12px 14px;">
+      <div style="font-size: 11px; font-weight: 600; color: #78909F;">Yaklaşan sınav</div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px;" class="num">7</div>
+      <div style="font-size: 11px; color: #78909F; margin-top: 2px;">e-Sınav 4</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 12px 14px;">
+      <div style="font-size: 11px; font-weight: 600; color: #78909F;">Bekleyen tahsilat</div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px;" class="num">₺186.400</div>
+      <div style="font-size: 11px; color: #78909F; margin-top: 2px;">4 gecikmiş</div></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; flex-grow: 1;">
+        <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 12px; padding: 14px;">
+          <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 600;">Bugün</div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+      <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 12px; font-weight: 600; width: 38px;" class="num">08:30</span>
+      <span style="width: 22px; height: 22px; border-radius: 6px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+      <span style="font-size: 12px; font-weight: 600;">Ayşe Yılmaz</span>
+      <span style="font-size: 11px; color: #78909F; margin-left: auto;">Mehmet · 06 ABC 123</span></div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+      <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 12px; font-weight: 600; width: 38px;" class="num">10:00</span>
+      <span style="width: 22px; height: 22px; border-radius: 6px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+      <span style="font-size: 12px; font-weight: 600;">Teorik · Trafik</span>
+      <span style="font-size: 11px; color: #78909F; margin-left: auto;">Derslik 2 · 24 kişi</span></div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+      <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 12px; font-weight: 600; width: 38px;" class="num">11:30</span>
+      <span style="width: 22px; height: 22px; border-radius: 6px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+      <span style="font-size: 12px; font-weight: 600;">Zeynep Demir</span>
+      <span style="font-size: 11px; color: #78909F; margin-left: auto;">Ali · 06 XYZ 456</span></div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+      <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 12px; font-weight: 600; width: 38px;" class="num">13:30</span>
+      <span style="width: 22px; height: 22px; border-radius: 6px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+      <span style="font-size: 12px; font-weight: 600;">Emre Aydın</span>
+      <span style="font-size: 11px; color: #78909F; margin-left: auto;">Mehmet · 06 ABC 123</span></div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+      <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 12px; font-weight: 600; width: 38px;" class="num">15:00</span>
+      <span style="width: 22px; height: 22px; border-radius: 6px; background: #FCECEB; color: #D1453B; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+      <span style="font-size: 12px; font-weight: 600;">Merve Koç</span>
+      <span style="font-size: 11px; color: #78909F; margin-left: auto;">Çakışma riski</span></div>
+        </div>
+        <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 12px; padding: 14px;">
+          <div style="display: flex; align-items: center; gap: 7px;">
+            <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 600;">Dikkat gerektirenler</span>
+            <span style="font-size: 10px; font-weight: 700; color: #D1453B; background: #FCECEB; border-radius: 999px; padding: 1px 6px;">7</span></div>
+          <div style="display: flex; gap: 8px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #FCECEB; color: #D1453B; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M12 3l10 18H2zM12 10v4M12 18h.01"/></svg></span>
+            <span style="font-size: 11.5px; font-weight: 600; line-height: 1.35;">Ders çakışması · Hakan Tuna 15:00</span></div><div style="display: flex; gap: 8px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #FCECEB; color: #D1453B; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 7a2 2 0 0 1 2-2h14v4M3 7v10a2 2 0 0 0 2 2h16v-8H3z"/><circle cx="17" cy="14" r="1"/></svg></span>
+            <span style="font-size: 11.5px; font-weight: 600; line-height: 1.35;">4 kursiyerin ödemesi gecikti</span></div><div style="display: flex; gap: 8px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #FDF0E8; color: #D9713C; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+            <span style="font-size: 11.5px; font-weight: 600; line-height: 1.35;">3 kursiyerde evrak eksik</span></div><div style="display: flex; gap: 8px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M8 3h8a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M8.5 13l2 2 4-4.5"/></svg></span>
+            <span style="font-size: 11.5px; font-weight: 600; line-height: 1.35;">3 kursiyer e-Sınav için hazır</span></div><div style="display: flex; gap: 8px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #FDF0E8; color: #D9713C; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M15.5 3.5a5 5 0 0 0-5.9 6.4L3 16.5V21h4.5l6.6-6.6a5 5 0 0 0 6.4-5.9L18 11l-3-3z"/></svg></span>
+            <span style="font-size: 11.5px; font-weight: 600; line-height: 1.35;">06 DEF 789 bakımına 420 km</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+  </div>
+</section><section style="background: #FFFFFF; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Bugün nasıl yönetiliyor</div>
+  <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Excel, defter ve WhatsApp bir yere kadar.</div></div>
+  <div style="margin-top: 16px;"><div style="font-size: 17px; line-height: 1.65; color: #42586A; max-width: 620px;">Sürücü kursu operasyonu birbirine bağlı bir zincirdir. Zincirin bir halkası ayrı bir yerde tutulduğunda, tamamı görünmez olur.</div></div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 44px;">
+    <div style="padding-top: 20px; border-top: 2px solid #E7EEF2;">
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 17px; font-weight: 600;">Ders planı WhatsApp'ta</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 8px;">Kim, hangi araçla, ne zaman? Cevap üç ayrı sohbette.</div></div><div style="padding-top: 20px; border-top: 2px solid #E7EEF2;">
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 17px; font-weight: 600;">Kursiyerin durumu kafada</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 8px;">Teorik bitti mi, sınav hakkı kaldı mı — herkes eğitmeni arıyor.</div></div><div style="padding-top: 20px; border-top: 2px solid #E7EEF2;">
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 17px; font-weight: 600;">Ödeme defterde</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 8px;">Kim ne kadar ödedi, kimin taksiti gecikti belli değil.</div></div><div style="padding-top: 20px; border-top: 2px solid #E7EEF2;">
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 17px; font-weight: 600;">Adaylar unutuluyor</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 8px;">Fiyat sorup dönmeyen aday, kaybedilmiş kayıttır.</div></div>
+  </div></div></section><section style="background: #F4F7F8; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Modüller</div>
+  <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Operasyonun tamamı, tek ekosistemde.</div></div>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 44px;">
+    <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0M16 4.5a3.5 3.5 0 0 1 0 7M22 20a7 7 0 0 0-5-6.7"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">Kursiyer yönetimi</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">Ön kayıttan mezuniyete kadar tek dosya: evrak, teorik, sınav, direksiyon, ödeme ve zaman çizelgesi.</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">Direksiyon planlama</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">Eğitmen, araç ve kursiyer uygunluğu aynı anda kontrol edilir. Çakışan ders oluşturulamaz.</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M8 3h8a1 1 0 0 1 1 1v1h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2V4a1 1 0 0 1 1-1z"/><path d="M8.5 13l2 2 4-4.5"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">Sınav yönetimi</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">e-Sınav ve direksiyon sınavı süreçleri ayrı ayrı; kalan sınav hakkı her zaman görünür.</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 7a2 2 0 0 1 2-2h14v4M3 7v10a2 2 0 0 0 2 2h16v-8H3z"/><circle cx="17" cy="14" r="1"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">Finans ve tahsilat</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">Kursiyer bazında ödeme planı, taksit takibi, geciken tahsilatlar ve gider yönetimi.</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 16v-3.2L5 7h14l2 5.8V16M3 16h18M3 16v2.5h3V16M18 16v2.5h3V16"/><circle cx="7.5" cy="12.6" r="1.1"/><circle cx="16.5" cy="12.6" r="1.1"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">Araç ve maliyet</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">Plaka bazında kilometre, bakım, muayene, sigorta ve km başına maliyet.</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 26px;">
+      <div style="width: 40px; height: 40px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 18px;">CRM ve ön kayıt</div>
+      <div style="font-size: 14px; line-height: 1.65; color: #42586A; margin-top: 8px;">Aday hunisi, takip hatırlatmaları ve kaynak analizi. Aday kaybetmeyi bırakın.</div></div>
+  </div></div></section><section style="background: #FFFFFF; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+    <div>
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Direksiyon planlama</div>
+      <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Çakışan ders diye bir şey kalmaz.</div></div>
+      <div style="margin-top: 16px;"><div style="font-size: 17px; line-height: 1.65; color: #42586A; max-width: 460px;">Ders oluştururken eğitmen, araç ve kursiyer uygunluğu aynı anda kontrol edilir. Çakışma varsa sistem dersi oluşturmadan önce nedenini açıkça söyler.</div></div>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 26px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 15px; color: #0E2436;">Gün, hafta, ay · eğitmen, araç, kursiyer görünümü</span></div><div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 15px; color: #0E2436;">En uygun saat önerileri</span></div><div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 15px; color: #0E2436;">Ders sonu eğitmen değerlendirmesi</span></div><div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 15px; color: #0E2436;">Kalan eğitim saati otomatik hesap</span></div>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 16px; padding: 22px; box-shadow: 0 30px 60px -34px rgba(14,36,54,.4);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="width: 30px; height: 30px; border-radius: 8px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/></svg></span>
+        <span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600;">Yeni direksiyon dersi</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px;">
+        <div><div style="font-size: 12px; font-weight: 600; color: #42586A;">Kursiyer</div>
+          <div class="input" style="height: 38px; margin-top: 5px; font-size: 13px; color: #0E2436;">Ayşe Yılmaz</div></div><div><div style="font-size: 12px; font-weight: 600; color: #42586A;">Eğitmen</div>
+          <div class="input" style="height: 38px; margin-top: 5px; font-size: 13px; color: #0E2436;">Mehmet Öz</div></div><div><div style="font-size: 12px; font-weight: 600; color: #42586A;">Araç</div>
+          <div class="input" style="height: 38px; margin-top: 5px; font-size: 13px; color: #0E2436;">06 ABC 123</div></div><div><div style="font-size: 12px; font-weight: 600; color: #42586A;">Saat</div>
+          <div class="input" style="height: 38px; margin-top: 5px; font-size: 13px; color: #0E2436;">14:00 – 15:30</div></div>
+      </div>
+      <div style="margin-top: 18px; border: 1px solid #E7EEF2; border-radius: 12px; padding: 4px 14px 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 12px 0 4px;">
+          <span style="font-size: 13px; font-weight: 600;">Uygunluk</span><span class="badge b-success"><span class="dot"></span>Planlanabilir</span></div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+          <span style="width: 20px; height: 20px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 13px;">Eğitmen müsait</span></div><div style="display: flex; align-items: center; gap: 9px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+          <span style="width: 20px; height: 20px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 13px;">Araç müsait</span></div><div style="display: flex; align-items: center; gap: 9px; padding: 9px 0; border-top: 1px solid #E7EEF2;">
+          <span style="width: 20px; height: 20px; border-radius: 999px; background: #E6F7F1; color: #12A87C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M5 12l5 5 9-11"/></svg></span>
+          <span style="font-size: 13px;">Kursiyer müsait</span></div>
+      </div>
+    </div>
+  </div></div></section><section style="background: #F4F7F8; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+    <div style="display: flex; gap: 18px; justify-content: center;">
+      <div style="width: 200px; border-radius: 24px; border: 1px solid #E7EEF2; background: #FFFFFF; padding: 16px; box-shadow: 0 30px 60px -34px rgba(14,36,54,.4);">
+        <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 700; color: #78909F;">Kursiyer</div>
+        <div style="margin-top: 12px; border-radius: 14px; background: linear-gradient(90deg, #2ED3A8 0%, #00A9BF 46%, #0067C4 100%); padding: 14px; min-height: 210px; color: #FFFFFF;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 700;">Merhaba Ayşe 👋</div>
+             <div style="font-size: 12px; opacity: .85; margin-top: 4px;">Ehliyet sürecin</div>
+             <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 30px; font-weight: 700; margin-top: 6px;">%72</div>
+             <div style="height: 6px; border-radius: 999px; background: rgba(255,255,255,.3); margin-top: 10px;"><div style="width: 72%; height: 100%; background: #FFFFFF; border-radius: 999px;"></div></div>
+             <div style="font-size: 12px; margin-top: 14px; line-height: 1.5;">Sonraki adım<br><b>Direksiyon eğitimi</b></div>
+             <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.25); font-size: 12px;">Yarın 14:00 · Mehmet Hoca<br>06 ABC 123</div></div></div><div style="width: 200px; border-radius: 24px; border: 1px solid #E7EEF2; background: #FFFFFF; padding: 16px; box-shadow: 0 30px 60px -34px rgba(14,36,54,.4);">
+        <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 700; color: #78909F;">Eğitmen</div>
+        <div style="margin-top: 12px; border-radius: 14px; background: #F4F7F8; padding: 14px; min-height: 210px; color: #0E2436;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 700;">Bugün · 4 ders</div>
+             <div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 10px; margin-top: 8px;">
+               <div style="display: flex; align-items: center; gap: 8px;"><span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 700;">09:00</span>
+               <span style="font-size: 12px; font-weight: 600;">Ayşe Y.</span></div>
+               <div style="font-size: 11px; color: #78909F; margin-top: 3px;">06 ABC 123 · tamamlandı</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 10px; margin-top: 8px;">
+               <div style="display: flex; align-items: center; gap: 8px;"><span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 700;">11:00</span>
+               <span style="font-size: 12px; font-weight: 600;">Emre A.</span></div>
+               <div style="font-size: 11px; color: #78909F; margin-top: 3px;">06 ABC 123 · sıradaki</div></div><div style="background: #FFFFFF; border: 1px solid #E7EEF2; border-radius: 10px; padding: 10px; margin-top: 8px;">
+               <div style="display: flex; align-items: center; gap: 8px;"><span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 13px; font-weight: 700;">14:00</span>
+               <span style="font-size: 12px; font-weight: 600;">Deniz U.</span></div>
+               <div style="font-size: 11px; color: #78909F; margin-top: 3px;">06 ABC 123</div></div>
+             <div style="margin-top: 10px; height: 34px; border-radius: 8px; background: #0067C4; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">Dersi tamamla</div></div></div>
+    </div>
+    <div>
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Mobil uygulama</div>
+      <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Kursiyer sürecini kimseye sormadan görür.</div></div>
+      <div style="margin-top: 16px;"><div style="font-size: 17px; line-height: 1.65; color: #42586A; max-width: 460px;">Kursiyer kendi ilerlemesini, dersini, sınavını ve ödemesini uygulamadan takip eder. Eğitmen ise sadece kendi gününü görür; ders sonunda değerlendirmesini telefondan girer.</div></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 26px;">
+        <div style="padding: 14px 16px; border: 1px solid #E7EEF2; border-radius: 12px; background: #FFFFFF;">
+          <div style="font-size: 14px; font-weight: 600;">Kursiyer</div>
+          <div style="font-size: 13px; color: #42586A; margin-top: 4px; line-height: 1.5;">İlerleme, ders, sınav, ödeme, belge</div></div><div style="padding: 14px 16px; border: 1px solid #E7EEF2; border-radius: 12px; background: #FFFFFF;">
+          <div style="font-size: 14px; font-weight: 600;">Eğitmen</div>
+          <div style="font-size: 13px; color: #42586A; margin-top: 4px; line-height: 1.5;">Bugünkü dersler ve değerlendirme</div></div><div style="padding: 14px 16px; border: 1px solid #E7EEF2; border-radius: 12px; background: #FFFFFF;">
+          <div style="font-size: 14px; font-weight: 600;">Bildirim</div>
+          <div style="font-size: 13px; color: #42586A; margin-top: 4px; line-height: 1.5;">Ders, ödeme ve sınav hatırlatmaları</div></div><div style="padding: 14px 16px; border: 1px solid #E7EEF2; border-radius: 12px; background: #FFFFFF;">
+          <div style="font-size: 14px; font-weight: 600;">Tek elle</div>
+          <div style="font-size: 13px; color: #42586A; margin-top: 4px; line-height: 1.5;">Thumb-friendly, 44px dokunma hedefi</div></div>
+      </div>
+    </div>
+  </div></div></section><section style="background: #FFFFFF; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Güvenlik</div>
+  <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Kişisel veri taşıyan bir sistem gibi tasarlandı.</div></div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 44px;">
+    <div>
+      <div style="width: 38px; height: 38px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; margin-top: 16px;">Rol bazlı yetki</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 6px;">Direksiyon eğitmeni finansı görmez; muhasebe ders detayına girmez.</div></div><div>
+      <div style="width: 38px; height: 38px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; margin-top: 16px;">KVKK uyumu</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 6px;">Şifreleme, oturum yönetimi, veri silme ve anonimleştirme politikaları.</div></div><div>
+      <div style="width: 38px; height: 38px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; margin-top: 16px;">Denetim kaydı</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 6px;">Kim, hangi veriye, ne zaman erişti — hepsi kayıt altında.</div></div><div>
+      <div style="width: 38px; height: 38px; border-radius: 11px; background: #E8F1FB; color: #0067C4; display: flex; align-items: center; justify-content: center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h3a1 1 0 0 1 1 1v11M2 21h20M8 7h4M8 11h4M8 15h4"/></svg></div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 16px; font-weight: 600; margin-top: 16px;">Kiracı izolasyonu</div>
+      <div style="font-size: 14px; line-height: 1.6; color: #42586A; margin-top: 6px;">Her kurs yalnızca kendi verisini görür. Kurslar arası sızma yoktur.</div></div>
+  </div>
+  <div style="margin-top: 40px; padding: 20px 22px; border-radius: 14px; background: #F4F7F8; display: flex; gap: 12px; align-items: flex-start;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style=" color: #78909F;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+    <div style="font-size: 14px; line-height: 1.65; color: #42586A; max-width: 900px;">
+      Ders süreleri, sınav hakları ve belge gereksinimleri mevzuata göre değişebilir; bunlar koda gömülü değil, yönetici tarafından güncellenen
+      <b>Mevzuat ve Kurs Ayarları</b> modülünde tutulur. Resmî sistem entegrasyonları yalnızca izin verilen bir API bulunduğunda kurulur; aksi hâlde
+      Excel içe/dışa aktarma ve manuel giriş kullanılır.</div>
+  </div></div></section><section style="background: #F4F7F8; padding: 96px 0;"><div style="width: 1140px; margin: 0 auto;">
+  <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #00559F;">Virel ekosistemi</div>
+    <div style="margin-top: 14px;"><div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: #0E2436; margin-bottom: 0px;">Aynı tasarım dili, bağımsız ürünler.</div></div>
+    <div style="margin-top: 16px;"><div style="font-size: 17px; line-height: 1.65; color: #42586A; max-width: 680px;">Virel Drive, Virel'in dikey SaaS ailesinin bir üyesidir. Ortak olan yalnızca marka ve tasarım sistemi; her ürünün kendi verisi, kendi kimlik doğrulaması ve kendi çalışma zamanı vardır.</div></div>
+    <div style="display: flex; gap: 20px; margin-top: 40px;">
+      <div style="width: 260px; padding: 26px; border: 1px solid #E7EEF2; border-radius: 16px; background: #FFFFFF;">
+        <span style="width: 10px; height: 10px; border-radius: 999px; background: #12A87C; display: block; margin: 0 auto;"></span>
+        <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 14px;">Virel Vet</div>
+        <div style="font-size: 14px; color: #42586A; margin-top: 5px;">Veteriner klinikleri</div></div><div style="width: 260px; padding: 26px; border: 1px solid #E7EEF2; border-radius: 16px; background: #FFFFFF;">
+        <span style="width: 10px; height: 10px; border-radius: 999px; background: #00A9BF; display: block; margin: 0 auto;"></span>
+        <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 14px;">Virel Eğitim</div>
+        <div style="font-size: 14px; color: #42586A; margin-top: 5px;">Eğitim kurumları</div></div><div style="width: 260px; padding: 26px; border: 1px solid #E7EEF2; border-radius: 16px; background: #FFFFFF;">
+        <span style="width: 10px; height: 10px; border-radius: 999px; background: #0067C4; display: block; margin: 0 auto;"></span>
+        <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 18px; font-weight: 600; margin-top: 14px;">Virel Drive</div>
+        <div style="font-size: 14px; color: #42586A; margin-top: 5px;">Sürücü kursları</div></div>
+    </div>
+  </div></div></section>
+<section style="background: linear-gradient(90deg, #2ED3A8 0%, #00A9BF 46%, #0067C4 100%); padding: 80px 0;">
+  <div style="width: 1140px; margin: 0 auto; display: flex; align-items: center; gap: 40px;">
+    <div>
+      <div style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 34px; font-weight: 700; letter-spacing: -0.02em; color: #FFFFFF;">Kursunuzun bugününü tek ekranda görün.</div>
+      <div style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.88); margin-top: 12px; max-width: 620px;">
+        Demo talebinizi bırakın; kursunuzun büyüklüğüne göre kurulum ve veri aktarımını birlikte planlayalım.</div>
+    </div>
+    <div style="margin-left: auto; display: flex; gap: 12px; flex-shrink: 0;">
+      <div class="btn" style="height: 48px; padding: 0 24px; background: #FFFFFF; color: #00559F; font-size: 15px;">Demo talep et</div>
+      <div class="btn" style="height: 48px; padding: 0 24px; background: rgba(255,255,255,0.16); color: #FFFFFF; font-size: 15px;">Giriş yap</div>
+    </div>
+  </div>
+</section>
+<section style="background: #0E2436; padding: 62px 0 34px;">
+  <div style="width: 1140px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 32px;">
+      <div>
+        <div style="display: flex; align-items: baseline; gap: 8px;"><svg width="99.8" height="26" viewBox="0 0 703.54 183.3" role="img" aria-label="virel" style="display: block; flex-shrink: 0;"><g transform="translate(0,0) scale(0.25179) translate(-70,-82)"><g fill="none" stroke="#FFFFFF" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"><path d="M 120 170 L 500 760 L 880 170"/></g><circle cx="500" cy="166" r="84" fill="#FFFFFF"/></g><g transform="translate(258.536,21.15) translate(0,-65)"><g fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 100 L 46 200 L 86 100"/><path d="M 144 106 L 144 194"/><path d="M 206 106 L 206 194"/><path d="M 206 152 C 206 120 223 106 255 106"/><path d="M 297 150 L 385 150"/><path d="M 385 150 A 44 44 0 1 0 376.6 175.86"/><path d="M 439 72 L 439 194"/></g><circle cx="144" cy="75" r="10" fill="#FFFFFF"/></g></svg><span style="font-family: Quicksand, Avenir Next, Century Gothic, sans-serif; font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7);">drive</span></div>
+        <div style="font-size: 14px; line-height: 1.65; color: #A9BEC9; margin-top: 16px; max-width: 280px;">Modern sürücü kurslarının operasyon merkezi.</div>
+      </div>
+      <div><div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">Ürün</div>
+        <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
+          <span style="font-size: 13px; color: #A9BEC9;">Dashboard</span><span style="font-size: 13px; color: #A9BEC9;">Kursiyerler</span><span style="font-size: 13px; color: #A9BEC9;">Direksiyon planlama</span><span style="font-size: 13px; color: #A9BEC9;">Sınavlar</span><span style="font-size: 13px; color: #A9BEC9;">Finans</span><span style="font-size: 13px; color: #A9BEC9;">Raporlar</span></div></div><div><div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">Mobil</div>
+        <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
+          <span style="font-size: 13px; color: #A9BEC9;">Kursiyer uygulaması</span><span style="font-size: 13px; color: #A9BEC9;">Eğitmen uygulaması</span><span style="font-size: 13px; color: #A9BEC9;">Bildirimler</span></div></div><div><div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">Kurum</div>
+        <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
+          <span style="font-size: 13px; color: #A9BEC9;">Hakkımızda</span><span style="font-size: 13px; color: #A9BEC9;">Güvenlik ve KVKK</span><span style="font-size: 13px; color: #A9BEC9;">İletişim</span><span style="font-size: 13px; color: #A9BEC9;">Destek</span></div></div><div><div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">Virel</div>
+        <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 14px;">
+          <span style="font-size: 13px; color: #A9BEC9;">Virel Vet</span><span style="font-size: 13px; color: #A9BEC9;">Virel Eğitim</span><span style="font-size: 13px; color: #A9BEC9;">Virel Drive</span></div></div>
+    </div>
+    <div style="height: 1px; background: rgba(255,255,255,0.10); margin: 40px 0 20px;"></div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 13px; color: #7B94A2;">© 2026 Virel · drive.virel.com.tr</span>
+      <span style="font-size: 13px; color: #7B94A2; margin-left: auto;">KVKK Aydınlatma Metni · Kullanım Koşulları · Çerez Politikası</span>
+    </div>
+  </div>
+</section>
+</div>
+</x-dc>
+</body>
+</html>
