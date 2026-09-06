@@ -111,7 +111,7 @@ export async function weekCalendar(schoolId: string, weekStart: Date, filter?: {
     ...exams.filter((e) => e.scheduledAt).map((e): CalendarEvent => ({
       lane: 0, lanes: 1,
       id: e.id, kind: "exam", day: dayOf(e.scheduledAt!), startsAt: e.scheduledAt!, endsAt: new Date(e.scheduledAt!.getTime() + 3 * 3600_000),
-      title: e.type === "ETEST" ? "e-Sınav" : "Direksiyon sınavı", meta: `${e.student.firstName} ${e.student.lastName[0]}. · ${e.place ?? ""}`.trim(), href: "/app/sinavlar",
+      title: e.type === "ETEST" ? "e-Sınav" : "Direksiyon sınavı", meta: `${e.student.firstName} ${e.student.lastName[0]}. · ${e.place ?? ""}`.trim(), href: `/app/sinavlar/${e.id}`,
     })),
   ].filter((e) => e.day >= 0 && e.day < 7);
   assignLanes(events);

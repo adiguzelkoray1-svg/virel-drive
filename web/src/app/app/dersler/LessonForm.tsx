@@ -49,6 +49,7 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
 
   // Oluşturma başarısız olursa React formu sıfırlar; alanlar sunucudan dönen değerlerle geri doldurulur.
   const back = createState.values;
+  const formKey = JSON.stringify(back ?? {});
   const failed = state.checks.filter((c) => !c.ok);
 
   return (
@@ -57,12 +58,12 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
 
       <div className="card p-[22px] flex flex-col gap-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select label="Kursiyer" name="studentId" options={students} defaultValue={back?.studentId ?? defaults.studentId} onChange={onSelect} className="md:col-span-2" required />
-          <Select label="Eğitmen" name="instructorId" options={instructors} defaultValue={back?.instructorId ?? defaults.instructorId} onChange={onSelect} required />
-          <Select label="Araç" name="vehicleId" options={vehicles} defaultValue={back?.vehicleId ?? defaults.vehicleId} onChange={onSelect} required />
-          <Select label="Ders türü" name="kind" options={kinds.map((k) => ({ id: k.key, label: k.label }))} defaultValue={back?.kind ?? defaults.kind ?? kinds[0]?.key} onChange={onSelect} />
+          <Select key={`studentId-${formKey}`} label="Kursiyer" name="studentId" options={students} defaultValue={back?.studentId ?? defaults.studentId} onChange={onSelect} className="md:col-span-2" required />
+          <Select key={`instructorId-${formKey}`} label="Eğitmen" name="instructorId" options={instructors} defaultValue={back?.instructorId ?? defaults.instructorId} onChange={onSelect} required />
+          <Select key={`vehicleId-${formKey}`} label="Araç" name="vehicleId" options={vehicles} defaultValue={back?.vehicleId ?? defaults.vehicleId} onChange={onSelect} required />
+          <Select key={`kind-${formKey}`} label="Ders türü" name="kind" options={kinds.map((k) => ({ id: k.key, label: k.label }))} defaultValue={back?.kind ?? defaults.kind ?? kinds[0]?.key} onChange={onSelect} />
           <Field label="Tarih">
-            <input type="date" name="date" defaultValue={back?.date ?? defaults.date} onChange={(e) => check(e.currentTarget)} className="input" required />
+            <input key={`date-${formKey}`} type="date" name="date" defaultValue={back?.date ?? defaults.date} onChange={(e) => check(e.currentTarget)} className="input" required />
           </Field>
           <Field label="Başlangıç">
             <input type="time" name="start" value={start} onChange={(e) => setStart(e.target.value)} onBlur={(e) => check(e.currentTarget)} className="input" required />
@@ -73,7 +74,7 @@ export function LessonForm({ students, instructors, vehicles, kinds, defaults, d
         </div>
 
         <Field label="Not (opsiyonel)">
-          <textarea name="note" rows={2} className="input" placeholder="Park ve yokuşta kalkış çalışılacak." defaultValue={back?.note ?? defaults.note ?? ""} />
+          <textarea key={`note-${formKey}`} name="note" rows={2} className="input" placeholder="Park ve yokuşta kalkış çalışılacak." defaultValue={back?.note ?? defaults.note ?? ""} />
         </Field>
 
         <div className="border border-border rounded-md px-4 pt-3 pb-3.5">

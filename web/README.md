@@ -86,7 +86,11 @@ Her durum değişikliği denetim kaydına yazılır.
 yoklama bekleyen süzgeçleri) · ders detayı · yoklama alma · devam riski listesi · ders planlama
 ve düzenleme (öğretmen ve derslik çakışma kontrolüyle) · ders iptali.
 
-**Sırada:** sınavlar · eğitmenler · araçlar · finans · CRM · belgeler · mesajlar · raporlar ·
+**Sınavlar tamamlandı:** e-Sınav ve Direksiyon Sınavı sekmeleri, sınav sonuçları, sınav hakları
+listesi · sınav planlama (hak ve eğitim şartı otomatik kontrolü, istisnai "yine de kaydet" onayı) ·
+sonuç kaydı (geçince kursiyer sürecini otomatik ilerletir) · sınav iptali.
+
+**Sırada:** eğitmenler · araçlar · finans · CRM · belgeler · mesajlar · raporlar ·
 mevzuat ayarları ekranı · mobil (eğitmen/kursiyer) · süper admin konsolu.
 
 ### Takvim hakkında
@@ -117,12 +121,50 @@ Teorik derste çakışma kontrolü aynı öğretmen ve aynı derslik üzerinden 
 yalnızca zaman alanları doğrulanır (konu ve kategori kaydetmede zorunludur), böylece form
 doldurulurken çakışma anında görünür.
 
+### Sınavlar
+
+Hak sayısı `LicenseClassRule.examAttempts` (sınıf bazında, mevzuat ayarı) üzerinden hesaplanır;
+`attemptNo` yalnızca `DONE` sınavlardan sayılır. Bu yüzden aynı türde zaten bekleyen (PLANNED/
+APPLIED) bir başvuru varken yeni kayıt engellenir — aksi hâlde iki ayrı "1. hak" kaydı oluşurdu.
+Bu engel istisnai onayla (override) aşılamaz; gerçek bir istisna değil, veri bütünlüğü hatasıdır.
+Direksiyon sınavı için mevzuat ayarı (`blockExamWithoutHours`) açıkken eğitim saati dolmadan
+başvuru engellenir — bu VE hak sınırı, yetkili kullanıcının "yine de kaydet" onayıyla aşılabilir
+(`overridable: true`); "istisnai durum" onayı yalnızca gerçekten istisnai olan bu iki durumda
+gösterilir. Sonuç PASSED olursa kursiyer süreci otomatik ilerler: e-Sınav → direksiyon eğitimi,
+direksiyon sınavı → mezuniyet (`nextStageAfter`).
+
 ### Ders formu
 
 Uygunluk sorgusu formu göndermez; `checkAvailabilityAction` doğrudan çağrılır. Sebebi:
 React 19 bir form aksiyonu tamamlandığında formu sıfırlıyor ve her kontrol turunda seçimler
 kayboluyordu. Oluşturma yolu form aksiyonudur ve hata dönerse alanlar sunucudan geri gelen
 değerlerle doldurulur.
+
+### `<select>` alanları ve form.reset() — üç formu etkileyen ortak hata
+
+Bir form aksiyonu (create/update/schedule) hata döndürdüğünde React 19 formun native
+`reset()`'ini çağırır. Bu, metin/tarih girişlerinde zararsızdır (React her render'da denetimli
+değeri yeniden yazar), ama `<select defaultValue=...>` için YIKICIDIR: native reset yalnızca
+`<option>` üzerindeki HTML `selected` özniteliğini okur, React ise seçimi yalnızca DOM özelliği
+olarak ayarlar (hiçbir `<option>`'a `selected` özniteliği yazmaz). Sonuç: hata sonrası seçili
+kursiyer/eğitmen/araç/kategori görünürde sessizce "Seçin…" placeholder'ına döner — kullanıcı
+tüm seçimlerini yeniden yapmak zorunda kalır ve fark etmezse yanlış bir kayıtla ilerleyebilir.
+
+`<option selected={...}>` eklemek ÇÖZÜM DEĞİLDİR: React bunu geçersiz kabul edip DOM'dan söker
+ve konsola uyarı basar (select seçimi yalnızca `<select>`'in kendi `value`/`defaultValue`
+prop'undan yönetilmelidir). Uygulanan çözüm: sunucudan dönen değerler değiştiğinde ilgili alanı
+`key` ile tamamen yeniden oluşturmak — taze bir DOM düğümü `defaultValue`'yu doğru uygular ve
+önceki reset'ten etkilenmez:
+
+```tsx
+const formKey = JSON.stringify(back ?? {});   // back = state.values (aksiyondan dönen değerler)
+<select key={`studentId-${formKey}`} name="studentId" defaultValue={back?.studentId ?? ""}>
+```
+
+**Önemli:** `key` kardeşler arasında benzersiz olmalı — aynı `formKey`'i birden fazla kardeş
+alana vermek "duplicate key" uyarısına ve öngörülemez davranışa yol açar; her alan adıyla
+öneklenir (`studentId-`, `date-`, `room-`…). Bu düzeltme `LessonForm`, `TheoryForm` ve
+`ScheduleForm`'un tümüne uygulanmıştır.
 
 ## Komutlar
 

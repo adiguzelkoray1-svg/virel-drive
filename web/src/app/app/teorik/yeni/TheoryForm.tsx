@@ -25,6 +25,17 @@ export function TheoryForm({ categories, teachers, rooms, defaults, lessonId, su
   const back = saveState.values;
   const failed = state.checks.filter((c) => !c.ok);
 
+  /**
+   * `theoryFormAction` (kaydetme) gerçek bir form gönderimidir; başarısız olursa React 19
+   * native form.reset() çağırır. Bu, defaultValue tabanlı denetimsiz alanları sıfırlar —
+   * <select> için özellikle sorunludur, çünkü hiçbir <option>'da HTML `selected` özniteliği
+   * yoktur (React seçimi yalnızca DOM özelliği olarak tutar) ve reset ilk seçeneğe döner.
+   * Çözüm: kaydetme her sonuçlandığında (formKey değiştiğinde) alanları `key` ile tazelemek —
+   * taze bir DOM düğümü defaultValue'yu doğru uygular. Uygunluk sorgusu (`check`) ayrı bir
+   * çağrı olduğundan (form submit değil) bu sıfırlamayı hiç tetiklemez.
+   */
+  const formKey = JSON.stringify(back ?? {});
+
   const check = (el: HTMLElement) => {
     const form = el.closest("form");
     if (!form) return;
@@ -39,35 +50,35 @@ export function TheoryForm({ categories, teachers, rooms, defaults, lessonId, su
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Field label="Kategori">
-          <select name="category" defaultValue={back?.category ?? defaults.category ?? categories[0]?.key} onChange={(e) => check(e.currentTarget)} className="input" required>
+          <select key={`category-${formKey}`} name="category" defaultValue={back?.category ?? defaults.category ?? categories[0]?.key} onChange={(e) => check(e.currentTarget)} className="input" required>
             {categories.map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}
           </select>
         </Field>
         <Field label="Konu" className="md:col-span-2">
-          <input name="topic" defaultValue={back?.topic ?? defaults.topic ?? ""} className="input" placeholder="Trafik işaretleri – 2" required />
+          <input key={`topic-${formKey}`} name="topic" defaultValue={back?.topic ?? defaults.topic ?? ""} className="input" placeholder="Trafik işaretleri – 2" required />
         </Field>
 
         <Field label="Öğretmen">
-          <select name="instructorId" defaultValue={back?.instructorId ?? defaults.instructorId ?? ""} onChange={(e) => check(e.currentTarget)} className="input">
+          <select key={`instructorId-${formKey}`} name="instructorId" defaultValue={back?.instructorId ?? defaults.instructorId ?? ""} onChange={(e) => check(e.currentTarget)} className="input">
             <option value="">Atanmadı</option>
             {teachers.map((t) => <option key={t.id} value={t.id}>{t.label}{t.sub ? ` · ${t.sub}` : ""}</option>)}
           </select>
         </Field>
         <Field label="Derslik">
-          <select name="room" defaultValue={back?.room ?? defaults.room ?? rooms[0] ?? ""} onChange={(e) => check(e.currentTarget)} className="input">
+          <select key={`room-${formKey}`} name="room" defaultValue={back?.room ?? defaults.room ?? rooms[0] ?? ""} onChange={(e) => check(e.currentTarget)} className="input">
             <option value="">Belirtilmedi</option>
             {rooms.map((r) => <option key={r} value={r}>{r}</option>)}
           </select>
         </Field>
         <Field label="Tarih">
-          <input type="date" name="date" defaultValue={back?.date ?? defaults.date} onChange={(e) => check(e.currentTarget)} className="input" required />
+          <input key={`date-${formKey}`} type="date" name="date" defaultValue={back?.date ?? defaults.date} onChange={(e) => check(e.currentTarget)} className="input" required />
         </Field>
 
         <Field label="Başlangıç">
-          <input type="time" name="start" defaultValue={back?.start ?? defaults.start} onBlur={(e) => check(e.currentTarget)} className="input" required />
+          <input key={`start-${formKey}`} type="time" name="start" defaultValue={back?.start ?? defaults.start} onBlur={(e) => check(e.currentTarget)} className="input" required />
         </Field>
         <Field label="Bitiş">
-          <input type="time" name="end" defaultValue={back?.end ?? defaults.end} onBlur={(e) => check(e.currentTarget)} className="input" required />
+          <input key={`end-${formKey}`} type="time" name="end" defaultValue={back?.end ?? defaults.end} onBlur={(e) => check(e.currentTarget)} className="input" required />
         </Field>
       </div>
 

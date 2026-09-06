@@ -69,7 +69,7 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
   }
 
   // 5. e-Sınav için hazır
-  if (examReady) alerts.push({ kind: "brand", icon: "exam", title: `${examReady} kursiyer e-Sınav için hazır`, detail: "Başvuru dönemi kapanmadan işlem yapın.", action: "Başvur", href: "/app/sinavlar" });
+  if (examReady) alerts.push({ kind: "brand", icon: "exam", title: `${examReady} kursiyer e-Sınav için hazır`, detail: "Başvuru dönemi kapanmadan işlem yapın.", action: "Başvur", href: "/app/sinavlar/yeni?tur=ETEST" });
 
   // 6. Direksiyon eğitimi bitmek üzere
   const nearFinish = await prisma.student.count({ where: { schoolId, status: "ACTIVE", stage: "DRIVING" } });
@@ -84,7 +84,7 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
       const hrs = ((doneMap.get(s.id) ?? 0) * 90) / 60;
       return req - hrs <= 3 && req - hrs > 0;
     }).length;
-    if (almost) alerts.push({ kind: "brand", icon: "wheel", title: `${almost} kursiyerin direksiyon eğitimi bitmek üzere`, detail: "Sınav planlaması yapılmalı.", action: "Planla", href: "/app/sinavlar" });
+    if (almost) alerts.push({ kind: "brand", icon: "wheel", title: `${almost} kursiyerin direksiyon eğitimi bitmek üzere`, detail: "Sınav planlaması yapılmalı.", action: "Planla", href: "/app/sinavlar/yeni?tur=DRIVING" });
   }
 
   // 7. Araç bakımı / muayenesi

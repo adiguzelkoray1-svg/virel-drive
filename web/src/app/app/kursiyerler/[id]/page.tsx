@@ -247,7 +247,13 @@ export default async function StudentDetailPage({ params }: PageProps<"/app/kurs
 
           <Card>
             <header className="flex items-center gap-2.5 px-5 pt-5">
-              <h2 className="h-card">Sınav hakları</h2>
+              <h2 className="h-card">Sınavlar</h2>
+              {(s.stage === "THEORY" || s.stage === "ETEST_WAITING") && (
+                <Link href={`/app/sinavlar/yeni?tur=ETEST&kursiyer=${s.id}`} className="ml-auto text-[13px] font-semibold text-blue">e-Sınav planla</Link>
+              )}
+              {(s.stage === "DRIVING" || s.stage === "DRIVING_EXAM") && (
+                <Link href={`/app/sinavlar/yeni?tur=DRIVING&kursiyer=${s.id}`} className="ml-auto text-[13px] font-semibold text-blue">Sınav planla</Link>
+              )}
             </header>
             <div className="px-5 pb-5 pt-3 flex flex-col gap-3">
               <div className="flex items-center gap-3">
@@ -258,6 +264,27 @@ export default async function StudentDetailPage({ params }: PageProps<"/app/kurs
                 <span className="text-[13px] w-[86px]">Direksiyon</span>
                 <ExamAttempts used={d.drivingExams.filter((e) => e.status === "DONE").length} total={d.attemptsAllowed} />
               </div>
+
+              {[...d.etest, ...d.drivingExams].length > 0 && (
+                <div className="flex flex-col gap-1.5 pt-2 mt-1 border-t border-border">
+                  {[...d.etest, ...d.drivingExams]
+                    .sort((a, b) => (b.scheduledAt?.getTime() ?? 0) - (a.scheduledAt?.getTime() ?? 0))
+                    .slice(0, 4)
+                    .map((e) => (
+                      <Link key={e.id} href={`/app/sinavlar/${e.id}`} className="flex items-center gap-2 text-[13px] hover:text-blue">
+                        <span className="text-text-2">{e.type === "ETEST" ? "e-Sınav" : "Direksiyon"} · {e.attemptNo}. hak</span>
+                        <span className="ml-auto">
+                          {e.status === "DONE" ? (
+                            <Badge kind={e.result === "PASSED" ? "success" : "danger"} dot>{e.result === "PASSED" ? "Başarılı" : "Başarısız"}</Badge>
+                          ) : (
+                            <Badge kind="brand">{e.scheduledAt ? date(e.scheduledAt) : "Planlandı"}</Badge>
+                          )}
+                        </span>
+                      </Link>
+                    ))}
+                </div>
+              )}
+
               <p className="text-xs text-muted leading-relaxed mt-1">
                 Hak sayısı mevzuata bağlıdır ve <b>Ayarlar › Mevzuat</b> ekranından değiştirilir.
               </p>
