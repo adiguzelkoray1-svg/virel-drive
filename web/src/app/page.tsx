@@ -180,6 +180,12 @@ export default async function LandingPage() {
           <span>© {new Date().getFullYear()} Virel · Sürücü kursları için yönetim platformu</span>
           <Link href="/giris" className="font-semibold text-text-2">Kurs girişi</Link>
         </div>
+        <div className="max-w-[1160px] mx-auto px-6 pt-6 mt-6 border-t border-border flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted">
+          <span className="font-semibold text-text-2">Virel ekosistemi</span>
+          <a href="https://virel.com.tr" className="hover:text-text">virel.com.tr</a>
+          <a href="https://vet.virel.com.tr" className="hover:text-text">Virel Vet</a>
+          <a href="https://egitim.virel.com.tr" className="hover:text-text">Virel Eğitim</a>
+        </div>
       </footer>
     </div>
   );
