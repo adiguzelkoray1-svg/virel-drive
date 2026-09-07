@@ -595,6 +595,15 @@ npm test           # tests/*.test.ts — DATABASE_URL'deki gerçek veritabanına
 > `db:seed` tüm tabloları siler ve yeniden yazar. Kullanıcı kimlikleri değiştiği için
 > açık oturumlar geçersiz olur; tekrar giriş yapmanız gerekir.
 
+## CI
+
+`.github/workflows/ci.yml` — `main`'e her push/PR'da GitHub Actions üzerinde çalışır: geçici bir
+Postgres servis konteyneri açar, `db:deploy` ile migrasyonları uygular, sonra `typecheck` →
+`lint` → `test` sırasıyla çalıştırır. `PRISMA_OFFLINE=0` set edilir ki `scripts/prisma.mjs`'deki
+yerel ağ-atlatma vekili (bkz. dosyanın kendisi) devreye girmesin — GitHub Actions runner'ının
+zaten güvenilir bir ağı var, Railway'deki gibi bir atlatmaya ihtiyaç yok. Boş bir veritabanına
+karşı yerel olarak (`createdb` ile taze bir DB açıp aynı adımları elle çalıştırarak) doğrulandı.
+
 ## Railway'e dağıtım
 
 Repo kökünde `web/` dışında `marka/` ve `tasarim/` de olduğu için Railway servisinde **Root
