@@ -190,7 +190,10 @@ export default async function StudentDetailPage({ params }: PageProps<"/app/kurs
 
           {showFinance && (
             <Card>
-              <h2 className="h-card px-5 pt-5">Ödeme planı</h2>
+              <div className="flex items-center gap-3 px-5 pt-5">
+                <h2 className="h-card">Ödeme planı</h2>
+                <Link href={`/app/finans/kursiyer/${s.id}`} className="ml-auto text-[13px] font-semibold text-blue">Finans detayı →</Link>
+              </div>
               <div className="px-5 pb-5">
                 {d.payment.installments.length === 0 ? (
                   <p className="text-[13px] text-text-2 py-5 text-center">Ödeme planı oluşturulmamış.</p>

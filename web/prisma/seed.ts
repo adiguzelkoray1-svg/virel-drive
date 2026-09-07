@@ -442,10 +442,19 @@ async function main() {
       }
     }
   }
-  // bugünkü tahsilatlar
-  for (let i = 0; i < 6; i++) {
-    const s = students[int(0, students.length - 1)];
-    await prisma.payment.create({ data: { schoolId: school.id, studentId: s.id, amount: int(2000, 8000) * 100, method: pick(["CASH", "CARD", "TRANSFER"]), receivedAt: at(today, 0, int(9, 17)) } });
+  // Bugünkü tahsilatlar: rastgele tutar yerine gerçek taksitler kapatılır; böylece
+  // kasa dökümü ile ödeme planları birbirini tutar ve her ödeme bir taksite bağlı olur.
+  const openSoon = await prisma.installment.findMany({
+    where: { schoolId: school.id, status: "PENDING" },
+    orderBy: { dueAt: "asc" }, take: 60, include: { plan: true },
+  });
+  for (let i = 0; i < 6 && i * 9 < openSoon.length; i++) {
+    const inst = openSoon[i * 9];
+    const receivedAt = at(today, 0, int(9, 17));
+    await prisma.installment.update({ where: { id: inst.id }, data: { status: "PAID", paidAt: receivedAt } });
+    await prisma.payment.create({
+      data: { schoolId: school.id, studentId: inst.plan.studentId, installmentId: inst.id, amount: inst.amount, method: pick(["CASH", "CARD", "TRANSFER"]), receivedAt },
+    });
   }
   // giderler
   for (let m = 0; m < 4; m++) {

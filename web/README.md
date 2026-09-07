@@ -99,8 +99,31 @@ bakım uyarısı) · ay seçicili maliyet tablosu (yakıt/bakım/lastik/sigorta/
 araç detayı (yaklaşan dersler, gider geçmişi) · gider ekleme (kilometreyi de günceller) ·
 bakıma alma/çıkarma (etkilenen planlı ders sayısını bildirir).
 
-**Sırada:** finans · CRM · belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
+**Finans tamamlandı:** genel bakış (bugün/ay/bekleyen/geciken/gider/net KPI'ları, son 6 ayın
+gelir-gider grafiği) · kursiyer bazında tahsilat tablosu (geciken / bu hafta vadesi gelen /
+planı olmayan süzgeçleri, arama) · tahsilat alma (açık taksitleri işaretleyerek + plan dışı tutar) ·
+tahsilatı geri alma · kursiyer finans detayı (ödeme planı, tahsilat geçmişi) · ödeme planı kurma ve
+yeniden yapılandırma (ödenmiş taksitlere dokunmadan) · tahsilat dökümü (ödeme yöntemi kırılımı) ·
+gider kayıtları (kategori dağılımı, ay seçici).
+
+**Sırada:** CRM · belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
 mobil (eğitmen/kursiyer) · süper admin konsolu.
+
+### Finans hakkında
+**Para birimi kuruş.** Tüm tutarlar tam sayı kuruş olarak saklanır; `money()` ekranda ₺'ye çevirir.
+Formlarda TL girilir, sunucu aksiyonu 100 ile çarpar.
+
+**Kısmi taksit ödemesi yok.** Taksit ya kapanır ya bekler; `Installment` üzerinde "kısmen ödendi"
+alanı tutulmaz. Kursiyer taksidin bir kısmını ödemek isterse plan yeniden yapılandırılır —
+ödenmiş taksitler korunur, açık taksitler silinip kalan bakiye yeni vadelere bölünür.
+
+**Vadesi geçen taksit gece işine bağlı değil.** Veritabanındaki `status` `PENDING` kalabilir;
+`effectiveStatus()` vadesi geçmiş bekleyen taksidi ekranda "Gecikti" sayar. Böylece durumu her gece
+güncelleyen bir cron olmadan da listeler doğru çalışır.
+
+**Araç giderleri ayrı tabloda.** Plakaya bağlı giderler `VehicleCost` içinde tutulur ve araçlar
+modülünden girilir; finans özetinde (aylık/yıllık gider, net durum, gelir-gider grafiği) toplam
+gidere dahil edilir ama gider listesinde ayrı gösterilir.
 
 ### Takvim hakkında
 
