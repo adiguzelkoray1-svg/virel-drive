@@ -122,8 +122,31 @@ ekranı / şablonlar-istatistik) · WhatsApp/SMS/e-posta/bildirim kanal etiketi 
 mesaj balonları · hazır şablonlarla (ad otomatik doldurulur) tek tıkla mesaj yazma · okundu
 işaretleme (konuşma açılınca) · gelen kutusu rozeti kenar çubuğunda canlı sayaç.
 
-**Sırada:** raporlar · mevzuat ayarları ekranı ·
+**Raporlar tamamlandı:** kurs performans merkezi — 6 KPI (toplam kursiyer, kayıt dönüşümü,
+e-Sınav/direksiyon başarısı, kursiyer başına gelir, tahsilat oranı) · "Tek ekranda cevaplar"
+(8 yönetim sorusu, tıklayınca ilgili sayfaya gider) · kayıt hunisi · ehliyet sınıfı dağılımı ·
+direksiyon eğitmeni performans tablosu · gün/saat ders yoğunluğu ısı haritası · 6 ay/yıl/özel
+tarih aralığı seçimi · gerçek CSV dışa aktarım (PDF/Excel yok, bkz. aşağıdaki not).
+
+**Sırada:** mevzuat ayarları ekranı ·
 mobil (eğitmen/kursiyer) · süper admin konsolu.
+
+### Raporlar hakkında
+**PDF ve Excel yok, yalnızca CSV var.** Gerçek bir PDF/Excel üretim kütüphanesi bağlanmadı;
+"CSV" düğmesi `/app/raporlar/export` route handler'ından gerçek, çalışan bir dosya indirir
+(Excel'de Türkçe karakterler bozulmasın diye UTF-8 BOM eklenir). Kursiyerler sayfasındaki eski
+"Dışa aktar" düğmesi (`?disa=csv`) hâlâ hiçbir şey yapmıyor — bu modülün kapsamı dışında bırakıldı.
+
+**Kayıt hunisi bir kohort, KPI'daki "kayıt dönüşümü" bir dönem oranı — ikisi karıştırılmamalı.**
+Huni, seçili aralıkta AÇILAN adaylardan kaçının şu an o aşamaya ulaştığını gösterir (`Lead`'in
+aşama geçmişi tutulmadığı için "en az bu aşamaya ulaştı" cari aşamadan çıkarılır; kaybedilenler
+yalnızca ilk basamakta sayılır çünkü hangi aşamada kaybedildikleri bilinmiyor). KPI'daki
+"kayıt dönüşümü" ise seçili aralıkta KAPANAN (kayıt olan + kaybedilen) adaylardan kaçının
+kazanıldığını gösterir — CRM modülündeki dönüşüm oranıyla aynı mantık, farklı bir soru.
+
+**Eğitmen performans tablosu ve doluluk anlık, aralığa bağlı değil.** `lib/instructor.ts`'deki
+`listInstructors` bu haftanın yükünü hesaplar; seçilen 6 ay/yıl/özel aralığı yalnızca ders
+yoğunluğu ısı haritasını ve KPI'ları etkiler.
 
 ### Mesajlar hakkında
 **Gerçek bir WhatsApp/SMS/e-posta sağlayıcısı bağlı değil.** Bu ekran `MessageLog` üzerinden
