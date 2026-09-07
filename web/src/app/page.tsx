@@ -28,16 +28,16 @@ const FEATURES: { icon: IconName; title: string; desc: string }[] = [
 
 const PLANS: { key: keyof typeof SCHOOL_PLAN_LIMITS; name: string; priceMonthly: number; features: string[] }[] = [
   {
-    key: "STARTER", name: "Başlangıç", priceMonthly: 59000,
+    key: "STARTER", name: "Başlangıç", priceMonthly: 69000,
     features: ["Direksiyon dersleri, kursiyer dosyası, teorik eğitim, sınavlar", "Tahsilat ve ödeme planı takibi", "Kursiyer mobil portalı"],
   },
   {
-    key: "PRO", name: "Profesyonel", priceMonthly: 119000,
+    key: "PRO", name: "Profesyonel", priceMonthly: 139000,
     features: ["Başlangıç'taki her şey", "CRM ve ön kayıt pipeline'ı", "Raporlar ve CSV dışa aktarma", "WhatsApp/SMS hatırlatmaları", "Eğitmen mobil portalı"],
   },
   {
-    key: "ENTERPRISE", name: "Kurumsal", priceMonthly: 249000,
-    features: ["Profesyonel'deki her şey", "Çoklu şube desteği", "Öncelikli destek", "Hesap yöneticisi"],
+    key: "ENTERPRISE", name: "Kurumsal", priceMonthly: 299000,
+    features: ["Profesyonel'deki her şey", "En yüksek kullanıcı/kursiyer limiti", "Öncelikli destek", "Hesap yöneticisi"],
   },
 ];
 

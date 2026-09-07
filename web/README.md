@@ -275,6 +275,52 @@ ziyaretçi hâlâ kendi konsoluna yönlendirilir, sayfa yalnızca çıkış yapm
   Drive'ın kendi adresinde (`/`) yayında** — `vet`/`egitim`'in aksine ayrı bir pazarlama alt
   alanı yok, ihtiyaç da yok: tek bir Next.js uygulaması hem tanıtımı hem uygulamayı sunuyor.
 
+### Piyasa analizi, fiyat güncellemesi ve kursiyer kaydındaki gerçek bir hata
+
+Kullanıcı "piyasadaki sürücü kursu yazılımlarını analiz et, hangi özellikler eksik kontrol et,
+ona göre fiyatlandır" dedi. Web'de AKINSOFT NetSürücü, WENNTEC ve Tabim Bilişim'in (Türkiye'nin
+başlıca sürücü kursu otomasyon sağlayıcıları) özellik listeleri incelendi.
+
+**Piyasa gerçeği: bu pazarda aylık SaaS aboneliği değil, tek seferlik masaüstü lisansı hâkim.**
+Hiçbir sağlayıcı aylık fiyat yayınlamıyor; AKINSOFT modül başına ~₺19.600+KDV **tek seferlik**
+lisans satıyor (3 modül = ₺58.800+). Yani doğrudan "aylık rakip fiyatı" diye bir referans yok —
+fiyat, kardeş ürün Virel Vet'in kanıtlanmış SaaS ekonomisinden (₺590/₺1.190/₺2.490) yola çıkılıp
+bu sektörün kursiyer başına daha yüksek gelirine (bir B sınıfı kursiyer toplamda ₺15.000-30.000+
+ödüyor) göre yukarı çekilerek belirlendi: **Başlangıç ₺690, Profesyonel ₺1.390, Kurumsal ₺2.990
+/ ay** (`src/app/page.tsx` içindeki `PLANS`). Kesin rakamlar değil, gerekçeli bir başlangıç noktası
+— kullanıcı isterse tek satırda değiştirir.
+
+**Kurumsal plandaki "Çoklu şube desteği" iddiası kaldırıldı.** Pazarlama metnini yazarken
+yanlışlıkla eklemiştim; Drive'da bir `School` tek bir lokasyon/kiracıdır, şubeler arası kursiyer
+transferi gibi bir kavram yok. Gerçek olmayan bir vaatte bulunmaktansa kaldırmak tercih edildi.
+
+**Üç rakip listesinde de tekrarlanan özellikler** (MEBBİS entegrasyonu, e-Fatura/e-Arşiv,
+Ek-7/Ek-8/Ek-9 resmi form dökümü) **bilerek eklenmedi** — bunlar gerçek bir devlet/entegratör API
+erişimi gerektiriyor; sahte bir "MEBBİS'e bağlandı" görünümü vermek, projedeki dürüstlük
+disiplinini (bkz. Destek sayfası, Mesajlar modülü notları) bozardı. Kapsam dışı kalmaya devam
+ediyor, README'nin başındaki listeye eklendi.
+
+**Ama araştırma sırasında gerçek, buildable bir hata bulundu: Kursiyerler listesindeki
+"+ Kursiyer ekle" düğmesi `/app/kursiyerler/yeni`'ye gidiyordu ama bu rota hiç yoktu — 404.**
+Kursiyer oluşturmanın TEK yolu CRM'den aday dönüştürmekti (`convertLeadAction`) ve o akış bile
+`nationalId`/`birthDate`/`address` toplamıyordu; bir kursiyer oluşturulduktan sonra hiçbir alanı
+düzeltmenin yolu yoktu (edit sayfası da yoktu). Rakiplerin hepsinin öne çıkardığı "sınırsız/
+doğrudan öğrenci kaydı" temel özelliği Drive'da fiilen eksikti. Düzeltildi:
+
+- `app/app/kursiyerler/yeni/page.tsx` artık gerçek bir sayfa — `?duzenle=<id>` ile hem oluşturma
+  hem düzenleme aynı formu kullanıyor (Eğitmenler modülündeki `?duzenle=` deseniyle birebir aynı).
+- Yeni `createStudentAction`/`updateStudentAction` (`app/actions/student.ts`), TC kimlik no
+  (11 hane doğrulaması, opsiyonel), doğum tarihi ve adres alanlarını da topluyor — şemada duran
+  ama hiç toplanmayan alanlardı.
+- Kursiyer detayında TC kimlik no artık telefon gibi maskeli gösteriliyor (`maskNationalId`,
+  "123 ***** 01"), doğum tarihi ve adres de görünür oldu. `Student.notes` (aday dönüşümünde
+  yazılıyor ama hiç okunmuyordu) da artık gösteriliyor.
+- **Yan etkiden çıkan ikinci, daha ince bir hata:** ne yeni `createStudentAction` ne de var olan
+  `convertLeadAction` kursiyer için 7 zorunlu belge satırını açıyordu — yalnızca `seed.ts` bunu
+  yapıyordu. Gerçek kullanımda (demo veri değil) yeni bir kursiyer "0/7 belge" yerine "0/0 belge"
+  ile yanlışlıkla "evrakları tamam" görünüyordu (`docsOk === docsTotal`). Paylaşılan
+  `openDocumentSlots()` (`lib/student.ts`) her iki oluşturma yolunda da çağrılıyor artık.
+
 ### Mobil portallar hakkında
 **Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`
 (app/actions/mobile.ts) `completeLessonAction`'la (app/actions/lessons.ts) aynı transaction'ı

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { audit, requirePermission } from "@/lib/auth";
+import { openDocumentSlots } from "@/lib/student";
 import { LEAD_STAGES } from "@/lib/constants";
 import type { LeadFormState, ContactFormState, ConvertFormState } from "@/lib/lead-form";
 
@@ -195,6 +196,7 @@ export async function convertLeadAction(_prev: ConvertFormState, formData: FormD
     data: { stage: "WON", wonAt: new Date(), lastContactAt: new Date(), nextFollowUpAt: null, studentId: student.id },
   });
 
+  await openDocumentSlots(user.schoolId, student.id);
   await audit({ schoolId: user.schoolId, actorId: user.id, action: "lead.convert", target: lead.id, meta: { studentId: student.id } });
   revalidatePath("/app/crm");
   revalidatePath("/app/on-kayitlar");

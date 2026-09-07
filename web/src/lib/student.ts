@@ -1,9 +1,18 @@
 import "server-only";
 import { prisma } from "./prisma";
-import { STAGE_WEIGHT, SKILLS, type StudentStage } from "./constants";
+import { STAGE_WEIGHT, SKILLS, DOCUMENT_TYPES, type StudentStage } from "./constants";
 import { getRegulation, regInt } from "./regulation";
 
 export type TimelineStep = { key: string; title: string; date: string; sub?: string; state: "done" | "now" | "todo" };
+
+/** Yeni kursiyer için 7 zorunlu belge satırını MISSING olarak açar — Belgeler modülünün
+ *  kursiyer × belge türü matrisi bunlara dayanır. Bu çağrılmazsa kursiyer 0/0 belgeyle
+ *  yanlışlıkla "evrakları tamam" görünür (bkz. kursiyerler/[id] "docsOk === docsTotal"). */
+export async function openDocumentSlots(schoolId: string, studentId: string) {
+  await prisma.document.createMany({
+    data: DOCUMENT_TYPES.map((d) => ({ schoolId, studentId, type: d.key, status: "MISSING" })),
+  });
+}
 
 /** Kursiyer listesi süzgeçleri — hem liste sayfası hem CSV dışa aktarımı aynı diziyi kullanır,
  *  ikisi arasında filtre tanımı kaymasın diye. */

@@ -97,7 +97,7 @@ model Student {
   lastName       String
   phone          String
   email          String?
-  nationalId     String?   // TC — KVKK: erişim denetim kaydına yazılır
+  nationalId     String?   // TC — KVKK: telefon gibi ekranlarda maskelenir (maskNationalId)
   birthDate      DateTime?
   address        String?
   photoUrl       String?

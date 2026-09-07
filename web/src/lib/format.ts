@@ -35,3 +35,10 @@ export const maskPhone = (phone: string) => {
 
 export const daysBetween = (a: Date | string, b: Date | string = new Date()) =>
   Math.round((new Date(a).getTime() - new Date(b).getTime()) / 86_400_000);
+
+/** TC kimlik no'yu KVKK gereği listelerde maskeler: "123 ***** 01". */
+export const maskNationalId = (id: string) => {
+  const digits = id.replace(/\D/g, "");
+  if (digits.length !== 11) return id;
+  return `${digits.slice(0, 3)} ***** ${digits.slice(-2)}`;
+};

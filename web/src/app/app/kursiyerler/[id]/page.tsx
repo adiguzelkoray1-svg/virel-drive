@@ -6,7 +6,7 @@ import { getStudentDetail } from "@/lib/student";
 import { Icon } from "@/components/icons";
 import { Badge, Card, ExamAttempts, Notice, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPES, SCORE_LABEL, STAGE_LABEL, STUDENT_STATUS_LABEL, INSTALLMENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
-import { date, fullName, maskPhone, money, time } from "@/lib/format";
+import { date, fullName, maskNationalId, maskPhone, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
 
 export async function generateMetadata({ params }: PageProps<"/app/kursiyerler/[id]">): Promise<Metadata> {
@@ -26,6 +26,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
   const s = d.student;
   const showFinance = can(user.role, "finance.read");
   const showDocEdit = can(user.role, "document.write");
+  const showEdit = can(user.role, "student.write");
   const status = STUDENT_STATUS_LABEL[s.status] ?? STUDENT_STATUS_LABEL.ACTIVE;
   const docLabel = new Map<string, string>(DOCUMENT_TYPES.map((t) => [t.key, t.label]));
   const nextStep =
@@ -56,12 +57,17 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
             </div>
             <div className="flex gap-4 items-center flex-wrap">
               <span className="text-[13px] text-text-2 tabular">{maskPhone(s.phone)}</span>
+              {s.nationalId && <span className="text-xs text-muted tabular">TC: {maskNationalId(s.nationalId)}</span>}
+              {s.birthDate && <span className="text-xs text-muted">Doğum: {date(s.birthDate)}</span>}
               <span className="text-xs text-muted">Kayıt: {date(s.registeredAt)}</span>
               {s.fileNo && <span className="text-xs text-muted tabular">Dosya no: {s.fileNo}</span>}
               <span className="text-xs text-muted">Aşama: {STAGE_LABEL[s.stage as StudentStage] ?? s.stage}</span>
             </div>
+            {s.address && <span className="text-xs text-muted">{s.address}</span>}
+            {s.notes && <span className="text-xs text-muted italic">{s.notes}</span>}
           </div>
           <div className="ml-auto flex gap-2 items-center">
+            {showEdit && <Link href={`/app/kursiyerler/yeni?duzenle=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="edit" size={15} />Düzenle</Link>}
             <Link href={`/app/mesajlar/${s.id}`} className="btn btn-secondary btn-sm"><Icon name="message" size={15} />Mesaj</Link>
             {showFinance && <Link href={`/app/finans/tahsilat?kursiyer=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="wallet" size={15} />Tahsilat</Link>}
             <Link href={`/app/dersler/yeni?kursiyer=${s.id}`} className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Ders planla</Link>
