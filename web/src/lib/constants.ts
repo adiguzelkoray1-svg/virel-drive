@@ -197,3 +197,25 @@ export const MESSAGE_TEMPLATES = [
   { key: "WELCOME", label: "Hoş geldiniz", body: "Sayın {ad}, Yıldız Sürücü Kursu ailesine hoş geldiniz! Sorularınız için bu hattan yazabilirsiniz." },
 ] as const;
 export const MESSAGE_TEMPLATE_LABEL: Record<string, string> = Object.fromEntries(MESSAGE_TEMPLATES.map((t) => [t.key, t.label]));
+
+// ---------- Mevzuat ayarları ----------
+export const VEHICLE_KIND_OPTIONS = ["Otomobil", "Motosiklet", "Kamyon", "Otobüs", "Çekici", "Minibüs"] as const;
+
+/** Ders/devam ve sınav/süreç kuralları — REGULATION_DEFAULTS'taki her anahtarın ekranda
+ *  nasıl gösterileceği. Yeni bir mevzuat anahtarı eklenirse burada da tanımlanmalı,
+ *  aksi halde ayarlar ekranında görünmez (bkz. lib/settings.ts). */
+export const REGULATION_NUMBER_FIELDS = [
+  { key: "drivingLessonMinutes", label: "Direksiyon ders süresi", suffix: "dakika", hint: "Tek derste azami süre" },
+  { key: "dailyMaxLessonHours", label: "Günlük azami ders", suffix: "saat", hint: "Kursiyer başına" },
+  { key: "minGapBetweenLessonsHours", label: "İki ders arası asgari", suffix: "saat" },
+  { key: "theoryAttendanceMinPercent", label: "Teorik devam zorunluluğu", suffix: "%", hint: "Bu oranın altında e-Sınav başvurusu yapılamaz" },
+  { key: "lessonCancelHours", label: "Ders iptal süresi", suffix: "saat", hint: "Bu süreden sonra iptal hak düşürür" },
+  { key: "termWeeks", label: "Dönem süresi", suffix: "hafta" },
+] as const;
+export const REGULATION_BOOL_FIELDS = [
+  { key: "blockExamWithoutHours", label: "Direksiyon eğitimi tamamlanmadan sınav başvurusu engellensin", hint: "Eğitim saati dolmadan başvuru oluşturulamaz" },
+  { key: "blockRegistrationWithoutDocs", label: "Evrak eksikse kayıt tamamlanmasın", hint: "Eksik belge varsa kursiyer 'ön kayıt' durumunda kalır" },
+  { key: "blockConflictingLessons", label: "Çakışan ders oluşturulmasına izin verme", hint: "Eğitmen, araç ve kursiyer uygunluğu zorunlu" },
+  { key: "notifyOnLastExamAttempt", label: "Sınav hakkı bittiğinde otomatik uyarı", hint: "Kurs sahibine ve sekretere bildirim" },
+  { key: "studentAppShowsProgress", label: "Kursiyer uygulamasında ilerleme görünsün", hint: "Kursiyer kendi sürecini görebilir" },
+] as const;

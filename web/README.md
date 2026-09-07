@@ -128,8 +128,33 @@ e-Sınav/direksiyon başarısı, kursiyer başına gelir, tahsilat oranı) · "T
 direksiyon eğitmeni performans tablosu · gün/saat ders yoğunluğu ısı haritası · 6 ay/yıl/özel
 tarih aralığı seçimi · gerçek CSV dışa aktarım (PDF/Excel yok, bkz. aşağıdaki not).
 
-**Sırada:** mevzuat ayarları ekranı ·
-mobil (eğitmen/kursiyer) · süper admin konsolu.
+**Ayarlar (Mevzuat) tamamlandı:** sertifika sınıfları ve eğitim kuralları tablosu (direksiyon
+saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/etkin-pasif) · ders ve
+devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
+formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
+anında etkili oluyor. Diğer 8 ayar kategorisi (Kurs profili, Kullanıcılar, Belge kuralları,
+Fiyat/ödeme, Mesaj şablonları, Entegrasyonlar, Güvenlik/KVKK, Denetim kaydı) sol menüde
+"Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları yok.
+
+**Sırada:** mobil (eğitmen/kursiyer) · süper admin konsolu.
+(Not: `/app/kurs` ve `/app/destek` kenar çubuğundaki kullanıcı menüsünde duran ama sayfası
+olmayan iki bağlantı daha — bu oturumda fark edildi, henüz yapılmadı.)
+
+### Ayarlar (Mevzuat) hakkında
+**Sınıf kodu sonradan değiştirilemez.** `LicenseClassRule.code` bir FK değil, `Student.licenseClass`
+ve `Vehicle.licenseClass` ona serbest metinle referans verir; kod değişirse mevcut kayıtlar
+sessizce "tanınmayan sınıf" haline gelip her yerde varsayılan değerlere düşer. Bu yüzden
+düzenleme formunda kod alanı `readOnly` — `disabled` DEĞİL, çünkü disabled input'lar FormData'ya
+hiç girmez ve sunucu tarafı doğrulamayı "alan eksik" diye reddeder (bu oturumda yakalanan gerçek
+bir hata: ilk sürüm `disabled` kullanıyordu, düzenleme kaydetmede "Invalid input: expected
+string, received undefined" hatası veriyordu).
+
+**Sınıf hiçbir zaman silinmez, yalnızca etkin/pasif işaretlenir** — aynı sebeple: geçmiş
+kayıtlar serbest metin referansı üzerinden bir kurala bağlı kalmaya devam etmeli.
+
+**Diğer ayar kategorileri sahte bağlantı değil.** Sol menüdeki 8 kategori (Kurs profili vb.)
+tıklanamaz `div` olarak ve "Yakında" etiketiyle gösterilir; henüz sayfaları olmadığı için
+gerçek bir `<Link>` olarak sunulmazlar.
 
 ### Raporlar hakkında
 **PDF ve Excel yok, yalnızca CSV var.** Gerçek bir PDF/Excel üretim kütüphanesi bağlanmadı;
