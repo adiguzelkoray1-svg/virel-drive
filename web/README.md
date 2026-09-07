@@ -488,3 +488,21 @@ npm run db:studio  # Prisma Studio
 
 > `db:seed` tüm tabloları siler ve yeniden yazar. Kullanıcı kimlikleri değiştiği için
 > açık oturumlar geçersiz olur; tekrar giriş yapmanız gerekir.
+
+## Railway'e dağıtım
+
+Repo kökünde `web/` dışında `marka/` ve `tasarim/` de olduğu için Railway servisinde **Root
+Directory**'nin `web` olarak ayarlanması gerekir. Aynı Railway projesine bir PostgreSQL eklentisi
+eklenip web servisine şu ortam değişkenleri tanımlanır: `DATABASE_URL` (Postgres eklentisinin
+referans değişkeni), `AUTH_SECRET` (bkz. yukarıdaki üretim komutu — yereldekinden **farklı**,
+production'a özel bir değer olmalı), `SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`.
+
+`start` script'i `npm run db:deploy && next start` — production'da her deploy'da bekleyen
+migrasyonlar otomatik uygulanır, ayrıca elle bir "release" adımı çalıştırmaya gerek yok.
+`postinstall` zaten `prisma generate` çalıştırıyor; `scripts/prisma.mjs` Railway'de olduğunu
+`RAILWAY_ENVIRONMENT` değişkeninden anlayıp yereldeki ağ-atlatma vekilini (bkz. dosyanın kendisi)
+devre dışı bırakır.
+
+**`db:seed` production'da elle çalıştırılmadıkça hiç tetiklenmez** — build/start akışının hiçbir
+adımı seed'e dokunmuyor, bu bilerek böyle: production ortamı gerçek kurs verisiyle başlamalı,
+demo verisiyle değil.
