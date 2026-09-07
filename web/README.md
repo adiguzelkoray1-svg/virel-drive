@@ -221,6 +221,29 @@ konsolu / mobil eğitmen-kursiyer uygulaması `/egitmen`, `/kursiyer`) tutarlı 
 Bu geziyle birlikte `/kursiyer` ve `/egitmen` portalları da mobilde tekrar uçtan uca denendi;
 her ikisi de her sayfada konsol hatası olmadan temiz.
 
+### Son uçtan uca kontrolde bulunan üç hata
+
+Tüm modüller bittikten sonra tarayıcıda OWNER, süper admin, eğitmen ve kursiyer olarak baştan
+sona tek tek gezilirken üç gerçek hata daha bulundu ve düzeltildi:
+
+- **Kursiyer detayındaki sekme çubuğu tamamen ölüydü.** `Genel, Evraklar, Teorik Eğitim, e-Sınav,
+  Direksiyon, Direksiyon Sınavları, Ödemeler, Notlar` başlıkları `<span>` olarak yazılmıştı — ne
+  `href` ne `onClick`, `data-active` her zaman sadece `"Genel"` için `true`. Sayfa zaten tüm bu
+  bilgiyi (evraklar, ödeme planı, sınavlar) tek ekranda gösterdiği için tıklanamaz sekmeler
+  kaldırıldı (`kursiyerler/[id]/page.tsx`). Not: şemada duran `Student.notes` alanı hâlâ hiçbir
+  yerde okunup yazılmıyor — "Notlar" sekmesinin kalıntısı, ayrı bir küçük özellik olarak kapsam
+  dışında bırakıldı.
+- **Kursiyer mobil portalında "Mesajlar" sekmesi alt menüde yoktu.** `/kursiyer/mesajlar` sayfası
+  tam çalışır durumdaydı (kursla iki yönlü yazışma) ama `kursiyer/layout.tsx`'teki `TABS`
+  dizisinde hiç yoktu — yalnızca doğrudan URL ile ya da ana sayfadaki "Kursa yaz" düğmesiyle
+  ulaşılabiliyordu, geri dönünce bir daha bulunamıyordu. Sekme eklendi; gönderilen test mesajının
+  masaüstü Mesajlar gelen kutusunda okunmamış rozetiyle aynen çıktığı doğrulandı.
+- **Impersonation denetim kaydı tek yönlüydü.** `school.impersonate.start` yazılıyordu ama
+  "Konsola dön" (`stopImpersonationAction`) hiçbir kayıt bırakmıyordu — kayıtta bir kursun ne
+  zaman görüntülenmeye başlandığı görünüyor, ne zaman bırakıldığı hiç görünmüyordu. Şimdi
+  `stopImpersonationAction` da çerezdeki `schoolId`'yi silmeden önce okuyup simetrik bir
+  `school.impersonate.stop` yazıyor.
+
 ### Mobil portallar hakkında
 **Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`
 (app/actions/mobile.ts) `completeLessonAction`'la (app/actions/lessons.ts) aynı transaction'ı

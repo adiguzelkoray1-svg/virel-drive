@@ -16,8 +16,6 @@ export async function generateMetadata({ params }: PageProps<"/app/kursiyerler/[
   return { title: d ? fullName(d.student) : "Kursiyer" };
 }
 
-const TABS = ["Genel", "Evraklar", "Teorik Eğitim", "e-Sınav", "Direksiyon", "Direksiyon Sınavları", "Ödemeler", "Notlar"];
-
 export default async function StudentDetailPage({ params, searchParams }: PageProps<"/app/kursiyerler/[id]">) {
   const { id } = await params;
   const sp = await searchParams;
@@ -86,10 +84,6 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
           </div>
         </div>
       </Card>
-
-      <div className="flex gap-5 border-b border-border tabs-scroll">
-        {TABS.map((t) => <span key={t} className="tab" data-active={t === "Genel"}>{t}</span>)}
-      </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-[342px_1fr_292px] gap-4 items-start">
         <Card>

@@ -6,6 +6,7 @@ const TABS = [
   { href: "/kursiyer/derslerim", label: "Derslerim", icon: "wheel" as const },
   { href: "/kursiyer/ilerlemem", label: "İlerlemem", icon: "trend" as const },
   { href: "/kursiyer/odemeler", label: "Ödemeler", icon: "wallet" as const },
+  { href: "/kursiyer/mesajlar", label: "Mesajlar", icon: "message" as const },
   { href: "/kursiyer/profil", label: "Profil", icon: "user" as const },
 ];
 

@@ -3,9 +3,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import crypto from "node:crypto";
 import { z } from "zod";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { audit, hashPassword, requireSuperAdmin, startImpersonation, stopImpersonation } from "@/lib/auth";
-import { SCHOOL_PLAN_LIMITS } from "@/lib/constants";
+import { audit, hashPassword, requireUser, requireSuperAdmin, startImpersonation, stopImpersonation } from "@/lib/auth";
+import { SCHOOL_PLAN_LIMITS, IMPERSONATE_COOKIE } from "@/lib/constants";
 import type { SchoolFormState, PlanFormState } from "@/lib/admin-form";
 
 const slugify = (s: string) =>
@@ -140,8 +141,13 @@ export async function startImpersonationAction(formData: FormData) {
 }
 
 /** Kurs görünümünden konsola dönüş. requireUser yeterli — impersonating olmayan bir
- *  kullanıcı bu formu zaten göremez (bkz. app/app/layout.tsx). */
+ *  kullanıcı bu formu zaten göremez (bkz. app/app/layout.tsx). Denetim kaydına start ile
+ *  simetrik bir stop yazılır; aksi halde kayıtta bir kursun ne zaman görüntülenmeye
+ *  başlandığı görünür ama ne zaman bırakıldığı hiç görünmezdi. */
 export async function stopImpersonationAction() {
+  const admin = await requireUser();
+  const schoolId = (await cookies()).get(IMPERSONATE_COOKIE)?.value;
   await stopImpersonation();
+  if (schoolId) await audit({ schoolId, actorId: admin.id, action: "school.impersonate.stop", target: schoolId });
   redirect("/admin");
 }
