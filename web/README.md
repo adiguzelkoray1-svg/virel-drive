@@ -30,7 +30,11 @@ Seed sonrası tüm hesapların şifresi `virel1234`.
 | `muhasebe@yildizsurucukursu.com` | Muhasebe | Finans ve raporlar |
 | `mehmet@yildizsurucukursu.com` | Direksiyon Eğitmeni | Kendi dersleri — **finans yok** |
 | `selin@yildizsurucukursu.com` | Teorik Öğretmen | Ders programı ve yoklama |
-| `quickfactt@gmail.com` | Süper Admin | Platform (henüz yapılmadı) |
+
+**Süper admin** ayrı ve gerçek bir hesap — paylaşılan demo şifresini taşımaz. E-posta ve şifresi
+yalnızca `.env`'de tutulur (`SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`); bu iki değişken
+boşsa seed rastgele bir şifre üretir ve `admin@virel-drive.local` ile giriş açar (terminale
+"Süper admin: ..." satırıyla yazdırılır, koda ya da git'e gömülmez).
 
 Rol farkını görmek için eğitmen hesabıyla girin: kenar çubuğunda Finans, CRM, Raporlar ve
 Ayarlar görünmez; dashboard'da tahsilat kartı yerine rol açıklaması çıkar.
@@ -136,9 +140,35 @@ anında etkili oluyor. Diğer 8 ayar kategorisi (Kurs profili, Kullanıcılar, B
 Fiyat/ödeme, Mesaj şablonları, Entegrasyonlar, Güvenlik/KVKK, Denetim kaydı) sol menüde
 "Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları yok.
 
-**Sırada:** mobil (eğitmen/kursiyer) · süper admin konsolu.
+**Süper admin konsolu tamamlandı:** `/admin` altında ayrı bir alan — kurs (kiracı) listesi
+(durum/plan süzgeci, arama, kullanım çubukları) · yeni kurs açma (otomatik slug + OWNER hesabı,
+geçici şifre bir kez gösterilir) · kurs detayı (profil, kullanıcılar, kullanım/limit, durum
+değiştirme, plan/limit düzenleme, o kursa ait denetim kaydı) · **"kurs olarak görüntüle"**
+(impersonation — süper admin kursun arayüzüne geçer, üstte turuncu bir bant ve "Konsola dön"
+düğmesiyle) · tüm kurslardaki işlemleri gösteren global denetim kaydı.
+
+**Sırada:** mobil (eğitmen/kursiyer).
 (Not: `/app/kurs` ve `/app/destek` kenar çubuğundaki kullanıcı menüsünde duran ama sayfası
 olmayan iki bağlantı daha — bu oturumda fark edildi, henüz yapılmadı.)
+
+### Süper admin konsolu hakkında
+**Kimlik doğrulama ve impersonation iskeleti zaten vardı.** `requireSuperAdmin`, `requireSchoolUser`'ın
+`virel_drive_as_school` çerezini okuyan kısmı ve `/admin`'e yönlendiren giriş akışı bu modülden
+önce yazılmıştı; yalnızca gerçek sayfalar eksikti. `startImpersonation`/`stopImpersonation`
+yardımcıları ve çerez sabiti (`IMPERSONATE_COOKIE`) bu oturumda eklendi.
+
+**Süper admin şifresi güvenlik nedeniyle koda gömülmedi.** Kullanıcı gerçek bir e-posta/şifre
+verdi (`koray@virel.com.tr`); bunu `.env`'e yazdım (git'e girmez) ama `prisma/seed.ts`'nin
+kendisine SABİT DEĞER olarak koymadım — .env boşsa seed rastgele bir şifre üretir. Böylece
+gerçek kişisel bir şifre GitHub geçmişine kalıcı olarak sızmaz; yalnızca .env'de yaşar.
+
+**Yeni kurs açarken geçici şifre yalnızca bir kez gösterilir, yönlendirmeyle değil.** E-posta
+gönderme altyapısı olmadığı için admin şifreyi elle iletmek zorunda; bu yüzden `createSchoolAction`
+başarıda `redirect()` etmez (şifre URL'e sızmasın diye) — aynı sayfada state olarak döner.
+
+**Plan/limit düşürme korumalı.** Kullanıcı ya da kursiyer limiti, mevcut sayının altına
+çekilemez — aksi halde kurs aniden "limit aşıldı" durumuna düşerdi. Bu oturumda tarayıcıda
+test edilip doğrulandı.
 
 ### Ayarlar (Mevzuat) hakkında
 **Sınıf kodu sonradan değiştirilemez.** `LicenseClassRule.code` bir FK değil, `Student.licenseClass`

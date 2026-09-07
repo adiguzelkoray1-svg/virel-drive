@@ -1,7 +1,9 @@
 import { requireSchoolUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { stopImpersonationAction } from "@/app/actions/admin";
 import { Sidebar, type NavGroup, type NavItem } from "@/components/shell/Sidebar";
 import { Header } from "@/components/shell/Header";
+import { Icon } from "@/components/icons";
 import { ROLE_LABEL, type Role } from "@/lib/constants";
 import { can, type Permission } from "@/lib/permissions";
 import { initials } from "@/lib/format";
@@ -65,23 +67,34 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
     .filter((g) => g.length);
 
   return (
-    <div className="min-h-screen flex bg-bg">
-      <div className="hidden lg:flex">
-        <Sidebar
-          groups={groups}
-          context={{ title: school.name, sub: [school.district, school.city].filter(Boolean).join(", ") || "Sürücü kursu", initials: initials(school.name) }}
-          user={{ name: user.name, title: ROLE_LABEL[user.role as Role] ?? user.role }}
-          footer={[
-            { href: "/app/kurs", label: "Kurs Profili", icon: "building" },
-            { href: "/app/destek", label: "Destek", icon: "help" },
-          ]}
-        />
-      </div>
-      <div className="flex-1 flex flex-col min-w-0">
-        <div className="hidden lg:block">
-          <Header searchPlaceholder="Kursiyer, telefon, eğitmen veya araç ara…" newHref="/app/dersler/yeni" newLabel="Yeni Ders" user={{ name: user.name }} alerts={1} />
+    <div className="min-h-screen flex flex-col bg-bg">
+      {user.impersonating && (
+        <div className="h-9 bg-warning text-on-brand flex items-center justify-center gap-3 px-4 text-[13px] font-semibold shrink-0">
+          <Icon name="eye" size={14} />
+          <span>Süper admin olarak <b>{school.name}</b> görüntüleniyor</span>
+          <form action={stopImpersonationAction}>
+            <button className="underline underline-offset-2">Konsola dön</button>
+          </form>
         </div>
-        <main className="flex-1 px-4 pt-5 pb-6 lg:px-8 lg:pt-7 lg:pb-8 flex flex-col gap-[22px]">{children}</main>
+      )}
+      <div className="flex flex-1 min-h-0">
+        <div className="hidden lg:flex">
+          <Sidebar
+            groups={groups}
+            context={{ title: school.name, sub: [school.district, school.city].filter(Boolean).join(", ") || "Sürücü kursu", initials: initials(school.name) }}
+            user={{ name: user.name, title: ROLE_LABEL[user.role as Role] ?? user.role }}
+            footer={[
+              { href: "/app/kurs", label: "Kurs Profili", icon: "building" },
+              { href: "/app/destek", label: "Destek", icon: "help" },
+            ]}
+          />
+        </div>
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="hidden lg:block">
+            <Header searchPlaceholder="Kursiyer, telefon, eğitmen veya araç ara…" newHref="/app/dersler/yeni" newLabel="Yeni Ders" user={{ name: user.name }} alerts={1} />
+          </div>
+          <main className="flex-1 px-4 pt-5 pb-6 lg:px-8 lg:pt-7 lg:pb-8 flex flex-col gap-[22px]">{children}</main>
+        </div>
       </div>
     </div>
   );

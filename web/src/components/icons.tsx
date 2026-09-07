@@ -67,6 +67,8 @@ const PATHS: Record<string, string> = {
   whatsapp: '<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.2-4.7A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.2c.3 2.6 2.2 4.5 4.8 4.8.5.1 1-.3 1-.8v-.6l-1.6-.6-.7.8a5.6 5.6 0 0 1-2.3-2.3l.8-.7-.6-1.6h-.6c-.5 0-.9.5-.8 1z"/>',
   wheel: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v5.6M4.2 16.5l4.9-2.8M19.8 16.5l-4.9-2.8"/>',
   wrench: '<path d="M15.5 3.5a5 5 0 0 0-5.9 6.4L3 16.5V21h4.5l6.6-6.6a5 5 0 0 0 6.4-5.9L18 11l-3-3z"/>',
+  key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/>',
+  copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>',
   x: '<path d="M6 6l12 12M18 6L6 18"/>',
   "x-circle": '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
 };

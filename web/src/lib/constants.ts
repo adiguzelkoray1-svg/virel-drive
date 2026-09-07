@@ -175,6 +175,18 @@ export const REGULATION_DEFAULTS = {
 } as const;
 
 export const SESSION_COOKIE = "virel_drive_session";
+/** Süper adminin "kurs olarak görüntüle" seçtiği kursun kimliği — bkz. requireSchoolUser. */
+export const IMPERSONATE_COOKIE = "virel_drive_as_school";
+
+// ---------- Süper admin ----------
+// SCHOOL_STATUS_LABEL yukarıda (kursiyer/marka sabitlerinden önce) zaten tanımlı.
+export const SCHOOL_PLAN_LABEL: Record<string, string> = { TRIAL: "Deneme", STARTER: "Başlangıç", PRO: "Pro", ENTERPRISE: "Kurumsal" };
+export const SCHOOL_PLAN_LIMITS: Record<string, { userLimit: number; studentLimit: number }> = {
+  TRIAL: { userLimit: 3, studentLimit: 150 },
+  STARTER: { userLimit: 5, studentLimit: 300 },
+  PRO: { userLimit: 12, studentLimit: 1000 },
+  ENTERPRISE: { userLimit: 50, studentLimit: 10000 },
+};
 
 // ---------- Mesajlar ----------
 export const MESSAGE_CHANNEL_LABEL: Record<string, string> = {

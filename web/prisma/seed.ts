@@ -5,6 +5,7 @@
  */
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { REGULATION_DEFAULTS } from "../src/lib/constants";
@@ -74,8 +75,31 @@ async function main() {
   const hoursOf = (code: string) => CLASS_RULES.find((c) => c.code === code)?.drivingHours ?? 14;
 
   // ---------- Kullanıcılar ----------
-  const superAdminEmail = process.env.SUPER_ADMIN_EMAIL || "quickfactt@gmail.com";
-  await prisma.user.create({ data: { email: superAdminEmail, passwordHash: pw, name: "Süper Admin", role: "SUPER_ADMIN" } });
+  // Süper admin şifresi diğer demo hesaplardan ayrı: bu, konsolun gerçek sahibi bir hesap,
+  // "virel1234" gibi paylaşılan demo şifresini taşımamalı. Gerçek e-posta/şifre yalnızca
+  // .env'de tutulur (git'e girmez); buradaki değerler yalnızca .env eksikse devreye giren
+  // güvenli varsayılanlardır.
+  const superAdminEmail = process.env.SUPER_ADMIN_EMAIL || "admin@virel-drive.local";
+  const superAdminPw = await bcrypt.hash(process.env.SUPER_ADMIN_PASSWORD || randomUUID(), 11);
+  await prisma.user.create({ data: { email: superAdminEmail, passwordHash: superAdminPw, name: "Süper Admin", role: "SUPER_ADMIN" } });
+
+  // Süper admin konsolunun kurs listesini boş göstermemesi için birkaç iskelet kiracı —
+  // yalnızca profil ve bir sahip kullanıcı; operasyonel veri (kursiyer, ders vb.) yok.
+  const OTHER_SCHOOLS = [
+    { name: "Mavi Sürücü Kursu", slug: "mavi", city: "İstanbul", district: "Kadıköy", status: "TRIAL", plan: "STARTER", userLimit: 5, studentLimit: 300, trialEndsAt: at(today, 5, 12), owner: { email: "sahip@mavisurucukursu.com", name: "Deniz Aydemir" } },
+    { name: "Güven Sürücü Kursu", slug: "guven", city: "İzmir", district: "Bornova", status: "PENDING", plan: "TRIAL", userLimit: 3, studentLimit: 150, trialEndsAt: at(today, 14, 12), owner: { email: "basvuru@guvensurucukursu.com", name: "Ferhat Kaplan" } },
+    { name: "Onur Sürücü Kursu", slug: "onur", city: "Bursa", district: "Nilüfer", status: "PAST_DUE", plan: "PRO", userLimit: 12, studentLimit: 1000, trialEndsAt: null, owner: { email: "yonetim@onursurucukursu.com", name: "Songül Er" } },
+  ] as const;
+  for (const s of OTHER_SCHOOLS) {
+    const other = await prisma.school.create({
+      data: {
+        name: s.name, slug: s.slug, city: s.city, district: s.district, status: s.status, plan: s.plan,
+        userLimit: s.userLimit, studentLimit: s.studentLimit, trialEndsAt: s.trialEndsAt,
+        approvedAt: s.status === "PENDING" ? null : at(today, -20, 10), kvkkAcceptedAt: at(today, -20, 10),
+      },
+    });
+    await prisma.user.create({ data: { email: s.owner.email, name: s.owner.name, role: "OWNER", passwordHash: pw, schoolId: other.id } });
+  }
 
   const staff = [
     { email: "ahmet@yildizsurucukursu.com", name: "Ahmet Yılmaz", role: "OWNER" },
@@ -556,12 +580,13 @@ async function main() {
   }
 
   const counts = {
-    kursiyer: await prisma.student.count(), eğitmen: await prisma.instructor.count(), araç: await prisma.vehicle.count(),
+    kurs: await prisma.school.count(), kursiyer: await prisma.student.count(), eğitmen: await prisma.instructor.count(), araç: await prisma.vehicle.count(),
     direksiyon: await prisma.drivingLesson.count(), teorik: await prisma.theoryLesson.count(),
     sınav: await prisma.exam.count(), taksit: await prisma.installment.count(), aday: await prisma.lead.count(),
   };
   console.log("Hazır:", counts);
-  console.log("Giriş: ahmet@yildizsurucukursu.com / virel1234");
+  console.log("Kurs girişi: ahmet@yildizsurucukursu.com / virel1234");
+  console.log(`Süper admin: ${superAdminEmail} / ${process.env.SUPER_ADMIN_PASSWORD ? "(.env'deki şifre)" : "rastgele üretildi — SUPER_ADMIN_PASSWORD tanımlamadan giriş yapılamaz"}`);
 }
 
 main()

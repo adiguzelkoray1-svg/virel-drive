@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { prisma } from "./prisma";
 import { signSession, verifySession, type SessionPayload } from "./jwt";
-import { SESSION_COOKIE, MANAGER_ROLES } from "./constants";
+import { SESSION_COOKIE, IMPERSONATE_COOKIE, MANAGER_ROLES } from "./constants";
 import { can, type Permission } from "./permissions";
 
 export const hashPassword = (pw: string) => bcrypt.hash(pw, 11);
@@ -61,7 +61,7 @@ export async function requireSchoolUser() {
   const user = await requireUser();
   if (user.role === "SUPER_ADMIN") {
     const store = await cookies();
-    const asSchool = store.get("virel_drive_as_school")?.value;
+    const asSchool = store.get(IMPERSONATE_COOKIE)?.value;
     if (asSchool) {
       const school = await prisma.school.findUnique({ where: { id: asSchool } });
       if (school) return { ...user, schoolId: school.id, school, impersonating: true as const };
@@ -76,6 +76,21 @@ export async function requireSuperAdmin() {
   const user = await requireUser();
   if (user.role !== "SUPER_ADMIN") redirect("/app");
   return user;
+}
+
+/** Süper admin bir kursu "kurs olarak görüntüle"meye başlar/bırakır. Yalnızca oturumu
+ *  tarayan bir çerez — kursun kendi verisine yazma yapmaz, requireSchoolUser bunu okuyup
+ *  o kursun schoolId'siyle çalışır (bkz. üstteki requireSchoolUser). 4 saat sonra kendiliğinden
+ *  düşer; süper admin unutup açık bırakırsa kalıcı bir "kurs olarak takılı kalma" olmasın diye. */
+export async function startImpersonation(schoolId: string) {
+  const store = await cookies();
+  store.set(IMPERSONATE_COOKIE, schoolId, {
+    httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 60 * 60 * 4,
+  });
+}
+export async function stopImpersonation() {
+  const store = await cookies();
+  store.delete(IMPERSONATE_COOKIE);
 }
 
 /** Kurs kullanıcısı + yetki; yetkisizse /app'e "yetki" hatasıyla döner. */
