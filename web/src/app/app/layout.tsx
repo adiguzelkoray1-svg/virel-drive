@@ -34,7 +34,11 @@ const NAV: NavGroup[] = [
   [{ href: "/app/ayarlar", label: "Ayarlar", icon: "settings" }],
 ];
 
-/** Menü öğesi → gerekli yetki. Yetkisi olmayan rol öğeyi hiç görmez. */
+/** Menü öğesi → gerekli yetki. Yetkisi olmayan rol öğeyi hiç görmez.
+ *  NAV'daki her href'in sayfasının kendi requirePermission çağrısıyla eşleşmesi gerekir —
+ *  eşleşmeyen bir href, o sayfada yetkisi olmayan bir role kırık bir bağlantı gösterir
+ *  (tıklayınca "/app?hata=yetki"e düşer). ACCOUNTANT ile denerken /app/dersler, /app/sinavlar
+ *  ve /app/takvim'in eksik olduğu fark edildi. */
 const NAV_PERM: Record<string, Permission> = {
   "/app/finans": "finance.read",
   "/app/raporlar": "report.read",
@@ -46,6 +50,10 @@ const NAV_PERM: Record<string, Permission> = {
   "/app/belgeler": "document.read",
   "/app/mesajlar": "message.send",
   "/app/teorik": "theory.read",
+  "/app/dersler": "lesson.read",
+  "/app/sinavlar": "exam.read",
+  "/app/takvim": "lesson.read",
+  "/app/kursiyerler": "student.read",
 };
 
 export default async function AppLayout({ children }: LayoutProps<"/app">) {

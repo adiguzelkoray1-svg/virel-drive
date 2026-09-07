@@ -177,6 +177,16 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 
 **Sırada:** —. Tüm modüller tamamlandı.
 
+### Yedi rolün tamamı tek tek denendi (son kontrol)
+OWNER, SECRETARY, ACCOUNTANT, DRIVING_INSTRUCTOR, THEORY_TEACHER, STUDENT, SUPER_ADMIN —
+her biriyle giriş yapılıp sidebar, dashboard ve yetkisiz sayfa denemesi kontrol edildi. Bu sırada
+gerçek bir hata bulundu ve düzeltildi: `NAV_PERM` (app/app/layout.tsx) `/app/dersler`,
+`/app/sinavlar`, `/app/takvim` ve `/app/kursiyerler` için hiç eşleme içermiyordu — yani bu
+sayfaların gerektirdiği yetkiye bakılmaksızın sidebar'da HER ZAMAN görünüyorlardı. ACCOUNTANT
+(ne `lesson.read` ne `exam.read`'e sahip) "Direksiyon Dersleri" ve "Sınavlar" bağlantılarını
+görüyor, tıklayınca `/app?hata=yetki`ye düşüyordu. Dört eşleme eklendi; artık NAV'daki her
+href'in kendi sayfasının `requirePermission` çağrısıyla birebir eşleştiği doğrulandı.
+
 ### Kurs Profili, Destek ve gerçek CSV dışa aktarımı
 İki arka plan görevi tamamlandı:
 
