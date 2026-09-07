@@ -174,6 +174,8 @@ export const LeadScalarFieldEnum = {
   lostReason: 'lostReason',
   nextFollowUpAt: 'nextFollowUpAt',
   lastContactAt: 'lastContactAt',
+  wonAt: 'wonAt',
+  studentId: 'studentId',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

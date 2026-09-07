@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
 import { getStudentDetail } from "@/lib/student";
 import { Icon } from "@/components/icons";
-import { Badge, Card, ExamAttempts, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
+import { Badge, Card, ExamAttempts, Notice, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPES, SCORE_LABEL, STAGE_LABEL, STUDENT_STATUS_LABEL, INSTALLMENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
 import { date, fullName, maskPhone, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
@@ -18,8 +18,9 @@ export async function generateMetadata({ params }: PageProps<"/app/kursiyerler/[
 
 const TABS = ["Genel", "Evraklar", "Teorik Eğitim", "e-Sınav", "Direksiyon", "Direksiyon Sınavları", "Ödemeler", "Notlar"];
 
-export default async function StudentDetailPage({ params }: PageProps<"/app/kursiyerler/[id]">) {
+export default async function StudentDetailPage({ params, searchParams }: PageProps<"/app/kursiyerler/[id]">) {
   const { id } = await params;
+  const sp = await searchParams;
   const user = await requirePermission("student.read");
   const d = await getStudentDetail(user.schoolId, id);
   if (!d) notFound();
@@ -38,6 +39,12 @@ export default async function StudentDetailPage({ params }: PageProps<"/app/kurs
   return (
     <>
       <PageHeader title="Kursiyer" sub={`Kursiyerler / ${fullName(s)}`} />
+
+      {sp.adaydan && (
+        <Notice kind="success">
+          Aday kaydından kursiyere dönüştürüldü. Süreç ön kayıt aşamasından başlar; sıradaki adım evrakların tamamlanması.
+        </Notice>
+      )}
 
       <Card className="p-[22px]">
         <div className="flex items-start gap-[18px] flex-wrap">

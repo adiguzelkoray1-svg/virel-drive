@@ -43,7 +43,7 @@ export default async function DashboardPage() {
       <PageHeader title={`${greeting()}, ${user.name.split(" ")[0]}.`} sub="Kursunuzun bugünkü operasyon özeti.">
         <Link href="/app/kursiyerler/yeni" className="btn btn-secondary btn-sm"><Icon name="users" size={15} />Kursiyer</Link>
         {showFinance && <Link href="/app/finans/tahsilat" className="btn btn-secondary btn-sm"><Icon name="wallet" size={15} />Tahsilat</Link>}
-        <Link href="/app/on-kayitlar/yeni" className="btn btn-secondary btn-sm"><Icon name="inbox-in" size={15} />Ön kayıt</Link>
+        <Link href="/app/crm/yeni" className="btn btn-secondary btn-sm"><Icon name="inbox-in" size={15} />Ön kayıt</Link>
         <Link href="/app/dersler/yeni" className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Direksiyon dersi</Link>
       </PageHeader>
 

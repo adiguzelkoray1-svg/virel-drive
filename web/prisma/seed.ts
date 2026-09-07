@@ -465,18 +465,36 @@ async function main() {
 
   // ---------- CRM ----------
   const LEAD_PLAN = [["NEW", 14], ["INFORMED", 9], ["QUOTED", 7], ["FOLLOW_UP", 5], ["MEETING", 4], ["WON", 11], ["LOST", 9]] as const;
+  // Kayda dönen adaylar gerçek kursiyerlere bağlanır; dönüşüm oranı ve "hangi kanaldan
+  // geldi" sorusu ancak bu bağ varsa cevaplanabilir.
+  const convertible = students.filter((s) => s.stage !== "PRE_REGISTRATION");
   let li = 0;
   for (const [stage, n] of LEAD_PLAN) {
     for (let k = 0; k < n; k++) {
       li++;
       const daysAgo = int(0, 18);
+      const linked = stage === "WON" ? convertible[k * 7] : undefined;
+      // WON adayın kaydı geçmişe yayılır; hepsi bugün olursa "bu ay kayıt" sayısı şişer.
+      // İlk dördü bu ay içinde kalsın ki aylık karşılaştırma boş görünmesin.
+      const wonDaysAgo = k < 4 ? int(1, 6) : int(12, 70);
       await prisma.lead.create({
         data: {
-          schoolId: school.id, name: `${pick(AD)} ${pick(SOYAD)}`, phone: phone(500 + li),
-          licenseClass: pick(CLASS_DIST), source: pick(["INSTAGRAM", "INSTAGRAM", "WEB", "WEB", "REFERRAL", "PHONE", "OTHER"]),
-          stage, lastContactAt: at(today, -daysAgo, 14),
-          nextFollowUpAt: ["QUOTED", "FOLLOW_UP", "MEETING"].includes(stage) ? at(today, -daysAgo + 2, 14) : null,
-          lostReason: stage === "LOST" ? pick(["Fiyat", "Başka kursa kaydoldu", "Vazgeçti"]) : null,
+          schoolId: school.id,
+          name: linked?.name ?? `${pick(AD)} ${pick(SOYAD)}`,
+          phone: phone(500 + li),
+          licenseClass: linked?.licenseClass ?? pick(CLASS_DIST),
+          source: pick(["INSTAGRAM", "INSTAGRAM", "WEB", "WEB", "REFERRAL", "PHONE", "OTHER"]),
+          stage,
+          createdAt: stage === "WON" ? at(today, -(wonDaysAgo + int(3, 12)), 11) : at(today, -int(0, 20), 11),
+          lastContactAt: stage === "WON" ? at(today, -wonDaysAgo, 14) : at(today, -daysAgo, 14),
+          wonAt: stage === "WON" ? at(today, -wonDaysAgo, 14) : null,
+          studentId: linked?.id ?? null,
+          // Takip tarihi çoğunlukla gelecekte; gecikme istisna olmalı (~%25) ki
+          // "takip zamanı geldi" uyarısı her kartta çıkıp anlamını yitirmesin.
+          nextFollowUpAt: ["QUOTED", "FOLLOW_UP", "MEETING"].includes(stage)
+            ? at(today, rnd() > 0.75 ? -int(1, 6) : int(1, 9), 14)
+            : null,
+          lostReason: stage === "LOST" ? pick(["Fiyat", "Başka kursa kaydoldu", "Vazgeçti", "Ulaşılamadı"]) : null,
         },
       });
     }

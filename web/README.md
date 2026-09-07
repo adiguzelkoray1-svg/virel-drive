@@ -106,8 +106,35 @@ tahsilatı geri alma · kursiyer finans detayı (ödeme planı, tahsilat geçmi�
 yeniden yapılandırma (ödenmiş taksitlere dokunmadan) · tahsilat dökümü (ödeme yöntemi kırılımı) ·
 gider kayıtları (kategori dağılımı, ay seçici).
 
-**Sırada:** CRM · belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
+**CRM tamamlandı:** pipeline panosu (altı aşama, kart üzerinden ara/WhatsApp/aşama ilerlet) ·
+aday listesi (aşama, kaynak ve ad/telefon süzgeçleri) · aday kartı (görüşme geçmişi, temas kaydı,
+düzenleme) · ön kayıt ekleme (aynı telefonlu açık aday uyarısı) · **adayı kursiyere dönüştürme**
+(iki kayıt birbirine bağlanır) · ön kayıt gelen kutusu (yeni başvurular + gecikmiş takipler) ·
+kaynak kırılımı ve kanal bazlı dönüşüm oranı.
+
+**Sırada:** belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
 mobil (eğitmen/kursiyer) · süper admin konsolu.
+
+### CRM hakkında
+**Aday ile kursiyer ayrı kayıtlardır.** `Lead` huninin içindeki kişidir; kayıt kesinleştiğinde
+`convertLeadAction` bir `Student` açar ve `Lead.studentId` ile ikisini bağlar. Bağ olmadan
+"bu kursiyer hangi kanaldan geldi" ve dönüşüm oranı sorulamaz.
+
+**"Kayıt oldu" elle seçilemez.** Aşama listesinde WON, aday kursiyere dönüştürülene kadar
+kapalıdır; aksi halde kayıt sayısı gerçek kursiyer kaydı olmadan artardı.
+
+**Kayıt anı ayrı alanda.** `wonAt`, `updatedAt`'ten bağımsız tutulur: her düzenleme
+`updatedAt`'i değiştirdiği için aylık kayıt sayısı ve ortalama kapanış süresi ondan hesaplanamaz.
+
+**Aşama değişikliği görüşmeden geçer.** Temas kaydı formu kanal, aşama, sonraki takip tarihi ve
+notu tek adımda yazar. Pano üzerindeki "İlerlet" yalnızca bir sonraki açık aşamaya taşır;
+kayıt ve kayıp kararları aday kartından verilir.
+
+**Gecikme gün başlangıcından hesaplanır.** `nextFollowUpAt` saat 14:00'e kurulu olsa da gün farkı
+iki tarihin gün başlangıcı üzerinden alınır; dün vadeli takip "0 gün geçti" diye görünmez.
+
+**Kanal karşılaştırması örneklem ister.** Dönüşüm oranının yanında `won/closed` sayısı da yazılır
+ve "en yüksek kanal" iddiası, en az beş adayı kapanmış iki kanal olmadan kurulmaz.
 
 ### Finans hakkında
 **Para birimi kuruş.** Tüm tutarlar tam sayı kuruş olarak saklanır; `money()` ekranda ₺'ye çevirir.

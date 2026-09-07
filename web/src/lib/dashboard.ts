@@ -14,7 +14,7 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
   const weekEnd = addDays(now, 7);
   const alerts: Alert[] = [];
 
-  const [lessons, overdue, missingDocs, examReady, vehicles, reg] = await Promise.all([
+  const [lessons, overdue, missingDocs, examReady, vehicles, staleLeads, reg] = await Promise.all([
     prisma.drivingLesson.findMany({
       where: { schoolId, status: { in: ["PLANNED", "LIVE"] }, startsAt: { gte: startOfDay(now), lte: weekEnd } },
       include: { instructor: true, vehicle: true, student: true },
@@ -24,6 +24,10 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
     prisma.document.groupBy({ by: ["studentId"], where: { schoolId, status: { in: ["MISSING", "PENDING"] }, student: { status: "ACTIVE", stage: { in: ["PRE_REGISTRATION", "DOCUMENTS", "THEORY"] } } }, _count: true }),
     prisma.student.count({ where: { schoolId, status: "ACTIVE", stage: "ETEST_WAITING" } }),
     prisma.vehicle.findMany({ where: { schoolId, status: { in: ["ACTIVE", "MAINTENANCE"] } } }),
+    prisma.lead.findMany({
+      where: { schoolId, stage: { notIn: ["WON", "LOST"] }, nextFollowUpAt: { lt: startOfDay(now) } },
+      select: { nextFollowUpAt: true }, orderBy: { nextFollowUpAt: "asc" },
+    }),
     getRegulation(schoolId),
   ]);
 
@@ -49,12 +53,23 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
     alerts.push({ kind: "danger", icon: "wallet", title: `${students.size} kursiyerin ödemesi gecikti`, detail: `Toplam ₺${(total / 100).toLocaleString("tr-TR", { maximumFractionDigits: 0 })} · en eskisi ${oldest} gün`, action: "Listele", href: "/app/finans?filtre=geciken" });
   }
 
-  // 3. Eksik evrak
+  // 3. Geri dönüş bekleyen aday — zamanında aranmayan aday kaybedilen kayıttır.
+  if (staleLeads.length) {
+    const oldest = Math.round((startOfDay(now).getTime() - startOfDay(staleLeads[0].nextFollowUpAt!).getTime()) / 86_400_000);
+    alerts.push({
+      kind: "warning", icon: "funnel",
+      title: `${staleLeads.length} adayın takip tarihi geçti`,
+      detail: `En eskisi ${oldest} gün önce aranacaktı.`,
+      action: "Ara", href: "/app/on-kayitlar",
+    });
+  }
+
+  // 4. Eksik evrak
   if (missingDocs.length) {
     alerts.push({ kind: "warning", icon: "folder", title: `${missingDocs.length} kursiyerde evrak eksik`, detail: "Kayıt süreci tamamlanamıyor.", action: "Görüntüle", href: "/app/belgeler?filtre=eksik" });
   }
 
-  // 4. Devam riski
+  // 5. Devam riski
   const minAttendance = regInt(reg, "theoryAttendanceMinPercent", 85);
   const rows = await prisma.attendance.findMany({ where: { schoolId }, select: { studentId: true, present: true } });
   if (rows.length) {
@@ -68,10 +83,10 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
     if (risky) alerts.push({ kind: "warning", icon: "book", title: `${risky} kursiyer teorik devamsızlıkta sınırda`, detail: `%${minAttendance} altına inen kursiyer e-Sınav başvurusu yapamaz.`, action: "İncele", href: "/app/teorik" });
   }
 
-  // 5. e-Sınav için hazır
+  // 6. e-Sınav için hazır
   if (examReady) alerts.push({ kind: "brand", icon: "exam", title: `${examReady} kursiyer e-Sınav için hazır`, detail: "Başvuru dönemi kapanmadan işlem yapın.", action: "Başvur", href: "/app/sinavlar/yeni?tur=ETEST" });
 
-  // 6. Direksiyon eğitimi bitmek üzere
+  // 7. Direksiyon eğitimi bitmek üzere
   const nearFinish = await prisma.student.count({ where: { schoolId, status: "ACTIVE", stage: "DRIVING" } });
   if (nearFinish) {
     const rules = await prisma.licenseClassRule.findMany({ where: { schoolId } });
@@ -87,7 +102,7 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
     if (almost) alerts.push({ kind: "brand", icon: "wheel", title: `${almost} kursiyerin direksiyon eğitimi bitmek üzere`, detail: "Sınav planlaması yapılmalı.", action: "Planla", href: "/app/sinavlar/yeni?tur=DRIVING" });
   }
 
-  // 7. Araç bakımı / muayenesi
+  // 8. Araç bakımı / muayenesi
   for (const v of vehicles) {
     if (v.nextServiceKm && v.nextServiceKm - v.km <= 500) {
       alerts.push({ kind: "warning", icon: "wrench", title: `${v.plate} bakımına ${Math.max(0, v.nextServiceKm - v.km).toLocaleString("tr-TR")} km kaldı`, detail: `Güncel kilometre ${v.km.toLocaleString("tr-TR")}.`, action: "Randevu", href: "/app/araclar" });
