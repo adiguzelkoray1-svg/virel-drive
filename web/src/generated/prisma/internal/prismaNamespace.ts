@@ -417,7 +417,8 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   RegulationSetting: 'RegulationSetting',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  DemoRequest: 'DemoRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "regulationSetting" | "auditLog"
+    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "regulationSetting" | "auditLog" | "demoRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1991,6 +1992,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DemoRequest: {
+      payload: Prisma.$DemoRequestPayload<ExtArgs>
+      fields: Prisma.DemoRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DemoRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DemoRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.DemoRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DemoRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        findMany: {
+          args: Prisma.DemoRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>[]
+        }
+        create: {
+          args: Prisma.DemoRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        createMany: {
+          args: Prisma.DemoRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DemoRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.DemoRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        update: {
+          args: Prisma.DemoRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.DemoRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DemoRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DemoRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.DemoRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DemoRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.DemoRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDemoRequest>
+        }
+        groupBy: {
+          args: Prisma.DemoRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DemoRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DemoRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DemoRequestCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2394,6 +2469,25 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const DemoRequestScalarFieldEnum = {
+  id: 'id',
+  schoolName: 'schoolName',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  city: 'city',
+  size: 'size',
+  message: 'message',
+  source: 'source',
+  status: 'status',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DemoRequestScalarFieldEnum = (typeof DemoRequestScalarFieldEnum)[keyof typeof DemoRequestScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2658,6 +2752,7 @@ export type GlobalOmitConfig = {
   licenseClassRule?: Prisma.LicenseClassRuleOmit
   regulationSetting?: Prisma.RegulationSettingOmit
   auditLog?: Prisma.AuditLogOmit
+  demoRequest?: Prisma.DemoRequestOmit
 }
 
 /* Types for Logging */

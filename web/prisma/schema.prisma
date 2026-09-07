@@ -473,3 +473,22 @@ model AuditLog {
 
   @@index([schoolId, createdAt])
 }
+
+// ---------- Tanıtım sitesi ----------
+model DemoRequest {
+  id         String    @id @default(cuid())
+  schoolName String
+  name       String
+  email      String
+  phone      String?
+  city       String?
+  size       String?   // kurs büyüklüğü: SOLO | SMALL | MEDIUM | LARGE
+  message    String?
+  source     String    @default("WEB")
+  status     String    @default("NEW") // NEW | CONTACTED | CONVERTED | CLOSED
+  note       String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([status, createdAt])
+}

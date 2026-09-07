@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getLiveSession } from "@/lib/auth";
 import { Icon } from "@/components/icons";
@@ -48,7 +49,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/giris">) {
           {notice && <p className="mt-4 text-[13px] px-3.5 py-3 rounded-sm bg-warning-bg">{notice}</p>}
           <LoginForm />
           <p className="text-[13px] text-muted mt-8 leading-relaxed">
-            Kursunuz henüz Virel Drive kullanmıyor mu? <span className="text-blue font-semibold">Demo talep edin.</span>
+            Kursunuz henüz Virel Drive kullanmıyor mu? <Link href="/#demo" className="text-blue font-semibold">Demo talep edin.</Link>
           </p>
         </div>
       </div>

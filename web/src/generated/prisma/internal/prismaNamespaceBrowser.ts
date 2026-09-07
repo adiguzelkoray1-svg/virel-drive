@@ -71,7 +71,8 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   RegulationSetting: 'RegulationSetting',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  DemoRequest: 'DemoRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -452,6 +453,25 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const DemoRequestScalarFieldEnum = {
+  id: 'id',
+  schoolName: 'schoolName',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  city: 'city',
+  size: 'size',
+  message: 'message',
+  source: 'source',
+  status: 'status',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DemoRequestScalarFieldEnum = (typeof DemoRequestScalarFieldEnum)[keyof typeof DemoRequestScalarFieldEnum]
 
 
 export const SortOrder = {

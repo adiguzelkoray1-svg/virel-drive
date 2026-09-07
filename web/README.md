@@ -244,6 +244,37 @@ sona tek tek gezilirken üç gerçek hata daha bulundu ve düzeltildi:
   `stopImpersonationAction` da çerezdeki `schoolId`'yi silmeden önce okuyup simetrik bir
   `school.impersonate.stop` yazıyor.
 
+### Tanıtım sayfası ve demo talepleri
+
+`/` artık gerçek bir tanıtım sayfası — daha önce her ziyaretçiyi (giriş yapmış olsun olmasın)
+doğrudan `/giris`'e yönlendiriyordu, hiç kimse Drive'ı görmeden önce satın alma kararı verecek
+bir sayfa yoktu. `vet.virel.com.tr`'nin tanıtım sayfası şablon alındı (hero, özellikler,
+fiyatlandırma, demo formu, footer) ve içerik sürücü kursu alanına uyarlandı; oturumu olan bir
+ziyaretçi hâlâ kendi konsoluna yönlendirilir, sayfa yalnızca çıkış yapmış ziyaretçiye gösterilir.
+
+- **Demo formu gerçek bir uçtan uca akış.** `/#demo`'daki form → `requestDemoAction` →
+  yeni `DemoRequest` tablosu → süper admine (ve talep sahibine) e-posta bildirimi →
+  `/admin/demo-talepleri`'de görüşme durumu takibi (Yeni/Görüşüldü/Deneme açıldı/Kapandı,
+  not ekleme, denetim kaydı). Bal küpü alanı (`website`) ve IP başına saatte 5 istek sınırı var.
+- **`lib/mail.ts` SMTP tanımlı değilse e-postayı sunucu günlüğüne yazar, hata vermez.** Yani
+  `SMTP_*` ortam değişkenleri girilmeden de form baştan sona çalışır — yalnızca gerçek e-posta
+  gönderilmez. Railway'de gerçek bildirim için `.env.example`'daki `SMTP_*`/`DEMO_NOTIFY_EMAIL`
+  değişkenlerini doldurun.
+- **`.env.example` bu commit'e kadar git'e hiç girmemişti.** `.gitignore`'daki `.env*` deseni
+  gerçek `.env`'i korurken örnek dosyayı da yanlışlıkla kapsıyordu — `!.env.example` istisnasıyla
+  düzeltildi. Sırf bu README'yi güncellerken fark edildi.
+- **Fiyatlar `src/app/page.tsx`'in başındaki `PLANS` sabitinde — yer tutucu, gerçek rakamlar
+  değil.** Vet'in kendi `PlatformSetting`'den okuyan dinamik fiyatlandırma altyapısı bilerek
+  buraya taşınmadı: Drive'da kurs kaydı zaten tamamen süper admin eliyle açılıyor (kendi kendine
+  kayıt/`/kayit` akışı yok), bu yüzden admin panelinden değiştirilebilir bir fiyat ayarına şu an
+  ihtiyaç yok — rakamlar sabit kodda, değiştirmek bir satırlık düzenleme.
+- **"14 gün ücretsiz" iddiası uydurma değil.** `createSchoolAction` (app/actions/admin.ts) yeni
+  kurs açılırken zaten `trialEndsAt`'i `+14 gün` olarak kuruyor; tanıtım sayfası var olan gerçek
+  bir davranışı anlatıyor.
+- **Kullanıcı henüz Railway domain'ini bağlamadığı için tanıtım sayfası şimdilik yalnızca
+  Drive'ın kendi adresinde (`/`) yayında** — `vet`/`egitim`'in aksine ayrı bir pazarlama alt
+  alanı yok, ihtiyaç da yok: tek bir Next.js uygulaması hem tanıtımı hem uygulamayı sunuyor.
+
 ### Mobil portallar hakkında
 **Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`
 (app/actions/mobile.ts) `completeLessonAction`'la (app/actions/lessons.ts) aynı transaction'ı

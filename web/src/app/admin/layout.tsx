@@ -2,7 +2,11 @@ import { requireSuperAdmin } from "@/lib/auth";
 import { Sidebar, type NavGroup } from "@/components/shell/Sidebar";
 import { MobileNav } from "@/components/shell/MobileNav";
 
-const NAV: NavGroup[] = [[{ href: "/admin", label: "Kurslar", icon: "building" }, { href: "/admin/denetim", label: "Denetim Kaydı", icon: "list" }]];
+const NAV: NavGroup[] = [[
+  { href: "/admin", label: "Kurslar", icon: "building" },
+  { href: "/admin/demo-talepleri", label: "Demo Talepleri", icon: "inbox-in" },
+  { href: "/admin/denetim", label: "Denetim Kaydı", icon: "list" },
+]];
 
 export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   const user = await requireSuperAdmin();

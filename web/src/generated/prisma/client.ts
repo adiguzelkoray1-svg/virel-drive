@@ -146,3 +146,8 @@ export type RegulationSetting = Prisma.RegulationSettingModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model DemoRequest
+ * 
+ */
+export type DemoRequest = Prisma.DemoRequestModel
