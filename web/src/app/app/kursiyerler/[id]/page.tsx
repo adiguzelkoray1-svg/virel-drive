@@ -27,6 +27,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
 
   const s = d.student;
   const showFinance = can(user.role, "finance.read");
+  const showDocEdit = can(user.role, "document.write");
   const status = STUDENT_STATUS_LABEL[s.status] ?? STUDENT_STATUS_LABEL.ACTIVE;
   const docLabel = new Map<string, string>(DOCUMENT_TYPES.map((t) => [t.key, t.label]));
   const nextStep =
@@ -239,6 +240,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
             <header className="flex items-center gap-2.5 px-5 pt-5">
               <h2 className="h-card">Evraklar</h2>
               <Badge kind={d.docsOk === d.docsTotal ? "success" : "warning"} dot>{d.docsOk}/{d.docsTotal} tamam</Badge>
+              {showDocEdit && <Link href={`/app/belgeler/${s.id}`} className="ml-auto text-[13px] font-semibold text-blue">Belgeleri düzenle →</Link>}
             </header>
             <div className="px-5 pb-5 pt-2">
               {s.documents.map((doc) => {

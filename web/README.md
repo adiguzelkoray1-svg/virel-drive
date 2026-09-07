@@ -112,8 +112,26 @@ düzenleme) · ön kayıt ekleme (aynı telefonlu açık aday uyarısı) · **ad
 (iki kayıt birbirine bağlanır) · ön kayıt gelen kutusu (yeni başvurular + gecikmiş takipler) ·
 kaynak kırılımı ve kanal bazlı dönüşüm oranı.
 
-**Sırada:** belgeler · mesajlar · raporlar · mevzuat ayarları ekranı ·
+**Belgeler tamamlandı:** kursiyer × belge türü matrisi (7 zorunlu belge, arama ve "eksik
+belgesi olan" süzgeci) · KPI'lar (evrağı tam, eksik belge, kontrol bekleyen, süresi dolacak) ·
+eksik evrak listesi (kayıt ne kadar uzun açıksa o kadar öncelikli) · kursiyer başına belge
+durumu güncelleme (durum, geçerlilik tarihi, not) · kursiyer kartından tek tıkla belgelere geçiş.
+
+**Sırada:** mesajlar · raporlar · mevzuat ayarları ekranı ·
 mobil (eğitmen/kursiyer) · süper admin konsolu.
+
+### Belgeler hakkında
+**Gerçek dosya yükleme yok.** `fileUrl` alanı şemada duruyor ama bu modül yalnızca belge
+*durumunu* takip ediyor (Eksik / Bekliyor / Kontrol ediliyor / Tamamlandı); gerçek bir depolama
+servisi bağlanmadı. "Belge yükle" akışı bilinçli olarak kapsam dışı bırakıldı.
+
+**Her kursiyer için 7 satır önceden açılır.** Seed her kursiyere `DOCUMENT_TYPES` kadar `Document`
+satırı oluşturuyor (`@@unique([studentId, type])`), bu yüzden güncelleme aksiyonu yeni satır
+açmıyor, yalnızca `upsert` ile mevcut satırı güncelliyor.
+
+**"Eksik" sayısı bekleyeni de kapsar.** Bir kursiyerde gerçekten eksik (MISSING) bir belge varsa,
+satırdaki "eksik" sayısı henüz gelmemiş (PENDING) belgeleri de sayar — ikisi de kayıt sürecini
+durduruyor. Yalnızca bekleyen belge varsa (hiç eksik yoksa) ayrıca "bekliyor" olarak gösterilir.
 
 ### CRM hakkında
 **Aday ile kursiyer ayrı kayıtlardır.** `Lead` huninin içindeki kişidir; kayıt kesinleştiğinde
