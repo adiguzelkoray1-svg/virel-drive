@@ -361,6 +361,17 @@ başarıda `redirect()` etmez (şifre URL'e sızmasın diye) — aynı sayfada s
 çekilemez — aksi halde kurs aniden "limit aşıldı" durumuna düşerdi. Bu oturumda tarayıcıda
 test edilip doğrulandı.
 
+**Gerçek bir hata: yeni açılan kurs kursiyer bile ekleyemiyordu.** Production'da (drive.virel.com.tr)
+"Yeni kurs ekle" ile gerçek bir test kursu açıp bütün `/app` sayfalarını gezerken bulundu:
+`createSchoolAction` yalnızca `School` ve OWNER `User` satırını yazıyordu — hiç `LicenseClassRule`
+oluşturmuyordu. Sonuç: kursiyer ekleme formundaki "Ehliyet sınıfı" seçimi tamamen boştu, hiçbir
+kursiyer/araç/eğitmen düzgün oluşturulamıyordu, ve owner bunun neden olduğunu anlaması için önce
+Ayarlar › Mevzuat'ı keşfedip sınıf tanımlaması gerekiyordu — hiçbir yerde bu yönlendirme de yoktu.
+`DEFAULT_LICENSE_CLASSES` (`lib/constants.ts`) artık hem `createSchoolAction`'da hem
+`prisma/seed.ts`'de tek kaynak olarak kullanılıyor; yeni bir kurs artık B/A2/A/C/D sınıflarıyla
+ve `REGULATION_DEFAULTS`'ın gerçek `RegulationSetting` satırlarıyla (önceden yalnızca okuma
+sırasında bellekte birleştiriliyordu, hiç yazılmıyordu) hazır açılıyor.
+
 ### Ayarlar (Mevzuat) hakkında
 **Sınıf kodu sonradan değiştirilemez.** `LicenseClassRule.code` bir FK değil, `Student.licenseClass`
 ve `Vehicle.licenseClass` ona serbest metinle referans verir; kod değişirse mevcut kayıtlar

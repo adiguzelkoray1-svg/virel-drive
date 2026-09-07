@@ -6,7 +6,7 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { audit, hashPassword, requireUser, requireSuperAdmin, startImpersonation, stopImpersonation } from "@/lib/auth";
-import { SCHOOL_PLAN_LIMITS, IMPERSONATE_COOKIE } from "@/lib/constants";
+import { SCHOOL_PLAN_LIMITS, IMPERSONATE_COOKIE, DEFAULT_LICENSE_CLASSES, REGULATION_DEFAULTS } from "@/lib/constants";
 import type { SchoolFormState, PlanFormState } from "@/lib/admin-form";
 
 const slugify = (s: string) =>
@@ -64,6 +64,8 @@ export async function createSchoolAction(_prev: SchoolFormState & { tempPassword
       },
     });
     await tx.user.create({ data: { email: v.ownerEmail, name: v.ownerName, role: "OWNER", passwordHash: await hashPassword(tempPassword), schoolId: created.id } });
+    await tx.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: created.id, ...c, examAttempts: 4, passScore: 70 })) });
+    await tx.regulationSetting.createMany({ data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: created.id, key, value })) });
     return created;
   });
 

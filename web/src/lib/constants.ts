@@ -174,6 +174,17 @@ export const REGULATION_DEFAULTS = {
   studentAppShowsProgress: "1",
 } as const;
 
+/** Yeni bir kurs açılırken yazılan başlangıç sertifika sınıfları. Bunlar olmadan kursiyer
+ *  ekleme formundaki "Ehliyet sınıfı" seçimi tamamen boş kalır — kursiyer, araç, eğitmen
+ *  hiçbiri oluşturulamaz (bkz. createSchoolAction). */
+export const DEFAULT_LICENSE_CLASSES = [
+  { code: "B", vehicleKind: "Otomobil", drivingHours: 14, theoryLessons: 12 },
+  { code: "A2", vehicleKind: "Motosiklet", drivingHours: 12, theoryLessons: 12 },
+  { code: "A", vehicleKind: "Motosiklet", drivingHours: 12, theoryLessons: 12 },
+  { code: "C", vehicleKind: "Kamyon", drivingHours: 20, theoryLessons: 16 },
+  { code: "D", vehicleKind: "Otobüs", drivingHours: 24, theoryLessons: 16 },
+] as const;
+
 export const SESSION_COOKIE = "virel_drive_session";
 /** Süper adminin "kurs olarak görüntüle" seçtiği kursun kimliği — bkz. requireSchoolUser. */
 export const IMPERSONATE_COOKIE = "virel_drive_as_school";

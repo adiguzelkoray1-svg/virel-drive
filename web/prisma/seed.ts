@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 import { randomUUID } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { REGULATION_DEFAULTS } from "../src/lib/constants";
+import { REGULATION_DEFAULTS, DEFAULT_LICENSE_CLASSES } from "../src/lib/constants";
 import { DOCUMENT_TYPES, SKILLS, THEORY_CATEGORIES } from "../src/lib/constants";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
@@ -64,15 +64,8 @@ async function main() {
   await prisma.regulationSetting.createMany({
     data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: school.id, key, value })),
   });
-  const CLASS_RULES = [
-    { code: "B", vehicleKind: "Otomobil", drivingHours: 14, theoryLessons: 12 },
-    { code: "A2", vehicleKind: "Motosiklet", drivingHours: 12, theoryLessons: 12 },
-    { code: "A", vehicleKind: "Motosiklet", drivingHours: 12, theoryLessons: 12 },
-    { code: "C", vehicleKind: "Kamyon", drivingHours: 20, theoryLessons: 16 },
-    { code: "D", vehicleKind: "Otobüs", drivingHours: 24, theoryLessons: 16 },
-  ];
-  await prisma.licenseClassRule.createMany({ data: CLASS_RULES.map((c) => ({ schoolId: school.id, ...c, examAttempts: 4, passScore: 70 })) });
-  const hoursOf = (code: string) => CLASS_RULES.find((c) => c.code === code)?.drivingHours ?? 14;
+  await prisma.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: school.id, ...c, examAttempts: 4, passScore: 70 })) });
+  const hoursOf = (code: string) => DEFAULT_LICENSE_CLASSES.find((c) => c.code === code)?.drivingHours ?? 14;
 
   // ---------- Kullanıcılar ----------
   // Süper admin şifresi diğer demo hesaplardan ayrı: bu, konsolun gerçek sahibi bir hesap,
