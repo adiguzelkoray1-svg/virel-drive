@@ -283,12 +283,17 @@ başlıca sürücü kursu otomasyon sağlayıcıları) özellik listeleri incele
 
 **Piyasa gerçeği: bu pazarda aylık SaaS aboneliği değil, tek seferlik masaüstü lisansı hâkim.**
 Hiçbir sağlayıcı aylık fiyat yayınlamıyor; AKINSOFT modül başına ~₺19.600+KDV **tek seferlik**
-lisans satıyor (3 modül = ₺58.800+). Yani doğrudan "aylık rakip fiyatı" diye bir referans yok —
-fiyat, kardeş ürün Virel Vet'in kanıtlanmış SaaS ekonomisinden (₺590/₺1.190/₺2.490) yola çıkılıp
-bu sektörün kursiyer başına daha yüksek gelirine (bir B sınıfı kursiyer toplamda ₺15.000-30.000+
-ödüyor) göre yukarı çekilerek belirlendi: **Başlangıç ₺690, Profesyonel ₺1.390, Kurumsal ₺2.990
-/ ay** (`src/app/page.tsx` içindeki `PLANS`). Kesin rakamlar değil, gerekçeli bir başlangıç noktası
-— kullanıcı isterse tek satırda değiştirir.
+lisans satıyor (3 modül = ₺58.800+KDV, yani ~₺70.560). İlk fiyatlandırma denemesi kardeş ürün
+Virel Vet'in SaaS ekonomisinden (₺590/₺1.190/₺2.490) yola çıkıp hafifçe yukarı çekmişti
+(₺690/₺1.390/₺2.990) — kullanıcı "AKINSOFT'a göre çok ucuz değil mi" diye haklı olarak itiraz
+etti. Yeniden hesaplandı: ₺70.560'lık tek seferlik rakip paketi 3 yıla amorti edilirse ≈₺1.960/ay
+eder, ama bu yalnızca rakibin masaüstü yazılımını karşılar — Drive'ın rakiplerde **hiç olmayan**
+gerçek mobil eğitmen/kursiyer uygulaması, WhatsApp/SMS otomasyonu ve CRM pipeline'ı gibi
+özelliklerinin değerini hiç yansıtmıyordu. Son rakamlar: **Başlangıç ₺790, Profesyonel ₺2.190,
+Kurumsal ₺4.490 / ay** (`src/app/page.tsx` içindeki `PLANS`) — Başlangıç rakip amortismanına
+yakın kalırken, Profesyonel/Kurumsal rakiplerde bulunmayan yeteneklerin farkını fiyatlıyor.
+Yine de kesin/bilimsel bir rakam değil, gerekçeli bir karar — kullanıcı isterse tek satırda
+değiştirir.
 
 **Kurumsal plandaki "Çoklu şube desteği" iddiası kaldırıldı.** Pazarlama metnini yazarken
 yanlışlıkla eklemiştim; Drive'da bir `School` tek bir lokasyon/kiracıdır, şubeler arası kursiyer
