@@ -574,12 +574,23 @@ eklenip web servisine şu ortam değişkenleri tanımlanır: `DATABASE_URL` (Pos
 referans değişkeni), `AUTH_SECRET` (bkz. yukarıdaki üretim komutu — yereldekinden **farklı**,
 production'a özel bir değer olmalı), `SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`.
 
-`start` script'i `npm run db:deploy && next start` — production'da her deploy'da bekleyen
-migrasyonlar otomatik uygulanır, ayrıca elle bir "release" adımı çalıştırmaya gerek yok.
-`postinstall` zaten `prisma generate` çalıştırıyor; `scripts/prisma.mjs` Railway'de olduğunu
-`RAILWAY_ENVIRONMENT` değişkeninden anlayıp yereldeki ağ-atlatma vekilini (bkz. dosyanın kendisi)
-devre dışı bırakır.
+`start` script'i `npm run db:deploy && npm run db:ensure-admin && next start` — production'da
+her deploy'da bekleyen migrasyonlar otomatik uygulanır, ayrıca elle bir "release" adımı
+çalıştırmaya gerek yok. `postinstall` zaten `prisma generate` çalıştırıyor; `scripts/prisma.mjs`
+Railway'de olduğunu `RAILWAY_ENVIRONMENT` değişkeninden anlayıp yereldeki ağ-atlatma vekilini
+(bkz. dosyanın kendisi) devre dışı bırakır.
 
 **`db:seed` production'da elle çalıştırılmadıkça hiç tetiklenmez** — build/start akışının hiçbir
 adımı seed'e dokunmuyor, bu bilerek böyle: production ortamı gerçek kurs verisiyle başlamalı,
 demo verisiyle değil.
+
+**İlk canlıya alışta gerçek bir hata çıktı: production'da hiç giriş yapılamıyordu.**
+`SUPER_ADMIN_EMAIL`/`SUPER_ADMIN_PASSWORD` doğru tanımlanmıştı ama süper admin *kullanıcısını*
+yaratan tek yer `seed.ts`'ydi — "production boş başlasın, seed hiç çalıştırılmasın" kararı
+verilirken bunun süper admin girişini de imkansız kıldığı gözden kaçmıştı: boş bir veritabanında
+kimse hiç giremiyordu. `prisma/ensure-admin.ts` bunu çözüyor — `db:seed`'in aksine hiçbir tabloyu
+silmez/yeniden yazmaz, yalnızca o e-postayla bir kullanıcı yoksa `SUPER_ADMIN_EMAIL`/
+`SUPER_ADMIN_PASSWORD`'den birini oluşturur; zaten varsa dokunmaz (şifreyi her boot'ta .env'e göre
+sıfırlamak, ileride eklenecek bir "şifremi değiştir" akışını sessizce geçersiz kılardı). `start`
+script'ine eklendiği için her deploy'da güvenle çalışır, elle bir kerelik komut çalıştırmaya
+gerek yok.
