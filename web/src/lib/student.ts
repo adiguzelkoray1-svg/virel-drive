@@ -5,6 +5,45 @@ import { getRegulation, regInt } from "./regulation";
 
 export type TimelineStep = { key: string; title: string; date: string; sub?: string; state: "done" | "now" | "todo" };
 
+/** Kursiyer listesi süzgeçleri — hem liste sayfası hem CSV dışa aktarımı aynı diziyi kullanır,
+ *  ikisi arasında filtre tanımı kaymasın diye. */
+export const STUDENT_FILTERS = [
+  { key: "tumu", label: "Tümü", where: {} },
+  { key: "aktif", label: "Aktif", where: { status: "ACTIVE" } },
+  { key: "on-kayit", label: "Ön kayıt", where: { stage: "PRE_REGISTRATION" } },
+  { key: "teorik", label: "Teorik", where: { stage: "THEORY" } },
+  { key: "esinav", label: "e-Sınav bekliyor", where: { stage: "ETEST_WAITING" } },
+  { key: "direksiyon", label: "Direksiyon", where: { stage: "DRIVING" } },
+  { key: "sinav", label: "Direksiyon sınavı", where: { stage: "DRIVING_EXAM" } },
+  { key: "mezun", label: "Mezun", where: { stage: "GRADUATED" } },
+  { key: "pasif", label: "Pasif", where: { status: "PASSIVE" } },
+] as const;
+
+/** Kursiyer listesi ve CSV dışa aktarımının paylaştığı Prisma `where` ifadesi. */
+export function buildStudentWhere(schoolId: string, filterKey: string, q: string) {
+  const filter = STUDENT_FILTERS.find((f) => f.key === filterKey) ?? STUDENT_FILTERS[0];
+  // Telefon araması yalnızca rakam girildiğinde uygulanır: boş bir `contains: ""` her kaydı eşler.
+  const digits = q.replace(/\D/g, "");
+  const words = q.split(/\s+/).filter(Boolean);
+  return {
+    schoolId,
+    ...filter.where,
+    // Ad ve soyad ayrı sütunlarda; "Ayşe Yılmaz" gibi tam ad araması her kelimeyi ayrı eşler.
+    ...(q
+      ? {
+          AND: words.map((w) => ({
+            OR: [
+              { firstName: { contains: w, mode: "insensitive" as const } },
+              { lastName: { contains: w, mode: "insensitive" as const } },
+              { fileNo: { contains: w, mode: "insensitive" as const } },
+              ...(digits.length >= 3 ? [{ phone: { contains: digits } }] : []),
+            ],
+          })),
+        }
+      : {}),
+  };
+}
+
 export async function getStudentDetail(schoolId: string, studentId: string) {
   const student = await prisma.student.findFirst({
     where: { id: studentId, schoolId },

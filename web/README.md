@@ -175,8 +175,27 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 `permissions.ts`, STUDENT boş dizi) giriş doğrudan `/kursiyer`'e gider; `/app`'e sızmaya
 çalışırsa `requireSchoolUser` onu geri yollar.
 
-**Sırada:** —. Kalan tek gerçek görev arka planda işaretli: `/app/kurs` ve `/app/destek`
-kenar çubuğu bağlantılarının sayfası yok.
+**Sırada:** —. Tüm modüller tamamlandı.
+
+### Kurs Profili, Destek ve gerçek CSV dışa aktarımı
+İki arka plan görevi tamamlandı:
+
+- **`/app/kurs`** — kurs profili (ad, iletişim, adres, vergi bilgileri), abonelik durumu/plan
+  rozeti ve kullanım çubukları (kullanıcı/kursiyer, limitle birlikte). Yalnızca `settings.write`
+  yetkisi olanlar düzenleyebilir (OWNER/MANAGER); diğerleri salt okunur görür. Plan ve limit
+  yalnızca süper admin konsolundan değişir — burada bilerek düzenlenemez.
+- **`/app/destek`** — gerçek iletişim kanalları (e-posta/telefon, `mailto:`/`tel:` linkleriyle)
+  ve birkaç SSS. Uygulama içi bir ticket sistemi yok; olmayan bir "talep oluştur" formu
+  göstermek yerine doğrudan iletişim yolunu sundum.
+- **Kursiyerler → Dışa aktar artık gerçekten çalışıyor.** Önceden `?disa=csv`'ye giden ama
+  hiçbir kod tarafından işlenmeyen bir bağlantıydı. `/app/kursiyerler/export` route handler'ı
+  ekrandaki filtre/aramayla (`lib/student.ts`'deki `buildStudentWhere` — liste sayfasıyla AYNI
+  fonksiyon) eşleşen tüm kursiyerleri CSV'ye döküyor. Ayrıca düğme artık yalnızca `export`
+  yetkisi olan rollere (OWNER/MANAGER/ACCOUNTANT) görünüyor — önceden SECRETARY/eğitmen gibi bu
+  yetkisi olmayan roller de düğmeyi görüyor, tıklayınca hiçbir şey olmuyordu. Telefon numarası
+  CSV'de de maskelenir (ekrandaki listeyle tutarlı — KVKK); dışa aktarım denetim kaydına yazılır.
+  CSV'nin ortak parçaları (`csvRow`/`csvResponse`) Raporlar'ın export'uyla paylaşılan
+  `lib/csv.ts`'e taşındı.
 
 ### Mobil portallar hakkında
 **Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`

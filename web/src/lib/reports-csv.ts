@@ -1,13 +1,7 @@
 import "server-only";
 import type { ReportRange, reportsOverview } from "./reports";
 import { money } from "./format";
-
-/** Basit CSV alan kaçışı: değer virgül, tırnak ya da satır sonu içeriyorsa çift tırnağa alınır. */
-const cell = (v: string | number) => {
-  const s = String(v);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-};
-const row = (...cols: (string | number)[]) => cols.map(cell).join(",") + "\n";
+import { csvRow as row } from "./csv";
 
 /** Rapor özetini CSV'ye çevirir. Excel'de Türkçe karakterler bozulmasın diye
  *  UTF-8 BOM eklenir (route handler'da byte olarak birleştirilir). */

@@ -1,30 +1,21 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
+import { can } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
 import { Badge, Card, Chip, EmptyState, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
 import { STAGE_LABEL, STUDENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
+import { STUDENT_FILTERS as FILTERS, buildStudentWhere } from "@/lib/student";
 import { date, fullName, maskPhone } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Kursiyerler" };
 
 const PAGE_SIZE = 25;
 
-const FILTERS = [
-  { key: "tumu", label: "Tümü", where: {} },
-  { key: "aktif", label: "Aktif", where: { status: "ACTIVE" } },
-  { key: "on-kayit", label: "Ön kayıt", where: { stage: "PRE_REGISTRATION" } },
-  { key: "teorik", label: "Teorik", where: { stage: "THEORY" } },
-  { key: "esinav", label: "e-Sınav bekliyor", where: { stage: "ETEST_WAITING" } },
-  { key: "direksiyon", label: "Direksiyon", where: { stage: "DRIVING" } },
-  { key: "sinav", label: "Direksiyon sınavı", where: { stage: "DRIVING_EXAM" } },
-  { key: "mezun", label: "Mezun", where: { stage: "GRADUATED" } },
-  { key: "pasif", label: "Pasif", where: { status: "PASSIVE" } },
-] as const;
-
 export default async function StudentsPage({ searchParams }: PageProps<"/app/kursiyerler">) {
   const user = await requirePermission("student.read");
+  const canExport = can(user.role, "export");
   const schoolId = user.schoolId;
   const sp = await searchParams;
   const filterKey = typeof sp.filtre === "string" ? sp.filtre : "tumu";
@@ -32,27 +23,7 @@ export default async function StudentsPage({ searchParams }: PageProps<"/app/kur
   const page = Math.max(1, Number(sp.sayfa) || 1);
 
   const now = new Date();
-  const filter = FILTERS.find((f) => f.key === filterKey) ?? FILTERS[0];
-  // Telefon araması yalnızca rakam girildiğinde uygulanır: boş bir `contains: ""` her kaydı eşler.
-  const digits = q.replace(/\D/g, "");
-  const words = q.split(/\s+/).filter(Boolean);
-  const where = {
-    schoolId,
-    ...filter.where,
-    // Ad ve soyad ayrı sütunlarda; "Ayşe Yılmaz" gibi tam ad araması her kelimeyi ayrı eşler.
-    ...(q
-      ? {
-          AND: words.map((w) => ({
-            OR: [
-              { firstName: { contains: w, mode: "insensitive" as const } },
-              { lastName: { contains: w, mode: "insensitive" as const } },
-              { fileNo: { contains: w, mode: "insensitive" as const } },
-              ...(digits.length >= 3 ? [{ phone: { contains: digits } }] : []),
-            ],
-          })),
-        }
-      : {}),
-  };
+  const where = buildStudentWhere(schoolId, filterKey, q);
 
   const [students, total, counts, rules] = await Promise.all([
     prisma.student.findMany({
@@ -101,7 +72,14 @@ export default async function StudentsPage({ searchParams }: PageProps<"/app/kur
   return (
     <>
       <PageHeader title="Kursiyerler" sub={`${counts[1]} aktif · ${counts[2]} ön kayıt · ${total} kayıt listeleniyor`}>
-        <Link href="/app/kursiyerler?disa=csv" className="btn btn-secondary btn-sm"><Icon name="download" size={15} />Dışa aktar</Link>
+        {canExport && (
+          <a
+            href={`/app/kursiyerler/export${filterKey !== "tumu" || q ? `?${new URLSearchParams({ ...(filterKey !== "tumu" ? { filtre: filterKey } : {}), ...(q ? { q } : {}) })}` : ""}`}
+            className="btn btn-secondary btn-sm"
+          >
+            <Icon name="download" size={15} />Dışa aktar
+          </a>
+        )}
         <Link href="/app/kursiyerler/yeni" className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Kursiyer ekle</Link>
       </PageHeader>
 
