@@ -47,20 +47,18 @@ Ayarlar görünmez; dashboard'da tahsilat kartı yerine rol açıklaması çıka
 ## Mimari
 
 ```
-src/lib/
-  prisma.ts        Tembel PrismaClient (pg adaptörü)
-  auth.ts          bcrypt + JWT çerez oturumu, requireSchoolUser (kiracı bağlamı), audit
-  jwt.ts           jose ile imzalama/doğrulama
-  permissions.ts   Rol → yetki matrisi (can())
-  constants.ts     Durum/rol etiketleri, mevzuat varsayılanları, tasarım sabitleri
-  regulation.ts    Mevzuat ayarlarını okuma/yazma (koda gömülü sayı yok)
-  availability.ts  Eğitmen + araç + kursiyer uygunluk kontrolü (çakışma nedeni metniyle)
-  dashboard.ts     Operasyon uyarıları, bugünkü program, tahsilat, haftalık yoğunluk
-  format.ts        ₺, tarih, saat, telefon maskesi, baş harf
-src/components/    ui.tsx (tasarım sistemi bileşenleri), icons.tsx (69 ikon), shell/
+src/lib/           Sorgular ve iş kuralları — modül başına bir dosya (auth, permissions,
+                    availability, regulation, dashboard, finance, crm, documents, messages,
+                    reports, instructor, vehicle, student, mobile, csv, format …)
+src/app/actions/   Server action'lar (form/route handler'ların çağırdığı yazma işlemleri)
+src/components/    ui.tsx (tasarım sistemi bileşenleri), icons.tsx (71 ikon), shell/ (Sidebar,
+                    Header, MobileNav)
 src/app/
   (auth)/giris     Giriş
-  app/             Kurs uygulaması (kabuk + dashboard + kursiyerler)
+  app/             Masaüstü personel konsolu (kabuk + dashboard + tüm modüller)
+  admin/           Süper admin konsolu (ayrı kabuk, requireSuperAdmin)
+  kursiyer/        Mobil kursiyer portalı (ayrı kabuk, requireStudentUser)
+  egitmen/         Mobil eğitmen portalı (ayrı kabuk, requireInstructorUser)
   api/auth/cikis   Çıkış
 ```
 
@@ -78,7 +76,7 @@ başlangıç değeridir.
 
 ## Durum
 
-**Hazır:** veri modeli (23 tablo) ve migrasyon · demo verisi · kimlik doğrulama ve roller ·
+**Hazır:** veri modeli (21 tablo) ve migrasyon · demo verisi · kimlik doğrulama ve roller ·
 uygulama kabuğu (yetkiye göre filtrelenen menü) · Dashboard (KPI, bugünkü program, dikkat
 gerektirenler, haftalık yoğunluk, tahsilat) · Kursiyerler listesi (filtre, arama, sayfalama,
 ilerleme) · **Kursiyer detayı** (süreç çizelgesi, direksiyon gelişim puanları, son dersler,
