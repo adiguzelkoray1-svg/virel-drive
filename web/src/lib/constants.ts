@@ -175,3 +175,25 @@ export const REGULATION_DEFAULTS = {
 } as const;
 
 export const SESSION_COOKIE = "virel_drive_session";
+
+// ---------- Mesajlar ----------
+export const MESSAGE_CHANNEL_LABEL: Record<string, string> = {
+  WHATSAPP: "WhatsApp", SMS: "SMS", EMAIL: "E-posta", PUSH: "Bildirim",
+};
+export const MESSAGE_STATUS_LABEL: Record<string, { label: string; kind: BadgeKind }> = {
+  QUEUED: { label: "Sırada", kind: "neutral" },
+  SENT: { label: "Gönderildi", kind: "neutral" },
+  DELIVERED: { label: "İletildi", kind: "brand" },
+  READ: { label: "Okundu", kind: "success" },
+  FAILED: { label: "Başarısız", kind: "danger" },
+};
+/** Konuşma ekranındaki hazır şablonlar. `{ad}` gönderim anında kursiyerin adıyla değiştirilir. */
+export const MESSAGE_TEMPLATES = [
+  { key: "LESSON_REMINDER", label: "Ders hatırlatması", body: "Sayın {ad}, yarınki dersiniz için hatırlatma: lütfen zamanında hazır olun." },
+  { key: "PAYMENT_REMINDER", label: "Ödeme hatırlatması", body: "Sayın {ad}, taksitinizin vadesi yaklaşıyor. Ödeme planınızı kursiyer panelinden görüntüleyebilirsiniz." },
+  { key: "EXAM_INFO", label: "Sınav bilgilendirmesi", body: "Sayın {ad}, sınav tarihiniz belirlendi. Detaylar için bizi arayabilirsiniz." },
+  { key: "DOCUMENT_MISSING", label: "Evrak eksik uyarısı", body: "Sayın {ad}, kaydınızın tamamlanması için eksik belgelerinizi en kısa sürede iletmenizi rica ederiz." },
+  { key: "LESSON_CANCELLED", label: "Ders iptali", body: "Sayın {ad}, bugünkü dersiniz iptal edilmiştir. Yeni tarih için sizinle iletişime geçeceğiz." },
+  { key: "WELCOME", label: "Hoş geldiniz", body: "Sayın {ad}, Yıldız Sürücü Kursu ailesine hoş geldiniz! Sorularınız için bu hattan yazabilirsiniz." },
+] as const;
+export const MESSAGE_TEMPLATE_LABEL: Record<string, string> = Object.fromEntries(MESSAGE_TEMPLATES.map((t) => [t.key, t.label]));

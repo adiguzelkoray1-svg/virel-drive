@@ -64,7 +64,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
             </div>
           </div>
           <div className="ml-auto flex gap-2 items-center">
-            <Link href={`/app/mesajlar?kursiyer=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="message" size={15} />Mesaj</Link>
+            <Link href={`/app/mesajlar/${s.id}`} className="btn btn-secondary btn-sm"><Icon name="message" size={15} />Mesaj</Link>
             {showFinance && <Link href={`/app/finans/tahsilat?kursiyer=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="wallet" size={15} />Tahsilat</Link>}
             <Link href={`/app/dersler/yeni?kursiyer=${s.id}`} className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Ders planla</Link>
           </div>

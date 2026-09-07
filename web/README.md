@@ -117,8 +117,29 @@ belgesi olan" süzgeci) · KPI'lar (evrağı tam, eksik belge, kontrol bekleyen,
 eksik evrak listesi (kayıt ne kadar uzun açıksa o kadar öncelikli) · kursiyer başına belge
 durumu güncelleme (durum, geçerlilik tarihi, not) · kursiyer kartından tek tıkla belgelere geçiş.
 
-**Sırada:** mesajlar · raporlar · mevzuat ayarları ekranı ·
+**Mesajlar tamamlandı:** kursiyer bazlı gelen kutusu (üç sütun: konuşma listesi / sohbet
+ekranı / şablonlar-istatistik) · WhatsApp/SMS/e-posta/bildirim kanal etiketi · gün ayraçlı
+mesaj balonları · hazır şablonlarla (ad otomatik doldurulur) tek tıkla mesaj yazma · okundu
+işaretleme (konuşma açılınca) · gelen kutusu rozeti kenar çubuğunda canlı sayaç.
+
+**Sırada:** raporlar · mevzuat ayarları ekranı ·
 mobil (eğitmen/kursiyer) · süper admin konsolu.
+
+### Mesajlar hakkında
+**Gerçek bir WhatsApp/SMS/e-posta sağlayıcısı bağlı değil.** Bu ekran `MessageLog` üzerinden
+gönderimi ve geçmişi simüle eder; gönderilen mesaj anında `SENT` olarak işaretlenir. Sağlayıcı
+bağlandığında bu, kuyruklayan bir arka plan işine devrolur (bkz. sağdaki panelin notu).
+
+**Ayrı bir Conversation tablosu yok.** `MessageLog` zaten `studentId` taşıyor; "konuşma" listesi
+bundan `lib/messages.ts` içinde JS tarafında gruplanır. Kurstaki mesaj hacmi küçük kaldığı
+sürece bu, ayrı bir tabloyu senkron tutmaktan daha basit.
+
+**Okundu işaretleme form değil.** Konuşma ekranı açıldığında `markThreadReadAction` istemciden
+doğrudan çağrılır (`lib/availability.ts`'deki desenle aynı gerekçe) — bir form göndermeye
+gerek yok, yalnızca o kursiyerin okunmamış gelen mesajlarını `READ` yapar.
+
+**Arama istemci tarafında.** `/app/mesajlar` bir `layout.tsx`; layout'lar `searchParams` almaz,
+bu yüzden gelen kutusu araması sunucu round-trip'i yerine `ThreadList` içinde anlık filtrelenir.
 
 ### Belgeler hakkında
 **Gerçek dosya yükleme yok.** `fileUrl` alanı şemada duruyor ama bu modül yalnızca belge

@@ -501,16 +501,58 @@ async function main() {
   }
 
   // ---------- Mesajlar ----------
-  for (let i = 0; i < 40; i++) {
-    const s = students[int(0, students.length - 1)];
-    await prisma.messageLog.create({
-      data: {
-        schoolId: school.id, studentId: s.id, channel: pick(["WHATSAPP", "WHATSAPP", "SMS", "EMAIL"]),
-        template: pick(["LESSON_REMINDER", "PAYMENT_REMINDER", "EXAM_INFO", "DOCUMENT_MISSING"]),
-        body: "Dersiniz yarın saat 14:00'te. Eğitmen: Mehmet Öz · Araç: 06 ABC 123",
-        status: "SENT", sentAt: at(today, -int(0, 20), int(9, 18)),
-      },
-    });
+  // Şablon başına gerçek gövde metni: konuşma ekranında her mesajın anlamı görünsün diye
+  // (dashboard'daki tek düz metnin aksine).
+  const MSG_TEMPLATE_BODY: Record<string, (ad: string) => string> = {
+    LESSON_REMINDER: (ad) => `Sayın ${ad}, yarınki direksiyon dersiniz saat 14:00'te. Eğitmen: Mehmet Öz · Araç: 06 ABC 123.`,
+    PAYMENT_REMINDER: (ad) => `Sayın ${ad}, taksitinizin vadesi yaklaşıyor. Ödeme planınızı kursiyer panelinden görüntüleyebilirsiniz.`,
+    EXAM_INFO: (ad) => `Sayın ${ad}, sınav tarihiniz belirlendi. Detaylar için bizi arayabilirsiniz.`,
+    DOCUMENT_MISSING: (ad) => `Sayın ${ad}, kaydınızın tamamlanması için eksik belgelerinizi en kısa sürede iletmenizi rica ederiz.`,
+  };
+  const REPLIES = [
+    "Hocam yarınki dersi biraz erteleyebilir miyiz?", "Teşekkürler, anladım.", "e-Sınav belgemi nereden alabilirim?",
+    "Tamamdır, uygun.", "Ödemeyi bugün yapacağım.", "Ne zaman gelebilirim?", "Anlaşıldı, teşekkürler 🙏", "Evet, doğru.",
+  ];
+  // Her kursiyerle ayrı bir konuşma yerine kursiyerlerin ~%40'ıyla gerçek bir mesaj geçmişi
+  // kurulur; ikili yazışma olsun diye kursun mesajına kursiyer belli ihtimalle yanıt verir.
+  // Birkaçının yanıtı bilerek okunmamış bırakılır ki gelen kutusu rozeti boş görünmesin.
+  let unreadBudget = 6;
+  // "Bugün" olarak işaretlenen mesajlar gerçek saatten ileri olmasın diye saat sınırlanır;
+  // aksi halde seed sabahın erken saatinde çalıştığında "bugün 18:00'de gönderildi" gibi
+  // ileri tarihli kayıtlar oluşur (finans modülündeki gider tarihi hatasıyla aynı sınıf).
+  const nowRef = new Date();
+  const nowHour = nowRef.getHours();
+  const capHour = (dayOffset: number, hour: number) => (dayOffset === 0 ? Math.min(hour, nowHour) : hour);
+  const capMinute = (dayOffset: number, hour: number, minute: number) =>
+    dayOffset === 0 && hour === nowHour ? Math.min(minute, nowRef.getMinutes()) : minute;
+  for (const s of students) {
+    if (rnd() > 0.4) continue;
+    const firstName = s.name.split(" ")[0];
+    const turns = int(1, 3);
+    let dayCursor = -int(3, 25);
+    for (let t = 0; t < turns; t++) {
+      const tpl = pick(["LESSON_REMINDER", "PAYMENT_REMINDER", "EXAM_INFO", "DOCUMENT_MISSING"]);
+      const channel = pick(["WHATSAPP", "WHATSAPP", "SMS", "EMAIL"]);
+      const sendHour = capHour(dayCursor, int(9, 18));
+      await prisma.messageLog.create({
+        data: {
+          schoolId: school.id, studentId: s.id, channel, template: tpl, direction: "OUT",
+          body: MSG_TEMPLATE_BODY[tpl](firstName), status: "SENT", sentAt: at(today, dayCursor, sendHour),
+        },
+      });
+      if (rnd() > 0.5) {
+        const unread = unreadBudget > 0 && rnd() > 0.6;
+        if (unread) unreadBudget--;
+        const replyHour = capHour(dayCursor, Math.min(21, sendHour + int(0, 2)));
+        await prisma.messageLog.create({
+          data: {
+            schoolId: school.id, studentId: s.id, channel, direction: "IN", body: pick(REPLIES),
+            status: unread ? "DELIVERED" : "READ", sentAt: at(today, dayCursor, replyHour, capMinute(dayCursor, replyHour, int(0, 59))),
+          },
+        });
+      }
+      dayCursor = Math.min(0, dayCursor + int(1, 6));
+    }
   }
 
   const counts = {
