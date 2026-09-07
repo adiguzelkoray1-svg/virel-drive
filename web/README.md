@@ -555,6 +555,16 @@ için typecheck/lint bunu yakalamaz. Bu yüzden form durum tipleri ve başlangı
 bir modülde tutulur: `lib/lesson-form.ts`, `lib/theory-form.ts`, `lib/exam-form.ts`,
 `lib/instructor-form.ts`. Yeni bir form aksiyonu yazarken aynı düzeni izleyin.
 
+### Taze bir checkout'ta `npm run typecheck` "Cannot find name 'PageProps'" verir
+
+Next.js'in tipli rotalar özelliği (`PageProps<"/rota">`, `LayoutProps<"/rota">`) bu tipleri
+`.next/types/` altına yalnızca `next dev`/`next build`/`next typegen` çalıştığında üretir —
+saf `tsc --noEmit` bunları kendiliğinden oluşturmaz. Yerelde hep önceden çalıştırılmış bir
+`.next` dizini olduğu için bu hiç fark edilmiyordu; CI'nin ilk kurulumunda taze bir checkout'ta
+typecheck'in projedeki HER sayfada bu hatayla patladığı ortaya çıktı. Çözüm: `package.json`'da
+`"pretypecheck": "next typegen"` — npm bunu her `npm run typecheck`'ten önce otomatik çalıştırır,
+CI dahil, elle bir adım eklemeye gerek kalmadan.
+
 ### `<select>` alanları ve form.reset() — üç formu etkileyen ortak hata
 
 Bir form aksiyonu (create/update/schedule) hata döndürdüğünde React 19 formun native
