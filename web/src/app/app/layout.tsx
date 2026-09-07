@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { stopImpersonationAction } from "@/app/actions/admin";
 import { Sidebar, type NavGroup, type NavItem } from "@/components/shell/Sidebar";
 import { Header } from "@/components/shell/Header";
+import { MobileNav } from "@/components/shell/MobileNav";
 import { Icon } from "@/components/icons";
 import { ROLE_LABEL, type Role } from "@/lib/constants";
 import { can, type Permission } from "@/lib/permissions";
@@ -74,6 +75,21 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
     )
     .filter((g) => g.length);
 
+  // Hem masaüstü dock'ta hem mobil çekmecede aynı sidebar — tek yerden tanımlanır ki ikisi
+  // birbirinden kaymasın (bkz. components/shell/MobileNav.tsx).
+  const sidebar = (
+    <Sidebar
+      groups={groups}
+      context={{ title: school.name, sub: [school.district, school.city].filter(Boolean).join(", ") || "Sürücü kursu", initials: initials(school.name) }}
+      user={{ name: user.name, title: ROLE_LABEL[user.role as Role] ?? user.role }}
+      footer={[
+        ...(["DRIVING_INSTRUCTOR", "THEORY_TEACHER"].includes(user.role) ? [{ href: "/egitmen", label: "Mobil görünüm", icon: "phone" as const }] : []),
+        { href: "/app/kurs", label: "Kurs Profili", icon: "building" },
+        { href: "/app/destek", label: "Destek", icon: "help" },
+      ]}
+    />
+  );
+
   return (
     <div className="min-h-screen flex flex-col bg-bg">
       {user.impersonating && (
@@ -85,19 +101,9 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
           </form>
         </div>
       )}
+      <MobileNav>{sidebar}</MobileNav>
       <div className="flex flex-1 min-h-0">
-        <div className="hidden lg:flex">
-          <Sidebar
-            groups={groups}
-            context={{ title: school.name, sub: [school.district, school.city].filter(Boolean).join(", ") || "Sürücü kursu", initials: initials(school.name) }}
-            user={{ name: user.name, title: ROLE_LABEL[user.role as Role] ?? user.role }}
-            footer={[
-              ...(["DRIVING_INSTRUCTOR", "THEORY_TEACHER"].includes(user.role) ? [{ href: "/egitmen", label: "Mobil görünüm", icon: "phone" as const }] : []),
-              { href: "/app/kurs", label: "Kurs Profili", icon: "building" },
-              { href: "/app/destek", label: "Destek", icon: "help" },
-            ]}
-          />
-        </div>
+        <div className="hidden lg:flex">{sidebar}</div>
         <div className="flex-1 flex flex-col min-w-0">
           <div className="hidden lg:block">
             <Header searchPlaceholder="Kursiyer, telefon, eğitmen veya araç ara…" newHref="/app/dersler/yeni" newLabel="Yeni Ders" user={{ name: user.name }} alerts={1} />

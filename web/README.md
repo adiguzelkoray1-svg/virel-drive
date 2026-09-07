@@ -207,6 +207,22 @@ href'in kendi sayfasının `requirePermission` çağrısıyla birebir eşleşti�
   CSV'nin ortak parçaları (`csvRow`/`csvResponse`) Raporlar'ın export'uyla paylaşılan
   `lib/csv.ts`'e taşındı.
 
+### Mobil genişlikte gezinme yoktu (masaüstü konsolu + süper admin)
+
+Yedi rolün tamamı bu kez telefon genişliğinde (375×812) tek tek denendi. `Sidebar` `hidden
+lg:flex`, `Header` `hidden lg:block` olduğu için mobilde ne `/app` ne `/admin`'de HİÇBİR gezinme
+öğesi yoktu — sayfa içeriği görünüyor ama başka bir yere gidilemiyor, çıkış bile yapılamıyordu.
+`components/shell/MobileNav.tsx` bunu çözüyor: `lg:hidden` bir üst çubuk (hamburger + logo) ile
+açılan, mevcut `Sidebar`'ı aynen gösteren bir kaydırmalı panel. Hem `/app/layout.tsx` hem
+`/admin/layout.tsx`'te aynı `sidebar` JSX değişkeni hem `<MobileNav>` içinde hem masaüstü
+dock'ta kullanılıyor ki ikisi birbirinden kaymasın.
+
+Bilerek dar tutuldu: bu yalnızca gezinmeyi açar, masaüstündeki yoğun tablo/takvim sayfalarını
+mobile uyarlayan bir yeniden tasarım değil — brief'in kasıtlı ayrımıyla (masaüstü personel
+konsolu / mobil eğitmen-kursiyer uygulaması `/egitmen`, `/kursiyer`) tutarlı bir sınır.
+Bu geziyle birlikte `/kursiyer` ve `/egitmen` portalları da mobilde tekrar uçtan uca denendi;
+her ikisi de her sayfada konsol hatası olmadan temiz.
+
 ### Mobil portallar hakkında
 **Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`
 (app/actions/mobile.ts) `completeLessonAction`'la (app/actions/lessons.ts) aynı transaction'ı
