@@ -3,5 +3,6 @@ import { getLiveSession } from "@/lib/auth";
 
 export default async function Home() {
   const session = await getLiveSession();
-  redirect(session ? "/app" : "/giris");
+  if (!session) redirect("/giris");
+  redirect(session.role === "SUPER_ADMIN" ? "/admin" : session.role === "STUDENT" ? "/kursiyer" : "/app");
 }

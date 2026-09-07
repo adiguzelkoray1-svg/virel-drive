@@ -84,6 +84,7 @@ export default async function AppLayout({ children }: LayoutProps<"/app">) {
             context={{ title: school.name, sub: [school.district, school.city].filter(Boolean).join(", ") || "Sürücü kursu", initials: initials(school.name) }}
             user={{ name: user.name, title: ROLE_LABEL[user.role as Role] ?? user.role }}
             footer={[
+              ...(["DRIVING_INSTRUCTOR", "THEORY_TEACHER"].includes(user.role) ? [{ href: "/egitmen", label: "Mobil görünüm", icon: "phone" as const }] : []),
               { href: "/app/kurs", label: "Kurs Profili", icon: "building" },
               { href: "/app/destek", label: "Destek", icon: "help" },
             ]}

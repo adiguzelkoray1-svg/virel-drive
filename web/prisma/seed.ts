@@ -192,10 +192,12 @@ async function main() {
     }
   }
 
-  // Ayşe Yılmaz — tasarımdaki örnek kursiyer (direksiyon eğitimi %72)
+  // Ayşe Yılmaz — tasarımdaki örnek kursiyer (direksiyon eğitimi %72). Mobil kursiyer
+  // portalını gerçek bir hesapla test edebilmek için giriş yapabilen tek kursiyer bu.
+  const ayseUser = await prisma.user.create({ data: { email: "ayse@ornek.com", passwordHash: pw, name: "Ayşe Yılmaz", role: "STUDENT", schoolId: school.id } });
   const ayse = await prisma.student.create({
     data: {
-      schoolId: school.id, fileNo: "2026-0418", firstName: "Ayşe", lastName: "Yılmaz", phone: "05321234541",
+      schoolId: school.id, userId: ayseUser.id, fileNo: "2026-0418", firstName: "Ayşe", lastName: "Yılmaz", phone: "05321234541",
       email: "ayse@ornek.com", licenseClass: "B", stage: "DRIVING", status: "ACTIVE", registeredAt: at(today, -86, 10),
     },
   });

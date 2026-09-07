@@ -59,6 +59,9 @@ export async function requireUser() {
 /** Kurs kullanıcısı (kiracı bağlamı). Tüm sorgular bu schoolId ile sınırlanır. */
 export async function requireSchoolUser() {
   const user = await requireUser();
+  // Kursiyerin masaüstü panelinde hiçbir yetkisi yok (permissions.ts: STUDENT boş dizi) —
+  // buraya sızarsa yarı çalışan, boş bir ekranla karşılaşırdı. Kendi portalına gönderilir.
+  if (user.role === "STUDENT") redirect("/kursiyer");
   if (user.role === "SUPER_ADMIN") {
     const store = await cookies();
     const asSchool = store.get(IMPERSONATE_COOKIE)?.value;
@@ -70,6 +73,26 @@ export async function requireSchoolUser() {
   }
   if (!user.schoolId || !user.school) redirect("/giris?hata=kurs");
   return { ...user, schoolId: user.schoolId, school: user.school, impersonating: false as const };
+}
+
+/** Kursiyer mobil portalı. Kursiyerin kendi User hesabı Student.userId ile eşlenir —
+ *  ayrı bir yetki sistemi yok, "bu kayıt seninki mi" kontrolü yeterli. */
+export async function requireStudentUser() {
+  const user = await requireUser();
+  if (user.role !== "STUDENT") redirect("/app");
+  const student = await prisma.student.findUnique({ where: { userId: user.id } });
+  if (!student) redirect("/giris?hata=kursiyer");
+  return { user, student, schoolId: student.schoolId };
+}
+
+/** Eğitmen mobil portalı. Direksiyon eğitmeni ve teorik öğretmen ikisi de girebilir;
+ *  şube (branch) sayfaların kendi içinde hangi ders türünü göstereceğini belirler. */
+export async function requireInstructorUser() {
+  const user = await requireUser();
+  if (!["DRIVING_INSTRUCTOR", "THEORY_TEACHER"].includes(user.role)) redirect("/app");
+  const instructor = await prisma.instructor.findUnique({ where: { userId: user.id } });
+  if (!instructor) redirect("/giris?hata=egitmen");
+  return { user, instructor, schoolId: instructor.schoolId };
 }
 
 export async function requireSuperAdmin() {

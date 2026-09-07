@@ -25,7 +25,10 @@ export async function loginAction(_prev: LoginState, formData: FormData): Promis
   await setSessionCookie({ sub: user.id, role: user.role, schoolId: user.schoolId, name: user.name, email: user.email });
   await audit({ schoolId: user.schoolId, actorId: user.id, action: "auth.login" });
 
-  redirect(user.role === "SUPER_ADMIN" ? "/admin" : "/app");
+  // Kursiyerin masaüstü panelinde hiçbir yetkisi yok (bkz. permissions.ts), bu yüzden
+  // doğrudan mobil kursiyer portalına gider. Eğitmenler hem /app'i hem /egitmen'i
+  // kullanabildiği için masaüstünde kalır; mobil görünüme oradan bir bağlantıyla geçer.
+  redirect(user.role === "SUPER_ADMIN" ? "/admin" : user.role === "STUDENT" ? "/kursiyer" : "/app");
 }
 
 export async function logoutAction() {

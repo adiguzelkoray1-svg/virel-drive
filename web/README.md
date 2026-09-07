@@ -30,6 +30,11 @@ Seed sonrası tüm hesapların şifresi `virel1234`.
 | `muhasebe@yildizsurucukursu.com` | Muhasebe | Finans ve raporlar |
 | `mehmet@yildizsurucukursu.com` | Direksiyon Eğitmeni | Kendi dersleri — **finans yok** |
 | `selin@yildizsurucukursu.com` | Teorik Öğretmen | Ders programı ve yoklama |
+| `ayse@ornek.com` | Kursiyer | Yalnızca mobil portal: `/kursiyer` |
+
+`mehmet@...` ve `selin@...` girişte `/app`'e gider; `/egitmen`'e sidebar altındaki "Mobil görünüm"
+bağlantısıyla ya da doğrudan URL ile geçilir. `ayse@ornek.com` doğrudan `/kursiyer`'e gider —
+masaüstünde hiç yetkisi yoktur.
 
 **Süper admin** ayrı ve gerçek bir hesap — paylaşılan demo şifresini taşımaz. E-posta ve şifresi
 yalnızca `.env`'de tutulur (`SUPER_ADMIN_EMAIL`, `SUPER_ADMIN_PASSWORD`); bu iki değişken
@@ -147,9 +152,47 @@ değiştirme, plan/limit düzenleme, o kursa ait denetim kaydı) · **"kurs olar
 (impersonation — süper admin kursun arayüzüne geçer, üstte turuncu bir bant ve "Konsola dön"
 düğmesiyle) · tüm kurslardaki işlemleri gösteren global denetim kaydı.
 
-**Sırada:** mobil (eğitmen/kursiyer).
-(Not: `/app/kurs` ve `/app/destek` kenar çubuğundaki kullanıcı menüsünde duran ama sayfası
-olmayan iki bağlantı daha — bu oturumda fark edildi, henüz yapılmadı.)
+**Mobil eğitmen/kursiyer portalları tamamlandı.** İki ayrı, telefon genişliğine göre tasarlanmış
+alan (`/kursiyer`, `/egitmen`) — masaüstü sidebar'ın yerine alt sekme çubuğu olan, kendi
+`requireStudentUser`/`requireInstructorUser` ile korunan bağımsız bir kabuk.
+
+- **`/kursiyer`** (rol: STUDENT): Ana sayfa (gradyan başlık, genel ilerleme %, yaklaşan ders,
+  kalan ders/borç, son sınav sonucu) · Derslerim (yaklaşan + geçmiş) · İlerlemem (7 adımlı süreç
+  zaman çizelgesi) · Ödemeler (taksit planı, salt okunur) · Mesajlar (kursla iki yönlü yazışma,
+  kursiyer tarafından gönderilen mesaj masaüstü Mesajlar gelen kutusunda aynen görünür) · Profil.
+  Tamamı `lib/student.ts`'deki `getStudentDetail`i (masaüstü kursiyer kartıyla aynı fonksiyon)
+  ve `lib/messages.ts`'deki `getThread`i yeniden kullanıyor — kursiyer tarafı için tek satır
+  yeni sorgu yazmadım.
+- **`/egitmen`** (rol: DRIVING_INSTRUCTOR/THEORY_TEACHER): Bugün (günün dersleri, sıradaki ders
+  büyük kartla vurgulanır, "Dersi tamamla") · Ders değerlendirmesi (11 gelişim alanı + not) ·
+  Takvim (bu haftanın kronolojik listesi) · Kursiyerlerim · Profil (+ "Masaüstü görünüme geç").
+  Direksiyon eğitmeni tasarım kanvasındakiyle birebir; teorik öğretmenin bugünkü dersleri de
+  listelenir ama yoklama alma masaüstündeki tam ekrana yönlendirir (ayrı bir mobil yoklama
+  arayüzü bu sürümde yok — tasarımda da kapsanmamıştı).
+
+Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, sidebar'ın altına sadece
+"Mobil görünüm" bağlantısı eklendi. Kursiyerin masaüstünde hiç yetkisi olmadığı için (bkz.
+`permissions.ts`, STUDENT boş dizi) giriş doğrudan `/kursiyer`'e gider; `/app`'e sızmaya
+çalışırsa `requireSchoolUser` onu geri yollar.
+
+**Sırada:** —. Kalan tek gerçek görev arka planda işaretli: `/app/kurs` ve `/app/destek`
+kenar çubuğu bağlantılarının sayfası yok.
+
+### Mobil portallar hakkında
+**Ders tamamlama masaüstündeki mantığın aynısı, ayrı bir kopyası.** `completeLessonMobileAction`
+(app/actions/mobile.ts) `completeLessonAction`'la (app/actions/lessons.ts) aynı transaction'ı
+çalıştırır; tek fark başarıda `/app/dersler/[id]` yerine `/egitmen`'e dönmesi. Masaüstü akışına
+dokunmamak için mantığı paylaşmak yerine kasıtlı olarak ikiye ayırdım.
+
+**"Sıradaki" kartı yalnızca PLANNED değil, LIVE dersleri de yakalar.** İlk sürümde yalnızca
+PLANNED bakıyordu; tarayıcıda test ederken saati geçmiş ama hâlâ LIVE durumunda kalan (kapatılmamış)
+bir dersin düz bir satır gibi göründüğünü, vurgulanmadığını fark ettim. Bu, tam da "eğitmenin şimdi
+kapatması gereken ders" senaryosu — düzeltildi.
+
+**Kod içi tip birleştirme:** `instructorWeek`/`instructorToday` şubeye (DRIVING/THEORY) göre iki
+farklı Prisma şekli döndürür; TypeScript bunları aynı diziye iterken bir union-of-arrays hatası
+verdi (`items: typeof lessons` çalışmadı) — `Awaited<ReturnType<...>>[number]` ile öğe tipini
+ayrıştırıp düzelttim.
 
 ### Süper admin konsolu hakkında
 **Kimlik doğrulama ve impersonation iskeleti zaten vardı.** `requireSuperAdmin`, `requireSchoolUser`'ın
