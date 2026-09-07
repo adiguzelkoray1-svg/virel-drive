@@ -372,6 +372,18 @@ Ayarlar › Mevzuat'ı keşfedip sınıf tanımlaması gerekiyordu — hiçbir y
 ve `REGULATION_DEFAULTS`'ın gerçek `RegulationSetting` satırlarıyla (önceden yalnızca okuma
 sırasında bellekte birleştiriliyordu, hiç yazılmıyordu) hazır açılıyor.
 
+**Bu hatayı yakalayan bir regresyon testi eklendi: `tests/school-creation.test.ts`.** Asıl
+kurs açma mantığı `createSchoolAction`'dan `lib/school.ts`'teki `createSchoolWithDefaults()`'a
+taşındı — `"use server"` aksiyonu artık yalnızca yetki/doğrulama yapıp bunu çağırıyor. Bu
+taşımanın tek nedeni test edilebilirlik: `lib/student.ts`, `lib/auth.ts` gibi diğer domain
+dosyalarının başındaki `import "server-only"` düz `tsx` ile (Next.js derleyicisi olmadan)
+çalıştırılamıyor — pakette `server-only` hiç kurulu değil, yalnızca Next'in kendi bundler'ı
+onu no-op'a çeviriyor. `lib/school.ts` bilerek bu korumayı taşımıyor ki hem action'dan hem
+testten çağrılabilsin. Test, `DATABASE_URL`'deki gerçek veritabanına yazıp temizliyor (Virel
+Vet'teki `tests/pricing-demo.test.ts` ile aynı desen) — sahte/mock Prisma değil. Doğrulamak
+için: `LicenseClassRule.createMany` satırını yorum satırı yapıp `npm test` çalıştırdım, iki
+test de gerçekten kırmızı çıktı ("0 !== 5"); satırı geri koyunca yeşile döndü.
+
 ### Ayarlar (Mevzuat) hakkında
 **Sınıf kodu sonradan değiştirilemez.** `LicenseClassRule.code` bir FK değil, `Student.licenseClass`
 ve `Vehicle.licenseClass` ona serbest metinle referans verir; kod değişirse mevcut kayıtlar
@@ -577,6 +589,7 @@ npm run typecheck  # tsc --noEmit
 npm run db:migrate # şema değişikliği sonrası migrasyon
 npm run db:seed    # demo verisini sıfırla ve yeniden yükle
 npm run db:studio  # Prisma Studio
+npm test           # tests/*.test.ts — DATABASE_URL'deki gerçek veritabanına yazar/temizler
 ```
 
 > `db:seed` tüm tabloları siler ve yeniden yazar. Kullanıcı kimlikleri değiştiği için

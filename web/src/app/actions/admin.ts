@@ -1,24 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import crypto from "node:crypto";
 import { z } from "zod";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { audit, hashPassword, requireUser, requireSuperAdmin, startImpersonation, stopImpersonation } from "@/lib/auth";
-import { SCHOOL_PLAN_LIMITS, IMPERSONATE_COOKIE, DEFAULT_LICENSE_CLASSES, REGULATION_DEFAULTS } from "@/lib/constants";
+import { audit, requireUser, requireSuperAdmin, startImpersonation, stopImpersonation } from "@/lib/auth";
+import { IMPERSONATE_COOKIE } from "@/lib/constants";
+import { createSchoolWithDefaults } from "@/lib/school";
 import type { SchoolFormState, PlanFormState } from "@/lib/admin-form";
-
-const slugify = (s: string) =>
-  s.toLocaleLowerCase("tr").replace(/ğ/g, "g").replace(/ü/g, "u").replace(/ş/g, "s").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "kurs";
-
-/** Herkese açık, hatırlanması kolay bir geçici şifre — büyük harf ve rakam karışımı,
- *  karıştırıcı karakterler (0/O, 1/I/l) elenmiş. */
-const genTempPassword = () => {
-  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-  return Array.from({ length: 10 }, () => chars[crypto.randomInt(chars.length)]).join("");
-};
 
 const SchoolSchema = z.object({
   name: z.string().trim().min(2, "Kurs adı girin."),
@@ -49,25 +38,7 @@ export async function createSchoolAction(_prev: SchoolFormState & { tempPassword
   const emailClash = await prisma.user.findUnique({ where: { email: v.ownerEmail } });
   if (emailClash) return { values, error: `${v.ownerEmail} zaten kullanımda.` };
 
-  let slug = slugify(v.name);
-  if (await prisma.school.findUnique({ where: { slug } })) slug = `${slug}-${crypto.randomInt(1000, 9999)}`;
-
-  const limits = SCHOOL_PLAN_LIMITS[v.plan];
-  const tempPassword = genTempPassword();
-
-  const school = await prisma.$transaction(async (tx) => {
-    const created = await tx.school.create({
-      data: {
-        name: v.name, slug, city: v.city || null, district: v.district || null, phone: v.phone || null, email: v.email || null,
-        status: "TRIAL", plan: v.plan, userLimit: limits.userLimit, studentLimit: limits.studentLimit,
-        trialEndsAt: new Date(Date.now() + 14 * 86_400_000),
-      },
-    });
-    await tx.user.create({ data: { email: v.ownerEmail, name: v.ownerName, role: "OWNER", passwordHash: await hashPassword(tempPassword), schoolId: created.id } });
-    await tx.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: created.id, ...c, examAttempts: 4, passScore: 70 })) });
-    await tx.regulationSetting.createMany({ data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: created.id, key, value })) });
-    return created;
-  });
+  const { school, tempPassword } = await createSchoolWithDefaults(v);
 
   await audit({ actorId: admin.id, action: "school.create", target: school.id, meta: { name: v.name, plan: v.plan } });
   revalidatePath("/admin");
