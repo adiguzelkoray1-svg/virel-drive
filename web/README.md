@@ -599,3 +599,24 @@ silmez/yeniden yazmaz, yalnızca o e-postayla bir kullanıcı yoksa `SUPER_ADMIN
 sıfırlamak, ileride eklenecek bir "şifremi değiştir" akışını sessizce geçersiz kılardı). `start`
 script'ine eklendiği için her deploy'da güvenle çalışır, elle bir kerelik komut çalıştırmaya
 gerek yok.
+
+### Railway CLI ile production'a bağlanma
+
+```bash
+brew install railway
+railway login                # tarayıcıda OAuth ile giriş
+railway link -p <project-id> -e production -s <service-id>
+railway status                # deploy/servis sağlığını gösterir
+railway logs --filter "@level:error" --since 2h
+```
+
+**`railway connect postgres` ilk seferinde SSH anahtarı ister** — Postgres'in Railway'de genelde
+genel (public) bir proxy adresi yok, bağlantı SSH tüneli üzerinden kuruluyor. `~/.ssh/`'de anahtar
+yoksa şu iki adım gerekiyor (bir kere, sonra kalıcı):
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N "" -C "railway-cli"
+railway ssh keys add --key ~/.ssh/id_ed25519.pub --name "railway-cli"
+```
+
+Sonra `railway connect postgres` (ya da SQL'i stdin'den vererek non-interactive: `echo "SELECT ...;" | railway connect postgres`) doğrudan production veritabanına bağlanır — `DATABASE_URL`'i elle Railway dashboard'undan kopyalamaya gerek kalmaz.
