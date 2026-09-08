@@ -271,9 +271,12 @@ ziyaretçi hâlâ kendi konsoluna yönlendirilir, sayfa yalnızca çıkış yapm
 - **"14 gün ücretsiz" iddiası uydurma değil.** `createSchoolAction` (app/actions/admin.ts) yeni
   kurs açılırken zaten `trialEndsAt`'i `+14 gün` olarak kuruyor; tanıtım sayfası var olan gerçek
   bir davranışı anlatıyor.
-- **Kullanıcı henüz Railway domain'ini bağlamadığı için tanıtım sayfası şimdilik yalnızca
-  Drive'ın kendi adresinde (`/`) yayında** — `vet`/`egitim`'in aksine ayrı bir pazarlama alt
-  alanı yok, ihtiyaç da yok: tek bir Next.js uygulaması hem tanıtımı hem uygulamayı sunuyor.
+- **Ayrı bir pazarlama alt alanı yok, ihtiyaç da yok** — `vet`/`egitim`'in aksine tek bir
+  Next.js uygulaması hem tanıtımı hem uygulamayı `drive.virel.com.tr`'de birlikte sunuyor.
+- **`robots.txt`/`sitemap.xml`** (`src/app/robots.ts`, `src/app/sitemap.ts`) yalnızca `/` ve
+  `/giris`'i taranabilir bırakıyor; `/app`, `/admin`, `/kursiyer`, `/egitmen` zaten oturum
+  gerektiriyor, tarayıcının orada yönlendirmeden başka bir şey görmesinin anlamı yok. Site
+  yayına alındıktan sonra loglarda tekrarlayan `GET /robots.txt 404` fark edilince eklendi.
 
 ### Piyasa analizi, fiyat güncellemesi ve kursiyer kaydındaki gerçek bir hata
 
