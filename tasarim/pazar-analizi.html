@@ -1,0 +1,408 @@
+<title>Sürücü Kursu Pazar Analizi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Karla:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --paper:#F6F3EC;
+    --paper-raised:#FFFFFF;
+    --ink:#1C2530;
+    --ink-soft:#5B6472;
+    --line:rgba(28,37,48,0.13);
+    --line-strong:rgba(28,37,48,0.24);
+    --brand:#0067C4;
+    --brand-deep:#0A3D66;
+    --brand-wash:#E7F0FA;
+    --teal:#00A9BF;
+    --moss:#2E7D4F;
+    --moss-wash:#E5F3EA;
+    --amber:#B4711F;
+    --amber-wash:#FBEEDD;
+    --rose:#B5423F;
+    --rose-wash:#FBE9E7;
+    --shadow: 0 1px 2px rgba(28,37,48,0.06), 0 10px 24px -14px rgba(28,37,48,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141A22;
+      --paper-raised:#1B2330;
+      --ink:#EAEDF1;
+      --ink-soft:#9DA8B6;
+      --line:rgba(234,237,241,0.13);
+      --line-strong:rgba(234,237,241,0.24);
+      --brand:#4FA0EE;
+      --brand-deep:#8FC4F5;
+      --brand-wash:rgba(79,160,238,0.14);
+      --teal:#3FC7DA;
+      --moss:#6FCB93;
+      --moss-wash:rgba(111,203,147,0.13);
+      --amber:#E3A055;
+      --amber-wash:rgba(227,160,85,0.14);
+      --rose:#E38684;
+      --rose-wash:rgba(227,134,132,0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -14px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141A22;
+    --paper-raised:#1B2330;
+    --ink:#EAEDF1;
+    --ink-soft:#9DA8B6;
+    --line:rgba(234,237,241,0.13);
+    --line-strong:rgba(234,237,241,0.24);
+    --brand:#4FA0EE;
+    --brand-deep:#8FC4F5;
+    --brand-wash:rgba(79,160,238,0.14);
+    --teal:#3FC7DA;
+    --moss:#6FCB93;
+    --moss-wash:rgba(111,203,147,0.13);
+    --amber:#E3A055;
+    --amber-wash:rgba(227,160,85,0.14);
+    --rose:#E38684;
+    --rose-wash:rgba(227,134,132,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 10px 28px -14px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Karla',system-ui,-apple-system,sans-serif;
+    line-height:1.6;
+  }
+  ::selection{ background:var(--brand); color:#fff; }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:56px 24px 100px; }
+
+  h1,h2,h3,.disp{ font-family:'Quicksand',system-ui,sans-serif; font-weight:700; text-wrap:balance; letter-spacing:-0.01em; }
+  .num, .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--brand);
+  }
+  .eyebrow::before{ content:""; width:16px; height:1.5px; background:var(--brand); display:inline-block; }
+
+  header.masthead{ margin-bottom:44px; }
+  header.masthead h1{ font-size:clamp(28px,4.4vw,42px); line-height:1.12; margin:14px 0 12px; }
+  header.masthead .sub{ font-size:16px; color:var(--ink-soft); max-width:62ch; }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:22px; padding-top:18px;
+    border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-soft);
+  }
+  .meta-row b{ color:var(--ink); font-weight:600; }
+
+  .summary{
+    background:var(--paper-raised); border:1px solid var(--line); border-left:3px solid var(--brand);
+    border-radius:10px; padding:22px 24px; box-shadow:var(--shadow); margin-bottom:8px;
+  }
+  .summary h2{ font-size:14px; text-transform:uppercase; letter-spacing:0.06em; color:var(--brand-deep); margin:0 0 12px; }
+  .summary ul{ margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .summary li{ display:flex; gap:10px; font-size:14.5px; }
+  .summary li::before{ content:"→"; color:var(--brand); font-weight:700; flex-shrink:0; }
+
+  nav.toc{
+    display:flex; flex-wrap:wrap; gap:8px 6px; margin:34px 0 8px; padding:14px 16px;
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+  }
+  nav.toc a{
+    font-size:12.5px; color:var(--ink-soft); text-decoration:none; padding:5px 10px;
+    border-radius:100px; border:1px solid transparent; font-weight:500;
+  }
+  nav.toc a:hover{ color:var(--brand); border-color:var(--line); background:var(--brand-wash); }
+
+  section{ margin-top:64px; scroll-margin-top:24px; }
+  section > .sec-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:22px; }
+  section > .sec-head .n{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--brand); font-weight:600; }
+  section > .sec-head h2{ font-size:23px; margin:0; }
+  section > .sec-head .count{ margin-left:auto; font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; }
+  section p.lead{ color:var(--ink-soft); font-size:14.5px; max-width:70ch; margin:-8px 0 24px; }
+
+  /* İhtiyaç kartları */
+  .need-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(258px,1fr)); gap:12px; }
+  .need{
+    background:var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+    padding:15px 16px; display:flex; flex-direction:column; gap:6px;
+  }
+  .need .tag{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--brand); letter-spacing:0.04em; text-transform:uppercase; }
+  .need h3{ font-size:14.5px; font-weight:600; margin:0; font-family:'Karla',sans-serif; }
+  .need p{ font-size:12.8px; color:var(--ink-soft); margin:0; }
+  .need.law{ border-left:3px solid var(--rose); }
+  .need.law .tag{ color:var(--rose); }
+
+  /* Rakip tablosu */
+  .tbl-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--paper-raised); box-shadow:var(--shadow); }
+  table{ width:100%; border-collapse:collapse; min-width:680px; font-size:13.3px; }
+  thead th{
+    text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-soft); padding:12px 14px; border-bottom:1px solid var(--line-strong);
+    background:var(--paper);
+  }
+  tbody td{ padding:13px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover td{ background:var(--brand-wash); }
+  td.firm{ font-weight:600; }
+  td.firm span{ display:block; font-weight:400; font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+  .price-cell{ font-family:'IBM Plex Mono',monospace; white-space:nowrap; }
+  tr.us td{ background:var(--brand-wash); }
+  tr.us td.firm{ color:var(--brand-deep); }
+
+  /* Dört kutu matrisi */
+  .matrix{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:720px){ .matrix{ grid-template-columns:1fr; } }
+  .box{ background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:20px; box-shadow:var(--shadow); }
+  .box-head{ display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+  .box-head .dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+  .box-head h3{ font-size:14px; margin:0; font-family:'Karla',sans-serif; font-weight:700; }
+  .box.have .dot{ background:var(--moss); } .box.have{ border-top:3px solid var(--moss); }
+  .box.moat .dot{ background:var(--brand); } .box.moat{ border-top:3px solid var(--brand); }
+  .box.add .dot{ background:var(--amber); }  .box.add{ border-top:3px solid var(--amber); }
+  .box.no .dot{ background:var(--rose); }    .box.no{ border-top:3px solid var(--rose); }
+  .box ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .box li{ font-size:13px; padding-left:0; border-top:1px solid var(--line); padding-top:10px; }
+  .box li:first-child{ border-top:none; padding-top:0; }
+  .box li b{ font-weight:600; display:block; margin-bottom:2px; }
+  .box li .note{ color:var(--ink-soft); font-size:12px; }
+  .chip{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.03em; padding:2px 7px; border-radius:5px; margin-left:6px; vertical-align:1px; }
+  .chip.low{ background:var(--moss-wash); color:var(--moss); }
+  .chip.mid{ background:var(--amber-wash); color:var(--amber); }
+  .chip.high{ background:var(--rose-wash); color:var(--rose); }
+
+  /* Fiyatlandırma */
+  .price-compare{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+  @media (max-width:720px){ .price-compare{ grid-template-columns:1fr; } }
+  .ptier{ background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:20px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px; }
+  .ptier.pro{ border-color:var(--brand); box-shadow:0 0 0 1px var(--brand), var(--shadow); position:relative; }
+  .ptier.pro::before{ content:"ÖNERİLEN"; position:absolute; top:-10px; left:16px; background:var(--brand); color:#fff; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.06em; padding:3px 8px; border-radius:5px; }
+  .ptier h4{ font-family:'Karla',sans-serif; font-size:15px; font-weight:700; margin:0; }
+  .ptier .old{ font-size:12px; color:var(--ink-soft); }
+  .ptier .old .num{ text-decoration:line-through; opacity:0.7; }
+  .ptier .new{ display:flex; align-items:baseline; gap:6px; }
+  .ptier .new .num{ font-size:26px; font-weight:600; color:var(--brand-deep); }
+  .ptier .new .unit{ font-size:12px; color:var(--ink-soft); }
+  .ptier .ybs{ font-size:12px; color:var(--ink-soft); padding-top:10px; border-top:1px dashed var(--line-strong); }
+  .ptier .ybs .num{ color:var(--ink); font-weight:600; }
+  .ptier .vs{ font-size:11.5px; color:var(--moss); background:var(--moss-wash); padding:7px 9px; border-radius:7px; }
+
+  .callout{ background:var(--brand-wash); border:1px solid var(--line); border-radius:10px; padding:18px 20px; font-size:13.8px; margin-top:8px; }
+  .callout b{ color:var(--brand-deep); }
+  .callout.warn{ background:var(--amber-wash); }
+  .callout.warn b{ color:var(--amber); }
+
+  .steps{ display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .step{ display:flex; gap:16px; padding:16px 0; border-top:1px solid var(--line); }
+  .step:first-child{ border-top:none; }
+  .step .idx{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--brand); flex-shrink:0; width:20px; padding-top:1px; }
+  .step b{ display:block; font-size:14px; margin-bottom:3px; }
+  .step p{ margin:0; font-size:13px; color:var(--ink-soft); }
+
+  footer{ margin-top:70px; padding-top:20px; border-top:1px solid var(--line); }
+  footer h3{ font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); font-family:'Karla',sans-serif; font-weight:700; margin:0 0 10px; }
+  footer ol{ margin:0; padding-left:18px; font-size:12px; color:var(--ink-soft); display:flex; flex-direction:column; gap:5px; }
+  footer a{ color:var(--ink-soft); }
+  footer a:hover{ color:var(--brand); }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="eyebrow">Virel Drive · İç Değerlendirme</span>
+    <h1>Sürücü kursu otomasyonu pazarında<br>Virel Drive'ı konumlandırmak</h1>
+    <p class="sub">Türkiye'deki MTSK otomasyon yazılımlarının ihtiyaç kümesi, rakip haritası ve tek seferlik lisans satışına geçiş için fiyatlandırma önerisi.</p>
+    <div class="meta-row">
+      <span><b>Tarih:</b> 9 Eylül 2026</span>
+      <span><b>Kapsam:</b> AKINSOFT NetSürücü Plus, TABİM Bilişim, WENNTEC, ÇizgiSoft/surucuegitim.com</span>
+      <span><b>Referans ürün:</b> Virel Drive (canlı sürüm)</span>
+    </div>
+  </header>
+
+  <div class="summary">
+    <h2>Yönetici özeti</h2>
+    <ul>
+      <li>Pazardaki tüm ciddi rakipler (AKINSOFT, TABİM, WENNTEC) <b>masaüstü + yerel MS SQL Server</b> mimarisinde ve <b>tek seferlik modül lisansı</b> satıyor — hiçbiri bulut/aylık abonelik sunmuyor. MTSK sahipleri yazılımı "satın alma" kültürüne alışkın.</li>
+      <li>Rakiplerin ortak zorunlu özelliği <b>MEBBİS / Özel MTSK Modülü entegrasyonu</b> — bu bir devlet sistemine bağlı, yasal bir zorunluluk ve bağımsız bir SaaS'ın kısa vadede erişemeyeceği kapalı bir kapı.</li>
+      <li>Virel Drive'ın gerçek farkı özellik sayısında değil, <b>mimaride</b>: bulut erişim, mobil kursiyer/eğitmen portalı, CRM ve çoklu-kiracı süper admin — bunların hiçbiri rakiplerde yok.</li>
+      <li>Öneri: mevcut aylık SaaS'ı kaldırmadan, pazarın alıştığı <b>tek seferlik lisans + yıllık bakım sözleşmesi (YBS)</b> modelini ikinci bir satış kanalı olarak eklemek.</li>
+    </ul>
+  </div>
+
+  <nav class="toc">
+    <a href="#ihtiyac">1. Sektör ihtiyaçları</a>
+    <a href="#rakip">2. Rakip haritası</a>
+    <a href="#matris">3. Özellik matrisi</a>
+    <a href="#fiyat">4. Tek seferlik satış modeli</a>
+    <a href="#adimlar">5. Sonraki adımlar</a>
+  </nav>
+
+  <section id="ihtiyac">
+    <div class="sec-head"><span class="n">01</span><h2>Bir MTSK'nın gerçekte ihtiyaç duyduğu şeyler</h2></div>
+    <p class="lead">Rakip ürün sayfaları ve MEB yönetmeliği taranarak çıkarılan, bir sürücü kursunun günlük operasyonunu döndüren 12 kalem. Kırmızı çizgili olanlar tercih değil, mevzuat gereği.</p>
+    <div class="need-grid">
+      <div class="need law"><span class="tag">Mevzuat</span><h3>MEBBİS aktarımı</h3><p>Kursiyer kaydı + biyometrik fotoğraf + MERNİS, Özel MTSK Modülü'ne zorunlu aktarım.</p></div>
+      <div class="need law"><span class="tag">Mevzuat</span><h3>Resmî evrak dökümü</h3><p>Ek-7, Ek-7A, K belgesi gibi matbu formların otomatik doldurulup basılması.</p></div>
+      <div class="need"><span class="tag">Operasyon</span><h3>Ders programı</h3><p>Teorik + direksiyon çizelgesi, eğitmen–araç–kursiyer eşleştirme ve çakışma uyarısı.</p></div>
+      <div class="need"><span class="tag">Operasyon</span><h3>Sınav takibi</h3><p>e-Sınav (teorik) sonuç sorgulama, direksiyon sınavı ve güzergah kayıtları.</p></div>
+      <div class="need"><span class="tag">Muhasebe</span><h3>Tahsilat &amp; taksit</h3><p>Makbuz kesimi, taksit planı, banka/POS ile ödeme, gelir-gider takibi.</p></div>
+      <div class="need"><span class="tag">Muhasebe</span><h3>e-Fatura / e-Arşiv</h3><p>GİB entegratörü üzerinden elektronik fatura düzenleme.</p></div>
+      <div class="need"><span class="tag">Personel</span><h3>Eğitmen yönetimi</h3><p>Sözleşme, MEB izin numarası takibi, maaş bordrosu.</p></div>
+      <div class="need"><span class="tag">Filo</span><h3>Araç takibi</h3><p>Ruhsat/muayene/sigorta tarihleri, yakıt-bakım-ceza kayıtları.</p></div>
+      <div class="need"><span class="tag">İletişim</span><h3>Toplu SMS</h3><p>Ders/ödeme/sınav hatırlatmaları için kitlesel kısa mesaj gönderimi.</p></div>
+      <div class="need"><span class="tag">Kursiyer</span><h3>Kendi takibi</h3><p>Kursiyerin kendi ödeme durumunu ve ders programını görebilmesi.</p></div>
+      <div class="need"><span class="tag">İçerik</span><h3>Sınav hazırlık</h3><p>e-Sınav soru bankası ve video anlatım — ayrı bir ürün kategorisi olarak satılıyor.</p></div>
+      <div class="need"><span class="tag">Yönetim</span><h3>Raporlama</h3><p>Doluluk, tahsilat, personel istatistikleri.</p></div>
+    </div>
+  </section>
+
+  <section id="rakip">
+    <div class="sec-head"><span class="n">02</span><h2>Rakip haritası</h2><span class="count">4 firma incelendi</span></div>
+    <p class="lead">Dört farklı sağlayıcının kamuya açık ürün sayfalarından derlendi. TABİM ve WENNTEC fiyatını yayınlamıyor — pazarda "teklif isteyin" satışı yaygın, bu da fiyatın telefonda pazarlıkla belirlendiğini gösteriyor.</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Firma</th><th>Dağıtım</th><th>Fiyat modeli</th><th>MEBBİS</th><th>Öne çıkan</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="firm">AKINSOFT<span>NetSürücü Plus</span></td>
+            <td>Masaüstü, tek bilgisayar/lokal ağ</td>
+            <td class="price-cell">19.600 ₺+KDV / modül<br><span style="color:var(--ink-soft);font-size:11px">(MTSK, SRC, Operatörlük ayrı ayrı)</span></td>
+            <td>✓ + e-Fatura</td>
+            <td>Pazarın en yaygın markası; bayi ağı geniş (Makrokey vb. aynı ürünü satıyor)</td>
+          </tr>
+          <tr>
+            <td class="firm">TABİM Bilişim</td>
+            <td>Masaüstü / yerel</td>
+            <td class="price-cell">Teklif usulü</td>
+            <td>✓</td>
+            <td>Ek-7 / Ek-7A / K belgesi matbu döküm, senet-ihbar-avukat takibi</td>
+          </tr>
+          <tr>
+            <td class="firm">WENNTEC</td>
+            <td>MS SQL Server (merkezi veya lokal)</td>
+            <td class="price-cell">Teklif usulü</td>
+            <td>✓</td>
+            <td>Sınırsız şube/kullanıcı, webcam entegrasyonu, araç yakıt/bakım/ceza takibi</td>
+          </tr>
+          <tr>
+            <td class="firm">ÇizgiSoft ailesi<span>surucuegitim.com, Bulut/Efsane/Ekin/Güven/Kursum</span></td>
+            <td>Markalı mobil uygulama + web</td>
+            <td class="price-cell">~42.000 ₺<br><span style="color:var(--ink-soft);font-size:11px">taksitle satılıyor</span></td>
+            <td>—</td>
+            <td>Farklı kategori: back-office değil, kursiyere yönelik e-sınav/video içerik ürünü</td>
+          </tr>
+          <tr class="us">
+            <td class="firm">Virel Drive</td>
+            <td>Bulut SaaS, tarayıcı</td>
+            <td class="price-cell">Aylık abonelik<br><span style="color:var(--ink-soft);font-size:11px">(bu raporun konusu: + tek seferlik)</span></td>
+            <td>✗ <span style="color:var(--rose)">(§3'te gerekçeli)</span></td>
+            <td>Tek yazılımda hem back-office hem kursiyer/eğitmen mobil portalı + CRM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="matris">
+    <div class="sec-head"><span class="n">03</span><h2>Özellik matrisi: elimizde olan, olmayan, eklenebilecek</h2></div>
+    <p class="lead">Dört rakibin toplamından çıkan özellik kümesiyle Virel Drive karşılaştırıldı.</p>
+    <div class="matrix">
+      <div class="box have">
+        <div class="box-head"><span class="dot"></span><h3>Ortak temel — ikisinde de var</h3></div>
+        <ul>
+          <li><b>Kursiyer kaydı ve evrak eksik takibi</b><span class="note">Rakiplerde matbu form odaklı, bizde dijital durum takibi</span></li>
+          <li><b>Ders programı ve çakışma kontrolü</b></li>
+          <li><b>Taksit / tahsilat takibi</b></li>
+          <li><b>Sınav süreci takibi</b></li>
+          <li><b>Toplu SMS</b><span class="note">Az önce NetGSM ile canlıya alındı — artık gerçek</span></li>
+          <li><b>Raporlama</b></li>
+        </ul>
+      </div>
+      <div class="box moat">
+        <div class="box-head"><span class="dot"></span><h3>Bizim farkımız — rakipte yok</h3></div>
+        <ul>
+          <li><b>Gerçek bulut erişim</b><span class="note">Rakipler masaüstü + yerel SQL Server; VPN kurmadan şube dışından erişilemiyor</span></li>
+          <li><b>Kursiyer + eğitmen mobil self-servis portalı</b><span class="note">Kendi ders programını, ödemesini, mesajını görme</span></li>
+          <li><b>CRM / ön kayıt pipeline'ı</b><span class="note">Adaydan kayda dönüşüm takibi hiçbir rakipte yok</span></li>
+          <li><b>Çoklu-kiracı süper admin konsolu</b><span class="note">Tek yazılımla onlarca kursu merkezi yönetme — bizim iş modelimizin temeli</span></li>
+          <li><b>Sıfır IT bakımı</b><span class="note">Kurulum, yedekleme, güncelleme bizde; rakipte müşterinin kendi PC'sinde</span></li>
+        </ul>
+      </div>
+      <div class="box add">
+        <div class="box-head"><span class="dot"></span><h3>Eklenebilir — yol haritası adayı</h3></div>
+        <ul>
+          <li><b>WhatsApp Business API<span class="chip mid">Orta efor</span></b><span class="note">Resmî başvuru + onay süreci gerekiyor</span></li>
+          <li><b>e-Fatura / e-Arşiv<span class="chip mid">Orta-yüksek efor</span></b><span class="note">GİB entegratörü (Foriba/Uyumsoft) anlaşması gerekir</span></li>
+          <li><b>PayTR ile online tahsilat<span class="chip low">Düşük efor</span></b><span class="note">Vet'te zaten var, Drive'a taşınabilir</span></li>
+          <li><b>Araç yakıt/bakım/ceza takibi<span class="chip low">Düşük efor</span></b><span class="note">Mevcut Araçlar modülüne alan eklemek yeterli</span></li>
+          <li><b>Eğitmen MEB izin no takibi<span class="chip low">Düşük efor</span></b></li>
+          <li><b>Çoklu şube desteği<span class="chip high">Yüksek efor</span></b><span class="note">School altında Branch kavramı — mimari genişleme</span></li>
+        </ul>
+      </div>
+      <div class="box no">
+        <div class="box-head"><span class="dot"></span><h3>Eklenemez / çok zor</h3></div>
+        <ul>
+          <li><b>MEBBİS / Özel MTSK Modülü entegrasyonu</b><span class="note">MEB'in kapalı sistemi; resmî API yok, bağımsız bir SaaS'ın erişimi büyük ölçüde imkansız</span></li>
+          <li><b>Biyometrik fotoğraf + MERNİS aktarımı</b><span class="note">Aynı devlet-sistemi kısıtı, MEBBİS'e bağımlı</span></li>
+          <li><b>e-Sınav soru bankası + video ders</b><span class="note">Yazılım değil, telif/lisanslı içerik üretimi işi — 3. parti ortaklık dışında kapsam dışı</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="fiyat">
+    <div class="sec-head"><span class="n">04</span><h2>Tek seferlik satış modeli</h2></div>
+    <p class="lead">Pazardaki her ciddi rakip modül başına tek seferlik lisans satıyor. Aylık SaaS'ı kaldırmadan, bu alışkanlığa hitap eden ikinci bir fiyat kartı öneriliyor: <b>lisans (tek seferlik) + yıllık bakım/barındırma sözleşmesi (YBS)</b> — Logo/Mikro/Netsis gibi yerleşik TR muhasebe yazılımlarının da kullandığı, alıcının zaten tanıdığı model.</p>
+
+    <div class="price-compare">
+      <div class="ptier">
+        <h4>Başlangıç</h4>
+        <div class="old">Mevcut: <span class="num">₺790</span> / ay</div>
+        <div class="new"><span class="num">16.900 ₺</span><span class="unit">+KDV, tek seferlik</span></div>
+        <div class="ybs">2. yıldan itibaren <span class="num">3.900 ₺</span>/yıl bakım-barındırma</div>
+        <div class="vs">AKINSOFT tek modül: 19.600 ₺+KDV — daha ucuza tüm back-office</div>
+      </div>
+      <div class="ptier pro">
+        <h4>Profesyonel</h4>
+        <div class="old">Mevcut: <span class="num">₺2.190</span> / ay</div>
+        <div class="new"><span class="num">45.900 ₺</span><span class="unit">+KDV, tek seferlik</span></div>
+        <div class="ybs">2. yıldan itibaren <span class="num">9.900 ₺</span>/yıl bakım-barındırma</div>
+        <div class="vs">ÇizgiSoft'un "42.000 ₺ değerinde" iddiasına denk, üstelik CRM + mobil portal dahil</div>
+      </div>
+      <div class="ptier">
+        <h4>Kurumsal</h4>
+        <div class="old">Mevcut: <span class="num">₺4.490</span> / ay</div>
+        <div class="new"><span class="num">94.900 ₺</span><span class="unit">+KDV, tek seferlik</span></div>
+        <div class="ybs">2. yıldan itibaren <span class="num">20.900 ₺</span>/yıl bakım-barındırma</div>
+        <div class="vs" style="background:var(--amber-wash);color:var(--amber)">AKINSOFT'un 3 modül toplamından (58.800 ₺+KDV) pahalı — bulut/mobil/CRM ile gerekçelendi</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Hesaplama mantığı:</b> her paketin tek seferlik fiyatı, aylık ücretin ~20–21 katı alınıp yuvarlanarak bulundu — SaaS'tan kalıcı lisansa geçişte yaygın kullanılan 18–36 aylık geri ödeme aralığının alt-orta bandı. İlk yıl bakım-barındırma bedeli lisansa dahil satılabilir; bu, kapanışı kolaylaştıran standart bir teşviktir.</div>
+
+    <div class="callout warn" style="margin-top:12px"><b>Neden "gerçek" tek seferlik değil, lisans + YBS:</b> AKINSOFT/TABİM/WENNTEC'te yazılım müşterinin kendi bilgisayarında çalışıyor — barındırma maliyeti onlara değil, müşteriye ait. Virel Drive bulutta çalıştığı için sunucu, veritabanı, yedekleme ve SSL maliyeti satış sonrasında da bize ait kalıyor; bu yüzden saf bir "öde-bitsin" lisans finansal olarak sürdürülemez. YBS bu farkı karşılıyor ve pazarın zaten Logo/Mikro/Netsis'ten tanıdığı bir model.</div>
+
+    <div class="callout" style="margin-top:12px"><b>Taksit:</b> ÇizgiSoft/surucuegitim.com da satışını taksitle yapıyor — PayTR sanal POS'u (Virel Vet'te zaten entegre) üzerinden 12 taksite kadar kredi kartı seçeneği sunulmalı.</div>
+  </section>
+
+  <section id="adimlar">
+    <div class="sec-head"><span class="n">05</span><h2>Sonraki adımlar</h2></div>
+    <div class="steps">
+      <div class="step"><span class="idx">01</span><div><b>Aylığı kaldırma, yanına ekleme</b><p>Mevcut ₺790/₺2.190/₺4.490 aylık planlar kalsın; fiyatlandırma sayfasına ikinci bir sekme olarak "Tek seferlik lisans" eklensin. Nakit akışı kısıtlı yeni kurslar aylığı, yerleşik/büyük kurslar (rakiplerin asıl kitlesi) lisansı seçsin.</p></div></div>
+      <div class="step"><span class="idx">02</span><div><b>PayTR taksit akışını Drive'a taşı</b><p>Vet'te çalışan entegrasyon; tek seferlik lisans satışının 12 taksitle sunulabilmesi için ön koşul.</p></div></div>
+      <div class="step"><span class="idx">03</span><div><b>YBS'yi faturalandırma döngüsüne bağla</b><p>İlk yıl lisansla birlikte "ücretsiz" sunulan bakım-barındırma, 12. ayda otomatik yıllık faturaya dönüşmeli — aksi halde ikinci yıldan gelir kaybı oluşur.</p></div></div>
+      <div class="step"><span class="idx">04</span><div><b>Düşük efor eklerle rakip farkını kapat</b><p>Araç yakıt/bakım/ceza takibi ve eğitmen MEB izin no alanı, mevcut Araçlar/Eğitmenler modüllerine küçük eklerle rakip özelliği görünüşte tamamlar — satış konuşmasında "MEBBİS hariç her şey var" demeyi güçlendirir.</p></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <h3>Kaynaklar</h3>
+    <ol>
+      <li><a href="https://www.akinsoft.com.tr/sektorel-cozumler/surucu-kursu-programi" target="_blank" rel="noopener">AKINSOFT NetSürücü Plus ürün sayfası</a></li>
+      <li><a href="https://www.tabim.com.tr/surucu-kursu-programi" target="_blank" rel="noopener">TABİM Bilişim sürücü kursu programı</a></li>
+      <li><a href="https://wenntec.com.tr/surucu-kursu-programi/" target="_blank" rel="noopener">WENNTEC sürücü kursu programı</a></li>
+      <li><a href="https://surucuegitim.com/" target="_blank" rel="noopener">Sürücü Eğitim / ÇizgiSoft ürün ailesi</a></li>
+      <li><a href="https://ookgm.meb.gov.tr/meb_iys_dosyalar/2025_01/13144439_mtsk.pdf" target="_blank" rel="noopener">MEB Özel Motorlu Taşıt Sürücüleri Kursu Yönetmeliği</a></li>
+      <li><a href="https://www.ehliyetadresi.com/Mtsk/YayinGoster/ozel-mtsk-modul-mebb%C4%B1s-aktariminda-dikkat-edilmesi-gerekenler-310" target="_blank" rel="noopener">Özel MTSK Modül (MEBBİS) aktarımı — dikkat edilmesi gerekenler</a></li>
+      <li>Virel Drive canlı fiyatlandırma: <span class="mono">web/src/app/page.tsx</span> (PLANS sabiti)</li>
+    </ol>
+  </footer>
+
+</div>

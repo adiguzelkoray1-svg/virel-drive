@@ -8,7 +8,7 @@ import { DemoForm } from "@/components/DemoForm";
 import { requestDemoAction } from "@/app/actions/demo";
 import { DEMO_SIZES } from "@/lib/demo";
 import { SCHOOL_PLAN_LIMITS } from "@/lib/constants";
-import { number } from "@/lib/format";
+import { PricingTabs, type PricingPlan } from "@/components/PricingTabs";
 
 export const metadata: Metadata = {
   title: "Virel Drive · Sürücü kursları için yönetim platformu",
@@ -26,17 +26,24 @@ const FEATURES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "phone", title: "Mobil eğitmen ve kursiyer uygulaması", desc: "Eğitmen dersini telefonundan tamamlar, kursiyer ilerlemesini ve borcunu kendi telefonundan görür." },
 ];
 
-const PLANS: { key: keyof typeof SCHOOL_PLAN_LIMITS; name: string; priceMonthly: number; features: string[] }[] = [
+/**
+ * Tek seferlik lisans fiyatları aylık ücretin ~20-21 katı alınıp yuvarlanarak belirlendi
+ * (SaaS'tan kalıcı lisansa geçişte yaygın 18-36 aylık geri ödeme aralığının alt-orta bandı).
+ * Yıllık bakım-barındırma (YBS) lisans bedelinin ~%22'si — bulut sunucu/veritabanı/yedekleme
+ * maliyeti rakiplerin masaüstü modelinin aksine satış sonrasında da bize ait kaldığı için
+ * gerekiyor (bkz. pazar analizi: Logo/Mikro/Netsis'in de kullandığı, pazarın tanıdığı model).
+ */
+const PLANS: { key: keyof typeof SCHOOL_PLAN_LIMITS; name: string; priceMonthly: number; priceOneTime: number; priceMaintenanceYearly: number; features: string[] }[] = [
   {
-    key: "STARTER", name: "Başlangıç", priceMonthly: 79000,
+    key: "STARTER", name: "Başlangıç", priceMonthly: 79000, priceOneTime: 1690000, priceMaintenanceYearly: 390000,
     features: ["Direksiyon dersleri, kursiyer dosyası, teorik eğitim, sınavlar", "Tahsilat ve ödeme planı takibi", "Kursiyer mobil portalı"],
   },
   {
-    key: "PRO", name: "Profesyonel", priceMonthly: 219000,
+    key: "PRO", name: "Profesyonel", priceMonthly: 219000, priceOneTime: 4590000, priceMaintenanceYearly: 990000,
     features: ["Başlangıç'taki her şey", "CRM ve ön kayıt pipeline'ı", "Raporlar ve CSV dışa aktarma", "WhatsApp/SMS hatırlatmaları", "Eğitmen mobil portalı"],
   },
   {
-    key: "ENTERPRISE", name: "Kurumsal", priceMonthly: 449000,
+    key: "ENTERPRISE", name: "Kurumsal", priceMonthly: 449000, priceOneTime: 9490000, priceMaintenanceYearly: 2090000,
     features: ["Profesyonel'deki her şey", "En yüksek kullanıcı/kursiyer limiti", "Öncelikli destek", "Hesap yöneticisi"],
   },
 ];
@@ -130,31 +137,13 @@ export default async function LandingPage() {
             <h2 className="font-display text-[30px] font-bold mt-2 tracking-tight">Kursunuza göre plan seçin.</h2>
             <p className="text-text-2 mt-3 leading-relaxed">Tüm planlar 14 günlük ücretsiz denemeyle başlar. Fiyatlar aylık, KDV hariçtir.</p>
           </div>
-          <div className="grid lg:grid-cols-3 gap-6">
-            {PLANS.map((p, i) => {
-              const limits = SCHOOL_PLAN_LIMITS[p.key];
-              return (
-                <div key={p.key} className={`rounded-[16px] p-6 flex flex-col gap-4 bg-surface ${i === 1 ? "ring-2 ring-blue relative" : "border border-border"}`}>
-                  {i === 1 && <span className="absolute -top-3 left-6 badge b-brand text-[11px]">En çok tercih edilen</span>}
-                  <div>
-                    <h3 className="font-display text-lg font-bold">{p.name}</h3>
-                    <p className="text-xs text-text-2 mt-1">{number(limits.userLimit)} kullanıcı · {number(limits.studentLimit)} kursiyer</p>
-                  </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-display text-3xl font-bold tabular">₺{number(p.priceMonthly / 100)}</span>
-                    <span className="text-text-2 text-sm">/ ay</span>
-                  </div>
-                  <ul className="flex flex-col gap-2.5 flex-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-[13px] text-text-2"><Icon name="check" size={14} className="text-success mt-0.5 shrink-0" />{f}</li>
-                    ))}
-                  </ul>
-                  <a href="#demo" className={`btn h-11 justify-center ${i === 1 ? "btn-primary" : "btn-secondary"}`}>Ücretsiz denemeye başla</a>
-                </div>
-              );
-            })}
-          </div>
-          <p className="text-xs text-muted mt-6 max-w-[640px]">Faturalar kursunuzun kendi vergi kimliğiyle kesilir; Virel yalnızca abonelik faturası düzenler. Kurumsal için özel fiyat: demo talep edin.</p>
+          <PricingTabs
+            plans={PLANS.map((p): PricingPlan => ({
+              key: p.key, name: p.name, features: p.features,
+              userLimit: SCHOOL_PLAN_LIMITS[p.key].userLimit, studentLimit: SCHOOL_PLAN_LIMITS[p.key].studentLimit,
+              priceMonthly: p.priceMonthly, priceOneTime: p.priceOneTime, priceMaintenanceYearly: p.priceMaintenanceYearly,
+            }))}
+          />
         </div>
       </section>
 
