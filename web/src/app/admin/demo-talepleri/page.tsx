@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Badge, Card, EmptyState, PageHeader } from "@/components/ui";
 import { listDemoRequests, DEMO_SIZES, DEMO_STATUS_LABEL } from "@/lib/demo";
-import { setDemoStatusAction } from "@/app/actions/demo";
+import { deleteDemoRequestAction, setDemoStatusAction } from "@/app/actions/demo";
+import { ConfirmDeleteButton } from "@/components/ConfirmDeleteButton";
 import { dateTime, initials } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Demo Talepleri" };
@@ -39,6 +40,7 @@ export default async function DemoRequestsPage() {
                       <form action={setDemoStatusAction}><input type="hidden" name="id" value={d.id} /><button name="status" value="CLOSED" className="btn btn-ghost btn-xs">Kapat</button></form>
                     </>}
                     {(d.status === "CLOSED" || d.status === "CONVERTED") && <form action={setDemoStatusAction}><input type="hidden" name="id" value={d.id} /><button name="status" value="NEW" className="btn btn-ghost btn-xs">Yeniden aç</button></form>}
+                    <form action={deleteDemoRequestAction}><input type="hidden" name="id" value={d.id} /><ConfirmDeleteButton message={`"${d.schoolName}" demo talebi kalıcı olarak silinsin mi? Bu işlem geri alınamaz.`} /></form>
                   </div>
                 </div>
                 {(d.message || d.status !== "CONVERTED") && (

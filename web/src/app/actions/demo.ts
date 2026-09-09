@@ -58,3 +58,15 @@ export async function setDemoStatusAction(form: FormData) {
   await audit({ actorId: admin.id, action: "demo.status", target: r.schoolName, meta: { status } });
   revalidatePath("/admin/demo-talepleri");
 }
+
+/** Demo talebini kalıcı olarak siler (test kayıtları, mükerrerler). Denetim kaydına düşer. */
+export async function deleteDemoRequestAction(form: FormData) {
+  const admin = await requireSuperAdmin();
+  const id = String(form.get("id") ?? "");
+  if (!id) return;
+  const r = await prisma.demoRequest.findUnique({ where: { id } });
+  if (!r) return;
+  await prisma.demoRequest.delete({ where: { id } });
+  await audit({ actorId: admin.id, action: "demo.delete", target: r.schoolName, meta: { email: r.email, source: r.source } });
+  revalidatePath("/admin/demo-talepleri");
+}
