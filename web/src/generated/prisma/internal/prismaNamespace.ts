@@ -2127,6 +2127,9 @@ export const SchoolScalarFieldEnum = {
   approvedAt: 'approvedAt',
   kvkkAcceptedAt: 'kvkkAcceptedAt',
   settings: 'settings',
+  netgsmUsername: 'netgsmUsername',
+  netgsmPassword: 'netgsmPassword',
+  netgsmHeader: 'netgsmHeader',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

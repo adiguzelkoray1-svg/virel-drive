@@ -14,10 +14,10 @@ const Schema = z.object({
 });
 
 /**
- * Mesaj gönderir. SMS kanalı NETGSM_* tanımlıysa gerçekten NetGSM üzerinden gider (bkz.
- * lib/sms.ts); WhatsApp/e-posta/push hâlâ simüle ediliyor (bkz. README "Mesajlar hakkında") —
- * o kanallar için gönderim anında durum doğrudan SENT olarak yazılır. Bir sağlayıcı daha
- * bağlandığında burası da aynı desenle genişler.
+ * Mesaj gönderir. SMS kanalı, kurs kendi NetGSM bilgilerini Ayarlar › Entegrasyonlar'dan
+ * girmişse gerçekten NetGSM üzerinden gider (bkz. lib/sms.ts); WhatsApp/e-posta/push hâlâ
+ * simüle ediliyor (bkz. README "Mesajlar hakkında") — o kanallar için gönderim anında durum
+ * doğrudan SENT olarak yazılır. Bir sağlayıcı daha bağlandığında burası da aynı desenle genişler.
  */
 export async function sendMessageAction(_prev: SendMessageState, formData: FormData): Promise<SendMessageState> {
   const user = await requirePermission("message.send");
@@ -32,9 +32,13 @@ export async function sendMessageAction(_prev: SendMessageState, formData: FormD
   let status = "SENT";
   let errorNote: string | null = null;
   if (v.channel === "SMS") {
-    const result = await sendSms(student.phone, v.body);
-    // NETGSM_* tanımsızsa result.error hiç yok — o zaman diğer kanallar gibi simüle edilmiş SENT sayılır.
-    // Gerçekten yapılandırılmışken NetGSM hata dönerse FAILED yazılır ve kullanıcıya gösterilir.
+    const school = await prisma.school.findUniqueOrThrow({
+      where: { id: user.schoolId },
+      select: { netgsmUsername: true, netgsmPassword: true, netgsmHeader: true },
+    });
+    const result = await sendSms(school, student.phone, v.body);
+    // Kurs kendi NetGSM bilgilerini girmemişse result.error hiç yok — o zaman diğer kanallar gibi
+    // simüle edilmiş SENT sayılır. Gerçekten yapılandırılmışken NetGSM hata dönerse FAILED yazılır.
     if (result.error) status = "FAILED";
     errorNote = result.error ?? null;
   }

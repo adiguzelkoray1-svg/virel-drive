@@ -34,6 +34,13 @@ model School {
   approvedAt   DateTime?
   kvkkAcceptedAt DateTime?
   settings     String?   // JSON: çalışma saatleri, derslikler, fatura öneki
+
+  // Her kurs SMS'i kendi NetGSM hesabından gönderir — paylaşılan bir platform hesabı yok.
+  // Şifre düz metin: NetGSM API'sine her gönderimde yeniden kullanılması gerekiyor, tek yönlü
+  // hash'lenemez (kullanıcı şifreleri gibi değil). Yalnızca settings.write yetkisi olanlar görür/değiştirir.
+  netgsmUsername String?
+  netgsmPassword String?
+  netgsmHeader   String?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 

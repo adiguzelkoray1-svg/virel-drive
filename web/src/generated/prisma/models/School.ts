@@ -58,6 +58,9 @@ export type SchoolMinAggregateOutputType = {
   approvedAt: Date | null
   kvkkAcceptedAt: Date | null
   settings: string | null
+  netgsmUsername: string | null
+  netgsmPassword: string | null
+  netgsmHeader: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,6 +87,9 @@ export type SchoolMaxAggregateOutputType = {
   approvedAt: Date | null
   kvkkAcceptedAt: Date | null
   settings: string | null
+  netgsmUsername: string | null
+  netgsmPassword: string | null
+  netgsmHeader: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -110,6 +116,9 @@ export type SchoolCountAggregateOutputType = {
   approvedAt: number
   kvkkAcceptedAt: number
   settings: number
+  netgsmUsername: number
+  netgsmPassword: number
+  netgsmHeader: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -148,6 +157,9 @@ export type SchoolMinAggregateInputType = {
   approvedAt?: true
   kvkkAcceptedAt?: true
   settings?: true
+  netgsmUsername?: true
+  netgsmPassword?: true
+  netgsmHeader?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -174,6 +186,9 @@ export type SchoolMaxAggregateInputType = {
   approvedAt?: true
   kvkkAcceptedAt?: true
   settings?: true
+  netgsmUsername?: true
+  netgsmPassword?: true
+  netgsmHeader?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -200,6 +215,9 @@ export type SchoolCountAggregateInputType = {
   approvedAt?: true
   kvkkAcceptedAt?: true
   settings?: true
+  netgsmUsername?: true
+  netgsmPassword?: true
+  netgsmHeader?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -313,6 +331,9 @@ export type SchoolGroupByOutputType = {
   approvedAt: Date | null
   kvkkAcceptedAt: Date | null
   settings: string | null
+  netgsmUsername: string | null
+  netgsmPassword: string | null
+  netgsmHeader: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolCountAggregateOutputType | null
@@ -362,6 +383,9 @@ export type SchoolWhereInput = {
   approvedAt?: Prisma.DateTimeNullableFilter<"School"> | Date | string | null
   kvkkAcceptedAt?: Prisma.DateTimeNullableFilter<"School"> | Date | string | null
   settings?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmUsername?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmPassword?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmHeader?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -408,6 +432,9 @@ export type SchoolOrderByWithRelationInput = {
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   kvkkAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   settings?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmPassword?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmHeader?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
@@ -457,6 +484,9 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   approvedAt?: Prisma.DateTimeNullableFilter<"School"> | Date | string | null
   kvkkAcceptedAt?: Prisma.DateTimeNullableFilter<"School"> | Date | string | null
   settings?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmUsername?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmPassword?: Prisma.StringNullableFilter<"School"> | string | null
+  netgsmHeader?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
   users?: Prisma.UserListRelationFilter
@@ -503,6 +533,9 @@ export type SchoolOrderByWithAggregationInput = {
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   kvkkAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   settings?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmUsername?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmPassword?: Prisma.SortOrderInput | Prisma.SortOrder
+  netgsmHeader?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolCountOrderByAggregateInput
@@ -537,6 +570,9 @@ export type SchoolScalarWhereWithAggregatesInput = {
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"School"> | Date | string | null
   kvkkAcceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"School"> | Date | string | null
   settings?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
+  netgsmUsername?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
+  netgsmPassword?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
+  netgsmHeader?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
 }
@@ -563,6 +599,9 @@ export type SchoolCreateInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -609,6 +648,9 @@ export type SchoolUncheckedCreateInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -655,6 +697,9 @@ export type SchoolUpdateInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -701,6 +746,9 @@ export type SchoolUncheckedUpdateInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -747,6 +795,9 @@ export type SchoolCreateManyInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -773,6 +824,9 @@ export type SchoolUpdateManyMutationInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -799,6 +853,9 @@ export type SchoolUncheckedUpdateManyInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -825,6 +882,9 @@ export type SchoolCountOrderByAggregateInput = {
   approvedAt?: Prisma.SortOrder
   kvkkAcceptedAt?: Prisma.SortOrder
   settings?: Prisma.SortOrder
+  netgsmUsername?: Prisma.SortOrder
+  netgsmPassword?: Prisma.SortOrder
+  netgsmHeader?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -856,6 +916,9 @@ export type SchoolMaxOrderByAggregateInput = {
   approvedAt?: Prisma.SortOrder
   kvkkAcceptedAt?: Prisma.SortOrder
   settings?: Prisma.SortOrder
+  netgsmUsername?: Prisma.SortOrder
+  netgsmPassword?: Prisma.SortOrder
+  netgsmHeader?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -882,6 +945,9 @@ export type SchoolMinOrderByAggregateInput = {
   approvedAt?: Prisma.SortOrder
   kvkkAcceptedAt?: Prisma.SortOrder
   settings?: Prisma.SortOrder
+  netgsmUsername?: Prisma.SortOrder
+  netgsmPassword?: Prisma.SortOrder
+  netgsmHeader?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -1231,6 +1297,9 @@ export type SchoolCreateWithoutUsersInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   students?: Prisma.StudentCreateNestedManyWithoutSchoolInput
@@ -1276,6 +1345,9 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   students?: Prisma.StudentUncheckedCreateNestedManyWithoutSchoolInput
@@ -1337,6 +1409,9 @@ export type SchoolUpdateWithoutUsersInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   students?: Prisma.StudentUpdateManyWithoutSchoolNestedInput
@@ -1382,6 +1457,9 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   students?: Prisma.StudentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1427,6 +1505,9 @@ export type SchoolCreateWithoutStudentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -1472,6 +1553,9 @@ export type SchoolUncheckedCreateWithoutStudentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -1533,6 +1617,9 @@ export type SchoolUpdateWithoutStudentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -1578,6 +1665,9 @@ export type SchoolUncheckedUpdateWithoutStudentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1623,6 +1713,9 @@ export type SchoolCreateWithoutLeadsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -1668,6 +1761,9 @@ export type SchoolUncheckedCreateWithoutLeadsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -1729,6 +1825,9 @@ export type SchoolUpdateWithoutLeadsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -1774,6 +1873,9 @@ export type SchoolUncheckedUpdateWithoutLeadsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1819,6 +1921,9 @@ export type SchoolCreateWithoutDocumentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -1864,6 +1969,9 @@ export type SchoolUncheckedCreateWithoutDocumentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -1925,6 +2033,9 @@ export type SchoolUpdateWithoutDocumentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -1970,6 +2081,9 @@ export type SchoolUncheckedUpdateWithoutDocumentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2015,6 +2129,9 @@ export type SchoolCreateWithoutInstructorsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -2060,6 +2177,9 @@ export type SchoolUncheckedCreateWithoutInstructorsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -2121,6 +2241,9 @@ export type SchoolUpdateWithoutInstructorsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -2166,6 +2289,9 @@ export type SchoolUncheckedUpdateWithoutInstructorsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2211,6 +2337,9 @@ export type SchoolCreateWithoutVehiclesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -2256,6 +2385,9 @@ export type SchoolUncheckedCreateWithoutVehiclesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -2317,6 +2449,9 @@ export type SchoolUpdateWithoutVehiclesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -2362,6 +2497,9 @@ export type SchoolUncheckedUpdateWithoutVehiclesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2407,6 +2545,9 @@ export type SchoolCreateWithoutVehicleCostsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -2452,6 +2593,9 @@ export type SchoolUncheckedCreateWithoutVehicleCostsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -2513,6 +2657,9 @@ export type SchoolUpdateWithoutVehicleCostsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -2558,6 +2705,9 @@ export type SchoolUncheckedUpdateWithoutVehicleCostsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2603,6 +2753,9 @@ export type SchoolCreateWithoutTheoryLessonsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -2648,6 +2801,9 @@ export type SchoolUncheckedCreateWithoutTheoryLessonsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -2709,6 +2865,9 @@ export type SchoolUpdateWithoutTheoryLessonsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -2754,6 +2913,9 @@ export type SchoolUncheckedUpdateWithoutTheoryLessonsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2799,6 +2961,9 @@ export type SchoolCreateWithoutAttendancesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -2844,6 +3009,9 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -2905,6 +3073,9 @@ export type SchoolUpdateWithoutAttendancesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -2950,6 +3121,9 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2995,6 +3169,9 @@ export type SchoolCreateWithoutDrivingLessonsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -3040,6 +3217,9 @@ export type SchoolUncheckedCreateWithoutDrivingLessonsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -3101,6 +3281,9 @@ export type SchoolUpdateWithoutDrivingLessonsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -3146,6 +3329,9 @@ export type SchoolUncheckedUpdateWithoutDrivingLessonsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3191,6 +3377,9 @@ export type SchoolCreateWithoutSkillRatingsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -3236,6 +3425,9 @@ export type SchoolUncheckedCreateWithoutSkillRatingsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -3297,6 +3489,9 @@ export type SchoolUpdateWithoutSkillRatingsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -3342,6 +3537,9 @@ export type SchoolUncheckedUpdateWithoutSkillRatingsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3387,6 +3585,9 @@ export type SchoolCreateWithoutExamsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -3432,6 +3633,9 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -3493,6 +3697,9 @@ export type SchoolUpdateWithoutExamsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -3538,6 +3745,9 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3583,6 +3793,9 @@ export type SchoolCreateWithoutPaymentPlansInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -3628,6 +3841,9 @@ export type SchoolUncheckedCreateWithoutPaymentPlansInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -3689,6 +3905,9 @@ export type SchoolUpdateWithoutPaymentPlansInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -3734,6 +3953,9 @@ export type SchoolUncheckedUpdateWithoutPaymentPlansInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3779,6 +4001,9 @@ export type SchoolCreateWithoutInstallmentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -3824,6 +4049,9 @@ export type SchoolUncheckedCreateWithoutInstallmentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -3885,6 +4113,9 @@ export type SchoolUpdateWithoutInstallmentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -3930,6 +4161,9 @@ export type SchoolUncheckedUpdateWithoutInstallmentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3975,6 +4209,9 @@ export type SchoolCreateWithoutPaymentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -4020,6 +4257,9 @@ export type SchoolUncheckedCreateWithoutPaymentsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -4081,6 +4321,9 @@ export type SchoolUpdateWithoutPaymentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -4126,6 +4369,9 @@ export type SchoolUncheckedUpdateWithoutPaymentsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4171,6 +4417,9 @@ export type SchoolCreateWithoutExpensesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -4216,6 +4465,9 @@ export type SchoolUncheckedCreateWithoutExpensesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -4277,6 +4529,9 @@ export type SchoolUpdateWithoutExpensesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -4322,6 +4577,9 @@ export type SchoolUncheckedUpdateWithoutExpensesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4367,6 +4625,9 @@ export type SchoolCreateWithoutMessagesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -4412,6 +4673,9 @@ export type SchoolUncheckedCreateWithoutMessagesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -4473,6 +4737,9 @@ export type SchoolUpdateWithoutMessagesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -4518,6 +4785,9 @@ export type SchoolUncheckedUpdateWithoutMessagesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4563,6 +4833,9 @@ export type SchoolCreateWithoutClassRulesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -4608,6 +4881,9 @@ export type SchoolUncheckedCreateWithoutClassRulesInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -4669,6 +4945,9 @@ export type SchoolUpdateWithoutClassRulesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -4714,6 +4993,9 @@ export type SchoolUncheckedUpdateWithoutClassRulesInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4759,6 +5041,9 @@ export type SchoolCreateWithoutRegulationsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -4804,6 +5089,9 @@ export type SchoolUncheckedCreateWithoutRegulationsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -4865,6 +5153,9 @@ export type SchoolUpdateWithoutRegulationsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -4910,6 +5201,9 @@ export type SchoolUncheckedUpdateWithoutRegulationsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4955,6 +5249,9 @@ export type SchoolCreateWithoutAuditLogsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
@@ -5000,6 +5297,9 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   approvedAt?: Date | string | null
   kvkkAcceptedAt?: Date | string | null
   settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
@@ -5061,6 +5361,9 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
@@ -5106,6 +5409,9 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5353,6 +5659,9 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   approvedAt?: boolean
   kvkkAcceptedAt?: boolean
   settings?: boolean
+  netgsmUsername?: boolean
+  netgsmPassword?: boolean
+  netgsmHeader?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.School$usersArgs<ExtArgs>
@@ -5400,6 +5709,9 @@ export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   approvedAt?: boolean
   kvkkAcceptedAt?: boolean
   settings?: boolean
+  netgsmUsername?: boolean
+  netgsmPassword?: boolean
+  netgsmHeader?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -5426,6 +5738,9 @@ export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   approvedAt?: boolean
   kvkkAcceptedAt?: boolean
   settings?: boolean
+  netgsmUsername?: boolean
+  netgsmPassword?: boolean
+  netgsmHeader?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -5452,11 +5767,14 @@ export type SchoolSelectScalar = {
   approvedAt?: boolean
   kvkkAcceptedAt?: boolean
   settings?: boolean
+  netgsmUsername?: boolean
+  netgsmPassword?: boolean
+  netgsmHeader?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "city" | "district" | "phone" | "email" | "address" | "taxNumber" | "taxOffice" | "mebCode" | "timezone" | "currency" | "status" | "plan" | "trialEndsAt" | "userLimit" | "studentLimit" | "approvedAt" | "kvkkAcceptedAt" | "settings" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
+export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "city" | "district" | "phone" | "email" | "address" | "taxNumber" | "taxOffice" | "mebCode" | "timezone" | "currency" | "status" | "plan" | "trialEndsAt" | "userLimit" | "studentLimit" | "approvedAt" | "kvkkAcceptedAt" | "settings" | "netgsmUsername" | "netgsmPassword" | "netgsmHeader" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
 export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.School$usersArgs<ExtArgs>
   students?: boolean | Prisma.School$studentsArgs<ExtArgs>
@@ -5529,6 +5847,9 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     approvedAt: Date | null
     kvkkAcceptedAt: Date | null
     settings: string | null
+    netgsmUsername: string | null
+    netgsmPassword: string | null
+    netgsmHeader: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["school"]>
@@ -5995,6 +6316,9 @@ export interface SchoolFieldRefs {
   readonly approvedAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly kvkkAcceptedAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly settings: Prisma.FieldRef<"School", 'String'>
+  readonly netgsmUsername: Prisma.FieldRef<"School", 'String'>
+  readonly netgsmPassword: Prisma.FieldRef<"School", 'String'>
+  readonly netgsmHeader: Prisma.FieldRef<"School", 'String'>
   readonly createdAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"School", 'DateTime'>
 }

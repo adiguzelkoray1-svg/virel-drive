@@ -5,3 +5,6 @@ export const emptyRegulationState: RegulationFormState = {};
 
 export type ClassRuleFormState = { error?: string; values?: Record<string, string> };
 export const emptyClassRuleState: ClassRuleFormState = {};
+
+export type IntegrationsFormState = { error?: string; ok?: boolean };
+export const emptyIntegrationsState: IntegrationsFormState = {};

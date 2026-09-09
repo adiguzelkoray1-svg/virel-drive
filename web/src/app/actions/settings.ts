@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { audit, requirePermission } from "@/lib/auth";
 import { setRegulation } from "@/lib/regulation";
 import { REGULATION_BOOL_FIELDS, REGULATION_NUMBER_FIELDS } from "@/lib/constants";
-import type { RegulationFormState, ClassRuleFormState } from "@/lib/settings-form";
+import type { RegulationFormState, ClassRuleFormState, IntegrationsFormState } from "@/lib/settings-form";
 
 /**
  * Ders/devam ve sınav/süreç kurallarının tamamını tek seferde kaydeder. Sayısal alanlar
@@ -85,4 +85,35 @@ export async function toggleLicenseClassActiveAction(formData: FormData) {
   await audit({ schoolId: user.schoolId, actorId: user.id, action: rule.isActive ? "class-rule.deactivate" : "class-rule.activate", target: id, meta: { code: rule.code } });
   revalidatePath("/app/ayarlar");
   redirect(`/app/ayarlar?sinif=${rule.isActive ? "pasif" : "aktif"}`);
+}
+
+const IntegrationsSchema = z.object({
+  netgsmUsername: z.string().trim().max(190).optional(),
+  netgsmPassword: z.string().trim().max(190).optional(),
+  netgsmHeader: z.string().trim().max(190).optional(),
+});
+
+/** Kursun kendi NetGSM hesabını kaydeder. Üç alan da doldurulmuşsa SMS gerçekten NetGSM
+ *  üzerinden gider (bkz. lib/sms.ts::smsConfigured); herhangi biri boşsa hâlihazırdaki
+ *  gibi simüle edilmiş gönderime döner. Şifre bilerek düz metin saklanır — NetGSM API'sine
+ *  her gönderimde yeniden sunulması gerekir, tek yönlü hash'lenemez (bkz. schema.prisma). */
+export async function updateIntegrationsAction(_prev: IntegrationsFormState, formData: FormData): Promise<IntegrationsFormState> {
+  const user = await requirePermission("settings.write");
+  const parsed = IntegrationsSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Alanları kontrol edin." };
+  const v = parsed.data;
+
+  await prisma.school.update({
+    where: { id: user.schoolId },
+    data: {
+      netgsmUsername: v.netgsmUsername || null,
+      netgsmPassword: v.netgsmPassword || null,
+      netgsmHeader: v.netgsmHeader || null,
+    },
+  });
+
+  await audit({ schoolId: user.schoolId, actorId: user.id, action: "integrations.netgsm.update" });
+  revalidatePath("/app/ayarlar/entegrasyonlar");
+  revalidatePath("/app/mesajlar");
+  return { ok: true };
 }

@@ -4,6 +4,7 @@ import { Icon } from "@/components/icons";
 import { MESSAGE_TEMPLATES } from "@/lib/constants";
 import { messageSummary, threadList } from "@/lib/messages";
 import { smsConfigured } from "@/lib/sms";
+import { prisma } from "@/lib/prisma";
 import { number } from "@/lib/format";
 import { ThreadList } from "./ThreadList";
 
@@ -11,7 +12,11 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
   const user = await requirePermission("message.send");
   // Arama istemci tarafında yapılır (bkz. ThreadList) — layout'lar searchParams almaz
   // ve küçük bir thread listesi için sunucu round-trip'i gereksizdir.
-  const [threads, summary] = await Promise.all([threadList(user.schoolId), messageSummary(user.schoolId)]);
+  const [threads, summary, school] = await Promise.all([
+    threadList(user.schoolId),
+    messageSummary(user.schoolId),
+    prisma.school.findUniqueOrThrow({ where: { id: user.schoolId }, select: { netgsmUsername: true, netgsmPassword: true, netgsmHeader: true } }),
+  ]);
 
   return (
     <>
@@ -59,9 +64,9 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
             <div className="px-4 py-4 flex items-start gap-2.5">
               <Icon name="info" size={15} className="text-muted shrink-0 mt-0.5" />
               <p className="text-[13px] text-text-2 leading-relaxed">
-                {smsConfigured()
-                  ? "SMS, NetGSM üzerinden gerçekten gönderiliyor. WhatsApp ve e-posta henüz bir sağlayıcıya bağlı değil; bu ekran o ikisinin gönderimini kurs içinde simüle eder."
-                  : "WhatsApp, SMS ve e-posta gerçek bir sağlayıcıya bağlı değil; bu ekran mesaj geçmişini ve gönderimi kurs içinde simüle eder."}
+                {smsConfigured(school)
+                  ? "SMS, kursunuzun NetGSM hesabı üzerinden gerçekten gönderiliyor. WhatsApp ve e-posta henüz bir sağlayıcıya bağlı değil; bu ekran o ikisinin gönderimini kurs içinde simüle eder."
+                  : <>WhatsApp ve e-posta gerçek bir sağlayıcıya bağlı değil; bu ekran gönderimi kurs içinde simüle eder. SMS için kendi NetGSM hesabınızı <a href="/app/ayarlar/entegrasyonlar" className="text-blue underline">Ayarlar › Entegrasyonlar</a>&apos;dan bağlayabilirsiniz.</>}
               </p>
             </div>
           </Card>

@@ -421,14 +421,23 @@ kazanıldığını gösterir — CRM modülündeki dönüşüm oranıyla aynı m
 yoğunluğu ısı haritasını ve KPI'ları etkiler.
 
 ### Mesajlar hakkında
-**SMS kanalı gerçek: NetGSM.** `lib/sms.ts` resmi `@netgsm/sms` paketini kullanıyor.
-`NETGSM_USERNAME`/`NETGSM_PASSWORD`/`NETGSM_HEADER` tanımlıysa `sendMessageAction`
-(app/actions/messages.ts) mesajı gerçekten NetGSM üzerinden gönderir; başarısız olursa
-(bakiyesiz, geçersiz başlık, vb.) `MessageLog.status` `FAILED` yazılır ve konuşma ekranında
-mesaj balonunun altında "Gönderilemedi" görünür — kullanıcıya sessizce yutulmaz. Üçü de
-tanımlı değilse (yerelde varsayılan) diğer kanallar gibi simüle edilip `SENT` yazılır, hiçbir
-şey bozulmaz. Telefon numarası NetGSM'in beklediği formata (`5XXXXXXXXX`, başındaki 0 atılmış)
-`toNetgsmNumber()` ile çevriliyor.
+**SMS kanalı gerçek: NetGSM, hesap başına kurs bazlı.** `lib/sms.ts` resmi `@netgsm/sms`
+paketini kullanıyor. **Platformun paylaşılan bir NetGSM hesabı yok** — her kurs kendi
+`netgsmUsername`/`netgsmPassword`/`netgsmHeader` bilgilerini `Ayarlar › Entegrasyonlar`
+(`app/app/ayarlar/entegrasyonlar`) ekranından girer, bu bilgiler `School` tablosunda saklanır
+ve yalnızca `settings.write` yetkisi olanlar görüp değiştirebilir. Kurs üçünü de doldurmuşsa
+`sendMessageAction` (app/actions/messages.ts) mesajı gerçekten o kursun NetGSM hesabından
+gönderir; başarısız olursa (bakiyesiz, geçersiz başlık, vb.) `MessageLog.status` `FAILED`
+yazılır ve konuşma ekranında mesaj balonunun altında "Gönderilemedi" görünür — kullanıcıya
+sessizce yutulmaz. Kurs henüz bağlamadıysa diğer kanallar gibi simüle edilip `SENT` yazılır,
+hiçbir şey bozulmaz. Telefon numarası NetGSM'in beklediği formata (`5XXXXXXXXX`, başındaki 0
+atılmış) `toNetgsmNumber()` ile çevriliyor.
+
+**`netgsmPassword` bilinçli olarak düz metin saklanıyor.** Kullanıcı şifreleri gibi tek yönlü
+hash'lenemez çünkü uygulamanın bu değeri her SMS gönderiminde NetGSM'in REST API'sine
+olduğu gibi yeniden sunması gerekiyor. Bu, gizliliği önemli ama tersine çevrilebilir olması
+zorunlu bir üçüncü taraf API kimlik bilgisi — kullanıcı kimlik doğrulama şifresiyle aynı tehdit
+modeline sahip değil. Alan yalnızca `settings.write` yetkisiyle okunup yazılabiliyor.
 
 **WhatsApp/e-posta/push hâlâ simüle ediliyor.** Bu ekran o üç kanal için `MessageLog` üzerinden
 gönderimi ve geçmişi simüle eder; gönderilen mesaj anında `SENT` olarak işaretlenir. Bir
