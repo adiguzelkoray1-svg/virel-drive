@@ -421,9 +421,18 @@ kazanıldığını gösterir — CRM modülündeki dönüşüm oranıyla aynı m
 yoğunluğu ısı haritasını ve KPI'ları etkiler.
 
 ### Mesajlar hakkında
-**Gerçek bir WhatsApp/SMS/e-posta sağlayıcısı bağlı değil.** Bu ekran `MessageLog` üzerinden
-gönderimi ve geçmişi simüle eder; gönderilen mesaj anında `SENT` olarak işaretlenir. Sağlayıcı
-bağlandığında bu, kuyruklayan bir arka plan işine devrolur (bkz. sağdaki panelin notu).
+**SMS kanalı gerçek: NetGSM.** `lib/sms.ts` resmi `@netgsm/sms` paketini kullanıyor.
+`NETGSM_USERNAME`/`NETGSM_PASSWORD`/`NETGSM_HEADER` tanımlıysa `sendMessageAction`
+(app/actions/messages.ts) mesajı gerçekten NetGSM üzerinden gönderir; başarısız olursa
+(bakiyesiz, geçersiz başlık, vb.) `MessageLog.status` `FAILED` yazılır ve konuşma ekranında
+mesaj balonunun altında "Gönderilemedi" görünür — kullanıcıya sessizce yutulmaz. Üçü de
+tanımlı değilse (yerelde varsayılan) diğer kanallar gibi simüle edilip `SENT` yazılır, hiçbir
+şey bozulmaz. Telefon numarası NetGSM'in beklediği formata (`5XXXXXXXXX`, başındaki 0 atılmış)
+`toNetgsmNumber()` ile çevriliyor.
+
+**WhatsApp/e-posta/push hâlâ simüle ediliyor.** Bu ekran o üç kanal için `MessageLog` üzerinden
+gönderimi ve geçmişi simüle eder; gönderilen mesaj anında `SENT` olarak işaretlenir. Bir
+sağlayıcı bağlandığında (ör. WhatsApp Business API) aynı desenle (`lib/sms.ts` gibi) genişler.
 
 **Ayrı bir Conversation tablosu yok.** `MessageLog` zaten `studentId` taşıyor; "konuşma" listesi
 bundan `lib/messages.ts` içinde JS tarafında gruplanır. Kurstaki mesaj hacmi küçük kaldığı

@@ -25,6 +25,7 @@
     "@prisma/client": "^7.10.0",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
+    "@netgsm/sms": "^1.1.11",
     "jose": "^6.2.10",
     "next": "16.3.4",
     "nodemailer": "^10.0.0",

@@ -73,6 +73,9 @@ export default async function ThreadPage({ params }: PageProps<"/app/mesajlar/[i
                     <div className={`text-[11px] mt-1 ${m.direction === "OUT" ? "text-right opacity-75" : "text-muted"}`}>
                       {time(m.sentAt ?? m.createdAt)}
                     </div>
+                    {m.status === "FAILED" && (
+                      <div className="text-[11px] mt-0.5 text-right font-semibold text-danger">Gönderilemedi</div>
+                    )}
                   </div>
                 </div>
               ))}

@@ -3,6 +3,7 @@ import { Card, PageHeader } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { MESSAGE_TEMPLATES } from "@/lib/constants";
 import { messageSummary, threadList } from "@/lib/messages";
+import { smsConfigured } from "@/lib/sms";
 import { number } from "@/lib/format";
 import { ThreadList } from "./ThreadList";
 
@@ -58,8 +59,9 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
             <div className="px-4 py-4 flex items-start gap-2.5">
               <Icon name="info" size={15} className="text-muted shrink-0 mt-0.5" />
               <p className="text-[13px] text-text-2 leading-relaxed">
-                WhatsApp, SMS ve e-posta gerçek bir sağlayıcıya bağlı değil; bu ekran mesaj
-                geçmişini ve gönderimi kurs içinde simüle eder.
+                {smsConfigured()
+                  ? "SMS, NetGSM üzerinden gerçekten gönderiliyor. WhatsApp ve e-posta henüz bir sağlayıcıya bağlı değil; bu ekran o ikisinin gönderimini kurs içinde simüle eder."
+                  : "WhatsApp, SMS ve e-posta gerçek bir sağlayıcıya bağlı değil; bu ekran mesaj geçmişini ve gönderimi kurs içinde simüle eder."}
               </p>
             </div>
           </Card>
