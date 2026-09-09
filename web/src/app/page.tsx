@@ -185,6 +185,7 @@ export default async function LandingPage() {
           <a href="https://virel.com.tr" className="hover:text-text">virel.com.tr</a>
           <a href="https://vet.virel.com.tr" className="hover:text-text">Virel Vet</a>
           <a href="https://egitim.virel.com.tr" className="hover:text-text">Virel Eğitim</a>
+          <a href="https://beauty.virel.com.tr" className="hover:text-text">Virel Beauty</a>
         </div>
       </footer>
     </div>
