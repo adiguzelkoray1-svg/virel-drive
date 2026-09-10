@@ -139,9 +139,11 @@ tarih aralığı seçimi · gerçek CSV dışa aktarım (PDF/Excel yok, bkz. aş
 saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/etkin-pasif) · ders ve
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
-anında etkili oluyor. Diğer 8 ayar kategorisi (Kurs profili, Kullanıcılar, Belge kuralları,
-Fiyat/ödeme, Mesaj şablonları, Entegrasyonlar, Güvenlik/KVKK, Denetim kaydı) sol menüde
-"Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları yok.
+anında etkili oluyor. **Entegrasyonlar artık gerçek bir sayfa** (NetGSM kurs-başına kimlik
+bilgileri, bkz. "Mesajlar hakkında"). Diğer 7 ayar kategorisi (Kurs profili, Kullanıcılar,
+Belge kuralları, Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK, Denetim kaydı) sol menüde
+"Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin
+kendisi zaten var ama bu listede değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
 
 **Süper admin konsolu tamamlandı:** `/admin` altında ayrı bir alan — kurs (kiracı) listesi
 (durum/plan süzgeci, arama, kullanım çubukları) · yeni kurs açma (otomatik slug + OWNER hesabı,
@@ -173,7 +175,11 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 `permissions.ts`, STUDENT boş dizi) giriş doğrudan `/kursiyer`'e gider; `/app`'e sızmaya
 çalışırsa `requireSchoolUser` onu geri yollar.
 
-**Sırada:** —. Tüm modüller tamamlandı.
+**Sırada:** Orijinal brief'in tüm modülleri tamamlandı; kalan işler pazar analizinden çıkan,
+bilinçli olarak ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): eğitmen MEB izin no
+alanı · araç yakıt/bakım/ceza takibi · gerçek WhatsApp Business API (hâlâ simüle ediliyor) ·
+çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR) hakkında" —
+PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu yüzden pasif.
 
 ### Yedi rolün tamamı tek tek denendi (son kontrol)
 OWNER, SECRETARY, ACCOUNTANT, DRIVING_INSTRUCTOR, THEORY_TEACHER, STUDENT, SUPER_ADMIN —
