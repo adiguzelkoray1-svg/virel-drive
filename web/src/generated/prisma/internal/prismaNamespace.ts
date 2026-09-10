@@ -417,6 +417,7 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   RegulationSetting: 'RegulationSetting',
+  PaymentLink: 'PaymentLink',
   AuditLog: 'AuditLog',
   DemoRequest: 'DemoRequest'
 } as const
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "regulationSetting" | "auditLog" | "demoRequest"
+    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1918,6 +1919,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PaymentLink: {
+      payload: Prisma.$PaymentLinkPayload<ExtArgs>
+      fields: Prisma.PaymentLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaymentLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaymentLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.PaymentLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaymentLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        findMany: {
+          args: Prisma.PaymentLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>[]
+        }
+        create: {
+          args: Prisma.PaymentLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        createMany: {
+          args: Prisma.PaymentLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaymentLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.PaymentLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        update: {
+          args: Prisma.PaymentLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaymentLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaymentLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaymentLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaymentLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePaymentLink>
+        }
+        groupBy: {
+          args: Prisma.PaymentLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaymentLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentLinkCountAggregateOutputType> | number
+        }
+      }
+    }
     AuditLog: {
       payload: Prisma.$AuditLogPayload<ExtArgs>
       fields: Prisma.AuditLogFieldRefs
@@ -2459,6 +2534,21 @@ export const RegulationSettingScalarFieldEnum = {
 export type RegulationSettingScalarFieldEnum = (typeof RegulationSettingScalarFieldEnum)[keyof typeof RegulationSettingScalarFieldEnum]
 
 
+export const PaymentLinkScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  plan: 'plan',
+  amountKurus: 'amountKurus',
+  description: 'description',
+  status: 'status',
+  createdById: 'createdById',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PaymentLinkScalarFieldEnum = (typeof PaymentLinkScalarFieldEnum)[keyof typeof PaymentLinkScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2754,6 +2844,7 @@ export type GlobalOmitConfig = {
   messageLog?: Prisma.MessageLogOmit
   licenseClassRule?: Prisma.LicenseClassRuleOmit
   regulationSetting?: Prisma.RegulationSettingOmit
+  paymentLink?: Prisma.PaymentLinkOmit
   auditLog?: Prisma.AuditLogOmit
   demoRequest?: Prisma.DemoRequestOmit
 }

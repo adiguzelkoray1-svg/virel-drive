@@ -408,6 +408,7 @@ export type SchoolWhereInput = {
   classRules?: Prisma.LicenseClassRuleListRelationFilter
   regulations?: Prisma.RegulationSettingListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  paymentLinks?: Prisma.PaymentLinkListRelationFilter
 }
 
 export type SchoolOrderByWithRelationInput = {
@@ -457,6 +458,7 @@ export type SchoolOrderByWithRelationInput = {
   classRules?: Prisma.LicenseClassRuleOrderByRelationAggregateInput
   regulations?: Prisma.RegulationSettingOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  paymentLinks?: Prisma.PaymentLinkOrderByRelationAggregateInput
 }
 
 export type SchoolWhereUniqueInput = Prisma.AtLeast<{
@@ -509,6 +511,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   classRules?: Prisma.LicenseClassRuleListRelationFilter
   regulations?: Prisma.RegulationSettingListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  paymentLinks?: Prisma.PaymentLinkListRelationFilter
 }, "id" | "slug">
 
 export type SchoolOrderByWithAggregationInput = {
@@ -624,6 +627,7 @@ export type SchoolCreateInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateInput = {
@@ -673,6 +677,7 @@ export type SchoolUncheckedCreateInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUpdateInput = {
@@ -722,6 +727,7 @@ export type SchoolUpdateInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateInput = {
@@ -771,6 +777,7 @@ export type SchoolUncheckedUpdateInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateManyInput = {
@@ -1259,6 +1266,20 @@ export type SchoolUpdateOneRequiredWithoutRegulationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutRegulationsInput, Prisma.SchoolUpdateWithoutRegulationsInput>, Prisma.SchoolUncheckedUpdateWithoutRegulationsInput>
 }
 
+export type SchoolCreateNestedOneWithoutPaymentLinksInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutPaymentLinksInput, Prisma.SchoolUncheckedCreateWithoutPaymentLinksInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutPaymentLinksInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutPaymentLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutPaymentLinksInput, Prisma.SchoolUncheckedCreateWithoutPaymentLinksInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutPaymentLinksInput
+  upsert?: Prisma.SchoolUpsertWithoutPaymentLinksInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutPaymentLinksInput, Prisma.SchoolUpdateWithoutPaymentLinksInput>, Prisma.SchoolUncheckedUpdateWithoutPaymentLinksInput>
+}
+
 export type SchoolCreateNestedOneWithoutAuditLogsInput = {
   create?: Prisma.XOR<Prisma.SchoolCreateWithoutAuditLogsInput, Prisma.SchoolUncheckedCreateWithoutAuditLogsInput>
   connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutAuditLogsInput
@@ -1321,6 +1342,7 @@ export type SchoolCreateWithoutUsersInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutUsersInput = {
@@ -1369,6 +1391,7 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutUsersInput = {
@@ -1433,6 +1456,7 @@ export type SchoolUpdateWithoutUsersInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutUsersInput = {
@@ -1481,6 +1505,7 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutStudentsInput = {
@@ -1529,6 +1554,7 @@ export type SchoolCreateWithoutStudentsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutStudentsInput = {
@@ -1577,6 +1603,7 @@ export type SchoolUncheckedCreateWithoutStudentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutStudentsInput = {
@@ -1641,6 +1668,7 @@ export type SchoolUpdateWithoutStudentsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutStudentsInput = {
@@ -1689,6 +1717,7 @@ export type SchoolUncheckedUpdateWithoutStudentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutLeadsInput = {
@@ -1737,6 +1766,7 @@ export type SchoolCreateWithoutLeadsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutLeadsInput = {
@@ -1785,6 +1815,7 @@ export type SchoolUncheckedCreateWithoutLeadsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutLeadsInput = {
@@ -1849,6 +1880,7 @@ export type SchoolUpdateWithoutLeadsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutLeadsInput = {
@@ -1897,6 +1929,7 @@ export type SchoolUncheckedUpdateWithoutLeadsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutDocumentsInput = {
@@ -1945,6 +1978,7 @@ export type SchoolCreateWithoutDocumentsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutDocumentsInput = {
@@ -1993,6 +2027,7 @@ export type SchoolUncheckedCreateWithoutDocumentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutDocumentsInput = {
@@ -2057,6 +2092,7 @@ export type SchoolUpdateWithoutDocumentsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutDocumentsInput = {
@@ -2105,6 +2141,7 @@ export type SchoolUncheckedUpdateWithoutDocumentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutInstructorsInput = {
@@ -2153,6 +2190,7 @@ export type SchoolCreateWithoutInstructorsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutInstructorsInput = {
@@ -2201,6 +2239,7 @@ export type SchoolUncheckedCreateWithoutInstructorsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutInstructorsInput = {
@@ -2265,6 +2304,7 @@ export type SchoolUpdateWithoutInstructorsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutInstructorsInput = {
@@ -2313,6 +2353,7 @@ export type SchoolUncheckedUpdateWithoutInstructorsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutVehiclesInput = {
@@ -2361,6 +2402,7 @@ export type SchoolCreateWithoutVehiclesInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutVehiclesInput = {
@@ -2409,6 +2451,7 @@ export type SchoolUncheckedCreateWithoutVehiclesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutVehiclesInput = {
@@ -2473,6 +2516,7 @@ export type SchoolUpdateWithoutVehiclesInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutVehiclesInput = {
@@ -2521,6 +2565,7 @@ export type SchoolUncheckedUpdateWithoutVehiclesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutVehicleCostsInput = {
@@ -2569,6 +2614,7 @@ export type SchoolCreateWithoutVehicleCostsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutVehicleCostsInput = {
@@ -2617,6 +2663,7 @@ export type SchoolUncheckedCreateWithoutVehicleCostsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutVehicleCostsInput = {
@@ -2681,6 +2728,7 @@ export type SchoolUpdateWithoutVehicleCostsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutVehicleCostsInput = {
@@ -2729,6 +2777,7 @@ export type SchoolUncheckedUpdateWithoutVehicleCostsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTheoryLessonsInput = {
@@ -2777,6 +2826,7 @@ export type SchoolCreateWithoutTheoryLessonsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTheoryLessonsInput = {
@@ -2825,6 +2875,7 @@ export type SchoolUncheckedCreateWithoutTheoryLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTheoryLessonsInput = {
@@ -2889,6 +2940,7 @@ export type SchoolUpdateWithoutTheoryLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTheoryLessonsInput = {
@@ -2937,6 +2989,7 @@ export type SchoolUncheckedUpdateWithoutTheoryLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAttendancesInput = {
@@ -2985,6 +3038,7 @@ export type SchoolCreateWithoutAttendancesInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAttendancesInput = {
@@ -3033,6 +3087,7 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAttendancesInput = {
@@ -3097,6 +3152,7 @@ export type SchoolUpdateWithoutAttendancesInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAttendancesInput = {
@@ -3145,6 +3201,7 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutDrivingLessonsInput = {
@@ -3193,6 +3250,7 @@ export type SchoolCreateWithoutDrivingLessonsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutDrivingLessonsInput = {
@@ -3241,6 +3299,7 @@ export type SchoolUncheckedCreateWithoutDrivingLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutDrivingLessonsInput = {
@@ -3305,6 +3364,7 @@ export type SchoolUpdateWithoutDrivingLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutDrivingLessonsInput = {
@@ -3353,6 +3413,7 @@ export type SchoolUncheckedUpdateWithoutDrivingLessonsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSkillRatingsInput = {
@@ -3401,6 +3462,7 @@ export type SchoolCreateWithoutSkillRatingsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSkillRatingsInput = {
@@ -3449,6 +3511,7 @@ export type SchoolUncheckedCreateWithoutSkillRatingsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSkillRatingsInput = {
@@ -3513,6 +3576,7 @@ export type SchoolUpdateWithoutSkillRatingsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSkillRatingsInput = {
@@ -3561,6 +3625,7 @@ export type SchoolUncheckedUpdateWithoutSkillRatingsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutExamsInput = {
@@ -3609,6 +3674,7 @@ export type SchoolCreateWithoutExamsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutExamsInput = {
@@ -3657,6 +3723,7 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutExamsInput = {
@@ -3721,6 +3788,7 @@ export type SchoolUpdateWithoutExamsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutExamsInput = {
@@ -3769,6 +3837,7 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutPaymentPlansInput = {
@@ -3817,6 +3886,7 @@ export type SchoolCreateWithoutPaymentPlansInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutPaymentPlansInput = {
@@ -3865,6 +3935,7 @@ export type SchoolUncheckedCreateWithoutPaymentPlansInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutPaymentPlansInput = {
@@ -3929,6 +4000,7 @@ export type SchoolUpdateWithoutPaymentPlansInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutPaymentPlansInput = {
@@ -3977,6 +4049,7 @@ export type SchoolUncheckedUpdateWithoutPaymentPlansInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutInstallmentsInput = {
@@ -4025,6 +4098,7 @@ export type SchoolCreateWithoutInstallmentsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutInstallmentsInput = {
@@ -4073,6 +4147,7 @@ export type SchoolUncheckedCreateWithoutInstallmentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutInstallmentsInput = {
@@ -4137,6 +4212,7 @@ export type SchoolUpdateWithoutInstallmentsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutInstallmentsInput = {
@@ -4185,6 +4261,7 @@ export type SchoolUncheckedUpdateWithoutInstallmentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutPaymentsInput = {
@@ -4233,6 +4310,7 @@ export type SchoolCreateWithoutPaymentsInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutPaymentsInput = {
@@ -4281,6 +4359,7 @@ export type SchoolUncheckedCreateWithoutPaymentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutPaymentsInput = {
@@ -4345,6 +4424,7 @@ export type SchoolUpdateWithoutPaymentsInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutPaymentsInput = {
@@ -4393,6 +4473,7 @@ export type SchoolUncheckedUpdateWithoutPaymentsInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutExpensesInput = {
@@ -4441,6 +4522,7 @@ export type SchoolCreateWithoutExpensesInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutExpensesInput = {
@@ -4489,6 +4571,7 @@ export type SchoolUncheckedCreateWithoutExpensesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutExpensesInput = {
@@ -4553,6 +4636,7 @@ export type SchoolUpdateWithoutExpensesInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutExpensesInput = {
@@ -4601,6 +4685,7 @@ export type SchoolUncheckedUpdateWithoutExpensesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutMessagesInput = {
@@ -4649,6 +4734,7 @@ export type SchoolCreateWithoutMessagesInput = {
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutMessagesInput = {
@@ -4697,6 +4783,7 @@ export type SchoolUncheckedCreateWithoutMessagesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutMessagesInput = {
@@ -4761,6 +4848,7 @@ export type SchoolUpdateWithoutMessagesInput = {
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutMessagesInput = {
@@ -4809,6 +4897,7 @@ export type SchoolUncheckedUpdateWithoutMessagesInput = {
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutClassRulesInput = {
@@ -4857,6 +4946,7 @@ export type SchoolCreateWithoutClassRulesInput = {
   messages?: Prisma.MessageLogCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutClassRulesInput = {
@@ -4905,6 +4995,7 @@ export type SchoolUncheckedCreateWithoutClassRulesInput = {
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutClassRulesInput = {
@@ -4969,6 +5060,7 @@ export type SchoolUpdateWithoutClassRulesInput = {
   messages?: Prisma.MessageLogUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutClassRulesInput = {
@@ -5017,6 +5109,7 @@ export type SchoolUncheckedUpdateWithoutClassRulesInput = {
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutRegulationsInput = {
@@ -5065,6 +5158,7 @@ export type SchoolCreateWithoutRegulationsInput = {
   messages?: Prisma.MessageLogCreateNestedManyWithoutSchoolInput
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutRegulationsInput = {
@@ -5113,6 +5207,7 @@ export type SchoolUncheckedCreateWithoutRegulationsInput = {
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutSchoolInput
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutRegulationsInput = {
@@ -5177,6 +5272,7 @@ export type SchoolUpdateWithoutRegulationsInput = {
   messages?: Prisma.MessageLogUpdateManyWithoutSchoolNestedInput
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutRegulationsInput = {
@@ -5224,6 +5320,219 @@ export type SchoolUncheckedUpdateWithoutRegulationsInput = {
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutSchoolNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutSchoolNestedInput
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutPaymentLinksInput = {
+  id?: string
+  name: string
+  slug: string
+  city?: string | null
+  district?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  taxNumber?: string | null
+  taxOffice?: string | null
+  mebCode?: string | null
+  timezone?: string
+  currency?: string
+  status?: string
+  plan?: string
+  trialEndsAt?: Date | string | null
+  userLimit?: number
+  studentLimit?: number
+  approvedAt?: Date | string | null
+  kvkkAcceptedAt?: Date | string | null
+  settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  students?: Prisma.StudentCreateNestedManyWithoutSchoolInput
+  leads?: Prisma.LeadCreateNestedManyWithoutSchoolInput
+  instructors?: Prisma.InstructorCreateNestedManyWithoutSchoolInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutSchoolInput
+  vehicleCosts?: Prisma.VehicleCostCreateNestedManyWithoutSchoolInput
+  theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
+  skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
+  installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutSchoolInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutSchoolInput
+  messages?: Prisma.MessageLogCreateNestedManyWithoutSchoolInput
+  classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
+  regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutPaymentLinksInput = {
+  id?: string
+  name: string
+  slug: string
+  city?: string | null
+  district?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  taxNumber?: string | null
+  taxOffice?: string | null
+  mebCode?: string | null
+  timezone?: string
+  currency?: string
+  status?: string
+  plan?: string
+  trialEndsAt?: Date | string | null
+  userLimit?: number
+  studentLimit?: number
+  approvedAt?: Date | string | null
+  kvkkAcceptedAt?: Date | string | null
+  settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutSchoolInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutSchoolInput
+  instructors?: Prisma.InstructorUncheckedCreateNestedManyWithoutSchoolInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutSchoolInput
+  vehicleCosts?: Prisma.VehicleCostUncheckedCreateNestedManyWithoutSchoolInput
+  theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
+  skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
+  installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutSchoolInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutSchoolInput
+  messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutSchoolInput
+  classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
+  regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutPaymentLinksInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutPaymentLinksInput, Prisma.SchoolUncheckedCreateWithoutPaymentLinksInput>
+}
+
+export type SchoolUpsertWithoutPaymentLinksInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutPaymentLinksInput, Prisma.SchoolUncheckedUpdateWithoutPaymentLinksInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutPaymentLinksInput, Prisma.SchoolUncheckedCreateWithoutPaymentLinksInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutPaymentLinksInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutPaymentLinksInput, Prisma.SchoolUncheckedUpdateWithoutPaymentLinksInput>
+}
+
+export type SchoolUpdateWithoutPaymentLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxOffice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  studentLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  students?: Prisma.StudentUpdateManyWithoutSchoolNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutSchoolNestedInput
+  instructors?: Prisma.InstructorUpdateManyWithoutSchoolNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutSchoolNestedInput
+  vehicleCosts?: Prisma.VehicleCostUpdateManyWithoutSchoolNestedInput
+  theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
+  skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
+  installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutSchoolNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutSchoolNestedInput
+  messages?: Prisma.MessageLogUpdateManyWithoutSchoolNestedInput
+  classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
+  regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutPaymentLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxOffice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  studentLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutSchoolNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutSchoolNestedInput
+  instructors?: Prisma.InstructorUncheckedUpdateManyWithoutSchoolNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutSchoolNestedInput
+  vehicleCosts?: Prisma.VehicleCostUncheckedUpdateManyWithoutSchoolNestedInput
+  theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
+  skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
+  installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutSchoolNestedInput
+  messages?: Prisma.MessageLogUncheckedUpdateManyWithoutSchoolNestedInput
+  classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
+  regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
@@ -5273,6 +5582,7 @@ export type SchoolCreateWithoutAuditLogsInput = {
   messages?: Prisma.MessageLogCreateNestedManyWithoutSchoolInput
   classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAuditLogsInput = {
@@ -5321,6 +5631,7 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutSchoolInput
   classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
   regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAuditLogsInput = {
@@ -5385,6 +5696,7 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   messages?: Prisma.MessageLogUpdateManyWithoutSchoolNestedInput
   classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
@@ -5433,6 +5745,7 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutSchoolNestedInput
   classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
   regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 
@@ -5461,6 +5774,7 @@ export type SchoolCountOutputType = {
   classRules: number
   regulations: number
   auditLogs: number
+  paymentLinks: number
 }
 
 export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5484,6 +5798,7 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   classRules?: boolean | SchoolCountOutputTypeCountClassRulesArgs
   regulations?: boolean | SchoolCountOutputTypeCountRegulationsArgs
   auditLogs?: boolean | SchoolCountOutputTypeCountAuditLogsArgs
+  paymentLinks?: boolean | SchoolCountOutputTypeCountPaymentLinksArgs
 }
 
 /**
@@ -5636,6 +5951,13 @@ export type SchoolCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Type
   where?: Prisma.AuditLogWhereInput
 }
 
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountPaymentLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentLinkWhereInput
+}
+
 
 export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5684,6 +6006,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   classRules?: boolean | Prisma.School$classRulesArgs<ExtArgs>
   regulations?: boolean | Prisma.School$regulationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
+  paymentLinks?: boolean | Prisma.School$paymentLinksArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["school"]>
 
@@ -5796,6 +6119,7 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   classRules?: boolean | Prisma.School$classRulesArgs<ExtArgs>
   regulations?: boolean | Prisma.School$regulationsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
+  paymentLinks?: boolean | Prisma.School$paymentLinksArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SchoolIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -5824,6 +6148,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     classRules: Prisma.$LicenseClassRulePayload<ExtArgs>[]
     regulations: Prisma.$RegulationSettingPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    paymentLinks: Prisma.$PaymentLinkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -6266,6 +6591,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   classRules<T extends Prisma.School$classRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$classRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LicenseClassRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   regulations<T extends Prisma.School$regulationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$regulationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegulationSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.School$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paymentLinks<T extends Prisma.School$paymentLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$paymentLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7191,6 +7517,30 @@ export type School$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * School.paymentLinks
+ */
+export type School$paymentLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PaymentLink
+   */
+  select?: Prisma.PaymentLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PaymentLink
+   */
+  omit?: Prisma.PaymentLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentLinkInclude<ExtArgs> | null
+  where?: Prisma.PaymentLinkWhereInput
+  orderBy?: Prisma.PaymentLinkOrderByWithRelationInput | Prisma.PaymentLinkOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentLinkScalarFieldEnum | Prisma.PaymentLinkScalarFieldEnum[]
 }
 
 /**

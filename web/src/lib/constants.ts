@@ -199,6 +199,21 @@ export const SCHOOL_PLAN_LIMITS: Record<string, { userLimit: number; studentLimi
   ENTERPRISE: { userLimit: 50, studentLimit: 10000 },
 };
 
+/**
+ * Satılabilir planların fiyatları (kuruş). Tek seferlik lisans, aylık ücretin ~20-21 katı
+ * alınıp yuvarlanarak belirlendi (SaaS'tan kalıcı lisansa geçişte yaygın 18-36 aylık geri
+ * ödeme aralığının alt-orta bandı — bkz. pazar analizi: AKINSOFT/TABİM/WENNTEC hepsi tek
+ * seferlik modül lisansı satıyor). Yıllık bakım-barındırma (YBS) lisansın ~%22'si — Logo/
+ * Mikro/Netsis'in de kullandığı model; bulut barındırma maliyeti satış sonrasında da bize
+ * ait kaldığı için (rakiplerin masaüstü modelinin aksine) gerekiyor. TRIAL satılabilir bir
+ * plan değil, burada yok — hem tanıtım sayfası hem süper admin ödeme linki bu tabloyu kullanır.
+ */
+export const SCHOOL_PLAN_PRICE: Record<string, { monthly: number; oneTime: number; maintenanceYearly: number }> = {
+  STARTER: { monthly: 79000, oneTime: 1690000, maintenanceYearly: 390000 },
+  PRO: { monthly: 219000, oneTime: 4590000, maintenanceYearly: 990000 },
+  ENTERPRISE: { monthly: 449000, oneTime: 9490000, maintenanceYearly: 2090000 },
+};
+
 // ---------- Mesajlar ----------
 export const MESSAGE_CHANNEL_LABEL: Record<string, string> = {
   WHATSAPP: "WhatsApp", SMS: "SMS", EMAIL: "E-posta", PUSH: "Bildirim",

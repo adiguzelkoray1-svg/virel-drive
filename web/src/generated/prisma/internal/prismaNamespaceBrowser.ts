@@ -71,6 +71,7 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   RegulationSetting: 'RegulationSetting',
+  PaymentLink: 'PaymentLink',
   AuditLog: 'AuditLog',
   DemoRequest: 'DemoRequest'
 } as const
@@ -443,6 +444,21 @@ export const RegulationSettingScalarFieldEnum = {
 } as const
 
 export type RegulationSettingScalarFieldEnum = (typeof RegulationSettingScalarFieldEnum)[keyof typeof RegulationSettingScalarFieldEnum]
+
+
+export const PaymentLinkScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  plan: 'plan',
+  amountKurus: 'amountKurus',
+  description: 'description',
+  status: 'status',
+  createdById: 'createdById',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PaymentLinkScalarFieldEnum = (typeof PaymentLinkScalarFieldEnum)[keyof typeof PaymentLinkScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {

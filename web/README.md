@@ -387,6 +387,39 @@ Vet'teki `tests/pricing-demo.test.ts` ile aynı desen) — sahte/mock Prisma de�
 için: `LicenseClassRule.createMany` satırını yorum satırı yapıp `npm test` çalıştırdım, iki
 test de gerçekten kırmızı çıktı ("0 !== 5"); satırı geri koyunca yeşile döndü.
 
+### Ödeme linkleri (PayTR) hakkında
+**Kurs açma gibi, ücretli plana geçiş de tamamen süper admin elinden gidiyor — kendi kendine
+yükseltme yok.** Drive'da Vet'teki gibi bir `Invoice`/self-servis plan değiştirme akışı hiç
+yok; satış görüşmesi sonrası süper admin `/admin/kurslar/[id]` üzerinden bir `PaymentLink`
+oluşturur (plan + tutar, tutar plana göre önerilir ama pazarlıkla değişebilir), oluşan
+`/odeme/lisans/[id]` URL'ini kendisi kopyalayıp kurs sahibine e-posta/WhatsApp ile iletir —
+otomatik mesaj gönderimi yok. Bu, pazar analizindeki bulguya dayanıyor: rakiplerin hepsi
+("teklif isteyin") telefon/demo ile satıyor, self-servis checkout değil.
+
+**Ödeme sayfası bilerek genel (public) bir URL, giriş gerektirmez.** Kurs sahibinin linke
+tıkladığı anda henüz bir oturumu olmayabilir (ya da olsa bile tekrar giriş yapmasını istemek
+sürtünme yaratır). Linkin kendisi zaten bir cuid — ayrı bir "token" katmanına gerek görülmedi.
+
+**PayTR entegrasyonu Virel Vet'ten neredeyse birebir taşındı** (`lib/providers/paytr.ts`,
+`components/PaytrFrame.tsx`) — iFrame API, HMAC-SHA256 imzalı token isteği ve bildirim (webhook)
+doğrulaması aynı. Fark: Vet'te kliniklerin KENDİ PayTR hesabını bağlama seçeneği de var (üye
+işyeri kliniğe ait); Drive'da tek yön var — yalnızca Virel'in kendi hesabı (`platformPaytr()`),
+çünkü para her zaman kurstan Virel'e gidiyor, NetGSM'in tersine burada paylaşılan bir kurs
+hesabı kavramı yok.
+
+**Ödeme başarılı olunca kurs otomatik `ACTIVE`'e geçer.** `/api/odeme/paytr/bildirim` webhook'u
+hash'i doğruladıktan sonra `PaymentLink.status = PAID`, `School.plan` = linkteki plan,
+`School.status = ACTIVE`, `trialEndsAt = null` yazar — süper adminin ödemeden sonra ayrıca elle
+plan değiştirmesi gerekmez. `Date.now()` çağrısı bilerek `lib/providers/paytr.ts`'teki
+`paytrMerchantOid()` yardımcısına taşındı: bir sunucu bileşeninin gövdesi içinde doğrudan
+çağrılırsa React'in yeni `react-hooks/purity` lint kuralını tetikliyor.
+
+**PayTR yapılandırılmamışsa ödeme sayfası çökmez, açıklayıcı bir mesaj gösterir** — NetGSM'deki
+"gerçek gönderim yapılmadan günlüğe yaz" gerekçesiyle aynı desen. `PAYTR_MERCHANT_ID/KEY/SALT`
+env değişkenleri boşsa `platformPaytr()` null döner, sayfa "Online ödeme şu an açık değil"
+yazıp durur; hiçbir yere yönlendirmez (ilk sürüm `/?hata=...`ya yönlendiriyordu ama tanıtım
+sayfası bu query param'ı hiç okumuyordu — mesaj sessizce kayboluyordu, düzeltildi).
+
 ### Ayarlar (Mevzuat) hakkında
 **Sınıf kodu sonradan değiştirilemez.** `LicenseClassRule.code` bir FK değil, `Student.licenseClass`
 ve `Vehicle.licenseClass` ona serbest metinle referans verir; kod değişirse mevcut kayıtlar

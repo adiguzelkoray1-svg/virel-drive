@@ -7,7 +7,7 @@ import { Icon, type IconName } from "@/components/icons";
 import { DemoForm } from "@/components/DemoForm";
 import { requestDemoAction } from "@/app/actions/demo";
 import { DEMO_SIZES } from "@/lib/demo";
-import { SCHOOL_PLAN_LIMITS } from "@/lib/constants";
+import { SCHOOL_PLAN_LIMITS, SCHOOL_PLAN_PRICE } from "@/lib/constants";
 import { PricingTabs, type PricingPlan } from "@/components/PricingTabs";
 
 export const metadata: Metadata = {
@@ -26,24 +26,19 @@ const FEATURES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "phone", title: "Mobil eğitmen ve kursiyer uygulaması", desc: "Eğitmen dersini telefonundan tamamlar, kursiyer ilerlemesini ve borcunu kendi telefonundan görür." },
 ];
 
-/**
- * Tek seferlik lisans fiyatları aylık ücretin ~20-21 katı alınıp yuvarlanarak belirlendi
- * (SaaS'tan kalıcı lisansa geçişte yaygın 18-36 aylık geri ödeme aralığının alt-orta bandı).
- * Yıllık bakım-barındırma (YBS) lisans bedelinin ~%22'si — bulut sunucu/veritabanı/yedekleme
- * maliyeti rakiplerin masaüstü modelinin aksine satış sonrasında da bize ait kaldığı için
- * gerekiyor (bkz. pazar analizi: Logo/Mikro/Netsis'in de kullandığı, pazarın tanıdığı model).
- */
-const PLANS: { key: keyof typeof SCHOOL_PLAN_LIMITS; name: string; priceMonthly: number; priceOneTime: number; priceMaintenanceYearly: number; features: string[] }[] = [
+// Fiyatlar lib/constants.ts::SCHOOL_PLAN_PRICE'ta — süper admin ödeme linki de aynı tabloyu
+// kullanır, tanıtım sayfası ile admin konsolu arasında fiyat sapması olmasın diye.
+const PLANS: { key: keyof typeof SCHOOL_PLAN_LIMITS; name: string; features: string[] }[] = [
   {
-    key: "STARTER", name: "Başlangıç", priceMonthly: 79000, priceOneTime: 1690000, priceMaintenanceYearly: 390000,
+    key: "STARTER", name: "Başlangıç",
     features: ["Direksiyon dersleri, kursiyer dosyası, teorik eğitim, sınavlar", "Tahsilat ve ödeme planı takibi", "Kursiyer mobil portalı"],
   },
   {
-    key: "PRO", name: "Profesyonel", priceMonthly: 219000, priceOneTime: 4590000, priceMaintenanceYearly: 990000,
+    key: "PRO", name: "Profesyonel",
     features: ["Başlangıç'taki her şey", "CRM ve ön kayıt pipeline'ı", "Raporlar ve CSV dışa aktarma", "WhatsApp/SMS hatırlatmaları", "Eğitmen mobil portalı"],
   },
   {
-    key: "ENTERPRISE", name: "Kurumsal", priceMonthly: 449000, priceOneTime: 9490000, priceMaintenanceYearly: 2090000,
+    key: "ENTERPRISE", name: "Kurumsal",
     features: ["Profesyonel'deki her şey", "En yüksek kullanıcı/kursiyer limiti", "Öncelikli destek", "Hesap yöneticisi"],
   },
 ];
@@ -141,7 +136,7 @@ export default async function LandingPage() {
             plans={PLANS.map((p): PricingPlan => ({
               key: p.key, name: p.name, features: p.features,
               userLimit: SCHOOL_PLAN_LIMITS[p.key].userLimit, studentLimit: SCHOOL_PLAN_LIMITS[p.key].studentLimit,
-              priceMonthly: p.priceMonthly, priceOneTime: p.priceOneTime, priceMaintenanceYearly: p.priceMaintenanceYearly,
+              priceMonthly: SCHOOL_PLAN_PRICE[p.key].monthly, priceOneTime: SCHOOL_PLAN_PRICE[p.key].oneTime, priceMaintenanceYearly: SCHOOL_PLAN_PRICE[p.key].maintenanceYearly,
             }))}
           />
         </div>

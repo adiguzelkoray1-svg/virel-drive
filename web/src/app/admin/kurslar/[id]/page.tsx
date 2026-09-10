@@ -3,11 +3,19 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getSchoolDetail } from "@/lib/admin";
 import { updateSchoolStatusAction, startImpersonationAction } from "@/app/actions/admin";
+import { cancelPaymentLinkAction } from "@/app/actions/payment-links";
 import { Badge, Card, Notice, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
 import { Icon } from "@/components/icons";
-import { ROLE_LABEL, SCHOOL_PLAN_LABEL, SCHOOL_STATUS_LABEL, type Role } from "@/lib/constants";
-import { date, dateTime, number } from "@/lib/format";
+import { ROLE_LABEL, SCHOOL_PLAN_LABEL, SCHOOL_STATUS_LABEL, type BadgeKind, type Role } from "@/lib/constants";
+import { date, dateTime, money, number } from "@/lib/format";
 import { PlanForm } from "./PlanForm";
+import { PaymentLinkForm } from "./PaymentLinkForm";
+
+const PAYMENT_LINK_STATUS: Record<string, { label: string; kind: BadgeKind }> = {
+  PENDING: { label: "Bekliyor", kind: "neutral" },
+  PAID: { label: "Ödendi", kind: "success" },
+  CANCELLED: { label: "İptal edildi", kind: "danger" },
+};
 
 export async function generateMetadata({ params }: PageProps<"/admin/kurslar/[id]">): Promise<Metadata> {
   const { id } = await params;
@@ -23,7 +31,7 @@ export default async function SchoolDetailPage({ params, searchParams }: PagePro
 
   const d = await getSchoolDetail(id);
   if (!d) notFound();
-  const { school, users, studentCount, auditLog } = d;
+  const { school, users, studentCount, auditLog, paymentLinks } = d;
 
   const st = SCHOOL_STATUS_LABEL[school.status] ?? SCHOOL_STATUS_LABEL.PENDING;
   const userPct = school.userLimit ? Math.min(100, Math.round((users.length / school.userLimit) * 100)) : 0;
@@ -138,6 +146,34 @@ export default async function SchoolDetailPage({ params, searchParams }: PagePro
 
           <Card title="Plan ve limitler">
             <PlanForm schoolId={school.id} plan={school.plan} userLimit={school.userLimit} studentLimit={school.studentLimit} />
+          </Card>
+
+          <Card title="Ödeme linkleri" sub="satış görüşmesi sonrası kurs sahibine iletin">
+            <div className="px-5 pb-5 pt-1 flex flex-col gap-4">
+              <PaymentLinkForm schoolId={school.id} />
+              {paymentLinks.length > 0 && (
+                <div className="flex flex-col">
+                  {paymentLinks.map((l) => {
+                    const st = PAYMENT_LINK_STATUS[l.status] ?? PAYMENT_LINK_STATUS.PENDING;
+                    return (
+                      <div key={l.id} className="flex items-center gap-2.5 py-2.5 border-t border-border first:border-0">
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="text-[13px] font-semibold truncate">{SCHOOL_PLAN_LABEL[l.plan] ?? l.plan} · {money(l.amountKurus)}</span>
+                          <span className="text-xs text-muted truncate">{l.description || dateTime(l.createdAt)}</span>
+                        </div>
+                        <Badge kind={st.kind}>{st.label}</Badge>
+                        {l.status === "PENDING" && (
+                          <form action={cancelPaymentLinkAction}>
+                            <input type="hidden" name="id" value={l.id} />
+                            <button className="btn btn-ghost btn-xs" aria-label="İptal et" title="İptal et"><Icon name="x-circle" size={14} /></button>
+                          </form>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </Card>
         </div>
       </div>

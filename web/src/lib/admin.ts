@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "./prisma";
+import { listPaymentLinks } from "./payment-link";
 
 export async function adminOverview() {
   const [schools, users, students, byStatus] = await Promise.all([
@@ -43,13 +44,14 @@ export async function getSchoolDetail(schoolId: string) {
   const school = await prisma.school.findUnique({ where: { id: schoolId } });
   if (!school) return null;
 
-  const [users, studentCount, auditLog] = await Promise.all([
+  const [users, studentCount, auditLog, paymentLinks] = await Promise.all([
     prisma.user.findMany({ where: { schoolId }, orderBy: [{ role: "asc" }, { name: "asc" }] }),
     prisma.student.count({ where: { schoolId } }),
     prisma.auditLog.findMany({ where: { schoolId }, orderBy: { createdAt: "desc" }, take: 15, include: { actor: { select: { name: true } } } }),
+    listPaymentLinks(schoolId),
   ]);
 
-  return { school, users, studentCount, auditLog };
+  return { school, users, studentCount, auditLog, paymentLinks };
 }
 
 export async function globalAuditLog(limit = 60) {

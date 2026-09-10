@@ -64,6 +64,7 @@ model School {
   classRules   LicenseClassRule[]
   regulations  RegulationSetting[]
   auditLogs    AuditLog[]
+  paymentLinks PaymentLink[]
 
   @@index([status])
 }
@@ -87,6 +88,7 @@ model User {
   instructor   Instructor?
   student      Student?
   auditLogs    AuditLog[]
+  paymentLinks PaymentLink[]
 
   @@index([schoolId, role])
 }
@@ -464,6 +466,27 @@ model RegulationSetting {
   updatedAt DateTime @updatedAt
 
   @@unique([schoolId, key])
+}
+
+// ---------- Platform (Virel) faturalama ----------
+/// Kurs açma tamamen süper admin elinden gittiği gibi, ücretli plana geçiş de öyle: satış
+/// görüşmesi sonrası süper admin bir ödeme linki oluşturur, kurs sahibine kendisi iletir
+/// (e-posta/WhatsApp) — bu yüzden link genel (public) bir URL'dir, giriş gerektirmez; kurs
+/// sahibinin henüz oturumu olmayabilir. Bkz. app/odeme/lisans/[id], lib/providers/paytr.ts.
+model PaymentLink {
+  id          String    @id @default(cuid())
+  schoolId    String
+  school      School    @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  plan        String    // STARTER | PRO | ENTERPRISE
+  amountKurus Int
+  description String?
+  status      String    @default("PENDING") // PENDING | PAID | CANCELLED
+  createdById String?
+  createdBy   User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  paidAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([schoolId])
 }
 
 // ---------- Denetim ----------

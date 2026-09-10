@@ -118,6 +118,14 @@ export type LicenseClassRule = Prisma.LicenseClassRuleModel
  */
 export type RegulationSetting = Prisma.RegulationSettingModel
 /**
+ * Model PaymentLink
+ * Kurs açma tamamen süper admin elinden gittiği gibi, ücretli plana geçiş de öyle: satış
+ * görüşmesi sonrası süper admin bir ödeme linki oluşturur, kurs sahibine kendisi iletir
+ * (e-posta/WhatsApp) — bu yüzden link genel (public) bir URL'dir, giriş gerektirmez; kurs
+ * sahibinin henüz oturumu olmayabilir. Bkz. app/odeme/lisans/[id], lib/providers/paytr.ts.
+ */
+export type PaymentLink = Prisma.PaymentLinkModel
+/**
  * Model AuditLog
  * 
  */
