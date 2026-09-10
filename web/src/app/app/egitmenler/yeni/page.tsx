@@ -33,7 +33,7 @@ export default async function NewInstructorPage({ searchParams }: PageProps<"/ap
           categoryOptions={THEORY_CATEGORIES.map((c) => ({ key: c.key, label: c.label }))}
           submitLabel={existing ? "Değişiklikleri kaydet" : "Eğitmeni ekle"}
           defaults={{
-            name: existing?.name, phone: existing?.phone ?? undefined, branch: existing?.branch,
+            name: existing?.name, phone: existing?.phone ?? undefined, mebLicenseNo: existing?.mebLicenseNo ?? undefined, branch: existing?.branch,
             weeklyCapacity: existing?.weeklyCapacity,
             licenseClasses: existing ? splitCsv(existing.licenseClasses) : undefined,
             subjects: existing ? splitCsv(existing.subjects) : undefined,

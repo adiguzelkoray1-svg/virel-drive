@@ -10,6 +10,7 @@ import type { InstructorFormState } from "@/lib/instructor-form";
 const Schema = z.object({
   name: z.string().trim().min(2, "Ad soyad girin."),
   phone: z.string().trim().optional(),
+  mebLicenseNo: z.string().trim().optional(),
   branch: z.enum(["DRIVING", "THEORY"]),
   weeklyCapacity: z.coerce.number().int().min(1, "Haftalık kapasite en az 1 saat olmalı.").max(80, "Haftalık kapasite 80 saati aşamaz."),
 });
@@ -41,7 +42,7 @@ export async function instructorFormAction(_prev: InstructorFormState, formData:
 
   const instructorId = String(raw.instructorId ?? "") || undefined;
   const data = {
-    name: v.name, phone: v.phone || null, branch: v.branch, weeklyCapacity: v.weeklyCapacity,
+    name: v.name, phone: v.phone || null, mebLicenseNo: v.mebLicenseNo || null, branch: v.branch, weeklyCapacity: v.weeklyCapacity,
     licenseClasses: v.branch === "DRIVING" ? joinCsv(licenseClasses) : "",
     subjects: v.branch === "THEORY" ? joinCsv(subjects) : null,
   };

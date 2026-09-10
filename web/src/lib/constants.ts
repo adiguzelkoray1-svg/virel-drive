@@ -146,7 +146,7 @@ export const VEHICLE_STATUS_LABEL: Record<string, { label: string; kind: BadgeKi
   PASSIVE: { label: "Pasif", kind: "neutral" },
 };
 export const VEHICLE_COST_LABEL: Record<string, string> = {
-  FUEL: "Yakıt", SERVICE: "Bakım", TIRE: "Lastik", INSURANCE: "Sigorta", INSPECTION: "Muayene", REPAIR: "Tamir", OTHER: "Diğer",
+  FUEL: "Yakıt", SERVICE: "Bakım", TIRE: "Lastik", INSURANCE: "Sigorta", INSPECTION: "Muayene", REPAIR: "Tamir", PENALTY: "Ceza", OTHER: "Diğer",
 };
 export const VEHICLE_USAGE_LABEL: Record<string, string> = { TRAINING: "Eğitim aracı", EXAM: "Sınav aracı" };
 

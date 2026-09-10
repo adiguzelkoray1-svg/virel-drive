@@ -73,6 +73,7 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
             <div className="flex gap-4 items-center flex-wrap text-[13px] text-text-2">
               {instructor.phone && <span className="flex items-center gap-1.5 tabular"><Icon name="phone" size={15} className="text-muted" />{instructor.phone}</span>}
               {instructor.user?.email && <span className="flex items-center gap-1.5"><Icon name="mail" size={15} className="text-muted" />{instructor.user.email}</span>}
+              {instructor.mebLicenseNo && <span className="flex items-center gap-1.5 tabular"><Icon name="badge-id" size={15} className="text-muted" />MEB izin no: {instructor.mebLicenseNo}</span>}
               <span className="text-xs text-muted">{classInfo || "Sınıf/kategori tanımlanmadı"}</span>
             </div>
           </div>

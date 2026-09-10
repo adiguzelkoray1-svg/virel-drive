@@ -2300,6 +2300,7 @@ export const InstructorScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   phone: 'phone',
+  mebLicenseNo: 'mebLicenseNo',
   branch: 'branch',
   licenseClasses: 'licenseClasses',
   subjects: 'subjects',

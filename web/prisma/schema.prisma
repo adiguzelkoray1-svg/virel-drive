@@ -191,6 +191,7 @@ model Instructor {
 
   name           String
   phone          String?
+  mebLicenseNo   String?                      // MEB izin belgesi numarası — Özel MTSK Modülü'nde personel kaydının zorunlu alanı
   branch         String   @default("DRIVING") // DRIVING | THEORY
   licenseClasses String   @default("B")       // virgülle: "B,A2"
   subjects       String?                      // teorik: "TRAFFIC,FIRST_AID"

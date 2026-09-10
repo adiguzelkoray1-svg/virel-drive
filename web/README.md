@@ -175,10 +175,11 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 `permissions.ts`, STUDENT boş dizi) giriş doğrudan `/kursiyer`'e gider; `/app`'e sızmaya
 çalışırsa `requireSchoolUser` onu geri yollar.
 
-**Sırada:** Orijinal brief'in tüm modülleri tamamlandı; kalan işler pazar analizinden çıkan,
-bilinçli olarak ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): eğitmen MEB izin no
-alanı · araç yakıt/bakım/ceza takibi · gerçek WhatsApp Business API (hâlâ simüle ediliyor) ·
-çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR) hakkında" —
+**Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no ve araç ceza takibi
+de eklendi (bkz. "Eğitmenler ve araçlar" hakkında). Kalan işler pazar analizinden çıkan, bilinçli
+olarak ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API
+(hâlâ simüle ediliyor) · çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri
+(PayTR) hakkında" —
 PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu yüzden pasif.
 
 ### Yedi rolün tamamı tek tek denendi (son kontrol)
@@ -605,6 +606,13 @@ için sabit "bu ay" görünümü yanıltıcıydı.
 
 Bakıma alınan araç derse atanamaz (`lib/availability.ts` bunu zaten reddediyor); bakıma alma
 ekranı, o araca bağlı kaç planlı dersin taşınması gerektiğini söyler.
+
+**Eğitmende MEB izin no, araçta Ceza gideri — pazar analizinden çıkan iki düşük efor ek.**
+`Instructor.mebLicenseNo` (opsiyonel) Özel MTSK Modülü'nde personel kaydının zorunlu bir alanı;
+rakip yazılımların hepsinde var, Drive'da yoktu. Araç tarafında ise `VehicleCost.type`'a yeni
+bir değer (`PENALTY`) eklendi — yeni bir model gerekmedi, mevcut gider tablosu (tutar/tarih/not)
+bir trafik cezasını da birebir aynı şekilde temsil ediyor. İkisi de MEBBİS gibi devlet API'si
+gerektirmiyor, salt veri alanı; bu yüzden "eklenemez" değil "eklenebilir" listesindeydi.
 
 ### Kural: `"use server"` dosyaları yalnızca async fonksiyon dışa aktarır
 

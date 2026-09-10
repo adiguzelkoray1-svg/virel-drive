@@ -10,7 +10,7 @@ import { can } from "@/lib/permissions";
 
 export const metadata: Metadata = { title: "Araçlar" };
 
-const COST_TYPES = ["FUEL", "SERVICE", "TIRE", "INSURANCE", "REPAIR", "OTHER"] as const;
+const COST_TYPES = ["FUEL", "SERVICE", "TIRE", "INSURANCE", "REPAIR", "PENALTY", "OTHER"] as const;
 const COST_COLS = `132px repeat(${COST_TYPES.length}, 1fr) 132px 120px`;
 
 export default async function VehiclesPage({ searchParams }: PageProps<"/app/araclar">) {

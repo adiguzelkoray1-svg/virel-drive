@@ -40,6 +40,7 @@ export type InstructorMinAggregateOutputType = {
   userId: string | null
   name: string | null
   phone: string | null
+  mebLicenseNo: string | null
   branch: string | null
   licenseClasses: string | null
   subjects: string | null
@@ -55,6 +56,7 @@ export type InstructorMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   phone: string | null
+  mebLicenseNo: string | null
   branch: string | null
   licenseClasses: string | null
   subjects: string | null
@@ -70,6 +72,7 @@ export type InstructorCountAggregateOutputType = {
   userId: number
   name: number
   phone: number
+  mebLicenseNo: number
   branch: number
   licenseClasses: number
   subjects: number
@@ -95,6 +98,7 @@ export type InstructorMinAggregateInputType = {
   userId?: true
   name?: true
   phone?: true
+  mebLicenseNo?: true
   branch?: true
   licenseClasses?: true
   subjects?: true
@@ -110,6 +114,7 @@ export type InstructorMaxAggregateInputType = {
   userId?: true
   name?: true
   phone?: true
+  mebLicenseNo?: true
   branch?: true
   licenseClasses?: true
   subjects?: true
@@ -125,6 +130,7 @@ export type InstructorCountAggregateInputType = {
   userId?: true
   name?: true
   phone?: true
+  mebLicenseNo?: true
   branch?: true
   licenseClasses?: true
   subjects?: true
@@ -227,6 +233,7 @@ export type InstructorGroupByOutputType = {
   userId: string | null
   name: string
   phone: string | null
+  mebLicenseNo: string | null
   branch: string
   licenseClasses: string
   subjects: string | null
@@ -265,6 +272,7 @@ export type InstructorWhereInput = {
   userId?: Prisma.StringNullableFilter<"Instructor"> | string | null
   name?: Prisma.StringFilter<"Instructor"> | string
   phone?: Prisma.StringNullableFilter<"Instructor"> | string | null
+  mebLicenseNo?: Prisma.StringNullableFilter<"Instructor"> | string | null
   branch?: Prisma.StringFilter<"Instructor"> | string
   licenseClasses?: Prisma.StringFilter<"Instructor"> | string
   subjects?: Prisma.StringNullableFilter<"Instructor"> | string | null
@@ -285,6 +293,7 @@ export type InstructorOrderByWithRelationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  mebLicenseNo?: Prisma.SortOrderInput | Prisma.SortOrder
   branch?: Prisma.SortOrder
   licenseClasses?: Prisma.SortOrder
   subjects?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -308,6 +317,7 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   schoolId?: Prisma.StringFilter<"Instructor"> | string
   name?: Prisma.StringFilter<"Instructor"> | string
   phone?: Prisma.StringNullableFilter<"Instructor"> | string | null
+  mebLicenseNo?: Prisma.StringNullableFilter<"Instructor"> | string | null
   branch?: Prisma.StringFilter<"Instructor"> | string
   licenseClasses?: Prisma.StringFilter<"Instructor"> | string
   subjects?: Prisma.StringNullableFilter<"Instructor"> | string | null
@@ -328,6 +338,7 @@ export type InstructorOrderByWithAggregationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  mebLicenseNo?: Prisma.SortOrderInput | Prisma.SortOrder
   branch?: Prisma.SortOrder
   licenseClasses?: Prisma.SortOrder
   subjects?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -351,6 +362,7 @@ export type InstructorScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
+  mebLicenseNo?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
   branch?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
   licenseClasses?: Prisma.StringWithAggregatesFilter<"Instructor"> | string
   subjects?: Prisma.StringNullableWithAggregatesFilter<"Instructor"> | string | null
@@ -364,6 +376,7 @@ export type InstructorCreateInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -384,6 +397,7 @@ export type InstructorUncheckedCreateInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -400,6 +414,7 @@ export type InstructorUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -420,6 +435,7 @@ export type InstructorUncheckedUpdateInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -438,6 +454,7 @@ export type InstructorCreateManyInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -451,6 +468,7 @@ export type InstructorUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -466,6 +484,7 @@ export type InstructorUncheckedUpdateManyInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -496,6 +515,7 @@ export type InstructorCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  mebLicenseNo?: Prisma.SortOrder
   branch?: Prisma.SortOrder
   licenseClasses?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
@@ -515,6 +535,7 @@ export type InstructorMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  mebLicenseNo?: Prisma.SortOrder
   branch?: Prisma.SortOrder
   licenseClasses?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
@@ -530,6 +551,7 @@ export type InstructorMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  mebLicenseNo?: Prisma.SortOrder
   branch?: Prisma.SortOrder
   licenseClasses?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
@@ -672,6 +694,7 @@ export type InstructorCreateWithoutSchoolInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -690,6 +713,7 @@ export type InstructorUncheckedCreateWithoutSchoolInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -737,6 +761,7 @@ export type InstructorScalarWhereInput = {
   userId?: Prisma.StringNullableFilter<"Instructor"> | string | null
   name?: Prisma.StringFilter<"Instructor"> | string
   phone?: Prisma.StringNullableFilter<"Instructor"> | string | null
+  mebLicenseNo?: Prisma.StringNullableFilter<"Instructor"> | string | null
   branch?: Prisma.StringFilter<"Instructor"> | string
   licenseClasses?: Prisma.StringFilter<"Instructor"> | string
   subjects?: Prisma.StringNullableFilter<"Instructor"> | string | null
@@ -750,6 +775,7 @@ export type InstructorCreateWithoutUserInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -768,6 +794,7 @@ export type InstructorUncheckedCreateWithoutUserInput = {
   schoolId: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -800,6 +827,7 @@ export type InstructorUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -818,6 +846,7 @@ export type InstructorUncheckedUpdateWithoutUserInput = {
   schoolId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -834,6 +863,7 @@ export type InstructorCreateWithoutVehiclesInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -853,6 +883,7 @@ export type InstructorUncheckedCreateWithoutVehiclesInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -884,6 +915,7 @@ export type InstructorUpdateWithoutVehiclesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -903,6 +935,7 @@ export type InstructorUncheckedUpdateWithoutVehiclesInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -918,6 +951,7 @@ export type InstructorCreateWithoutTheoryLessonsInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -937,6 +971,7 @@ export type InstructorUncheckedCreateWithoutTheoryLessonsInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -968,6 +1003,7 @@ export type InstructorUpdateWithoutTheoryLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -987,6 +1023,7 @@ export type InstructorUncheckedUpdateWithoutTheoryLessonsInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1002,6 +1039,7 @@ export type InstructorCreateWithoutDrivingLessonsInput = {
   id?: string
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -1021,6 +1059,7 @@ export type InstructorUncheckedCreateWithoutDrivingLessonsInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -1052,6 +1091,7 @@ export type InstructorUpdateWithoutDrivingLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1071,6 +1111,7 @@ export type InstructorUncheckedUpdateWithoutDrivingLessonsInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1087,6 +1128,7 @@ export type InstructorCreateManySchoolInput = {
   userId?: string | null
   name: string
   phone?: string | null
+  mebLicenseNo?: string | null
   branch?: string
   licenseClasses?: string
   subjects?: string | null
@@ -1100,6 +1142,7 @@ export type InstructorUpdateWithoutSchoolInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1118,6 +1161,7 @@ export type InstructorUncheckedUpdateWithoutSchoolInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1135,6 +1179,7 @@ export type InstructorUncheckedUpdateManyWithoutSchoolInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branch?: Prisma.StringFieldUpdateOperationsInput | string
   licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1199,6 +1244,7 @@ export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   userId?: boolean
   name?: boolean
   phone?: boolean
+  mebLicenseNo?: boolean
   branch?: boolean
   licenseClasses?: boolean
   subjects?: boolean
@@ -1220,6 +1266,7 @@ export type InstructorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   name?: boolean
   phone?: boolean
+  mebLicenseNo?: boolean
   branch?: boolean
   licenseClasses?: boolean
   subjects?: boolean
@@ -1237,6 +1284,7 @@ export type InstructorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   name?: boolean
   phone?: boolean
+  mebLicenseNo?: boolean
   branch?: boolean
   licenseClasses?: boolean
   subjects?: boolean
@@ -1254,6 +1302,7 @@ export type InstructorSelectScalar = {
   userId?: boolean
   name?: boolean
   phone?: boolean
+  mebLicenseNo?: boolean
   branch?: boolean
   licenseClasses?: boolean
   subjects?: boolean
@@ -1263,7 +1312,7 @@ export type InstructorSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "userId" | "name" | "phone" | "branch" | "licenseClasses" | "subjects" | "weeklyCapacity" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["instructor"]>
+export type InstructorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "userId" | "name" | "phone" | "mebLicenseNo" | "branch" | "licenseClasses" | "subjects" | "weeklyCapacity" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["instructor"]>
 export type InstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Instructor$userArgs<ExtArgs>
@@ -1296,6 +1345,7 @@ export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     userId: string | null
     name: string
     phone: string | null
+    mebLicenseNo: string | null
     branch: string
     licenseClasses: string
     subjects: string | null
@@ -1736,6 +1786,7 @@ export interface InstructorFieldRefs {
   readonly userId: Prisma.FieldRef<"Instructor", 'String'>
   readonly name: Prisma.FieldRef<"Instructor", 'String'>
   readonly phone: Prisma.FieldRef<"Instructor", 'String'>
+  readonly mebLicenseNo: Prisma.FieldRef<"Instructor", 'String'>
   readonly branch: Prisma.FieldRef<"Instructor", 'String'>
   readonly licenseClasses: Prisma.FieldRef<"Instructor", 'String'>
   readonly subjects: Prisma.FieldRef<"Instructor", 'String'>

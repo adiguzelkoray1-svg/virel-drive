@@ -10,7 +10,7 @@ export function InstructorForm({ instructorId, classOptions, categoryOptions, de
   instructorId?: string;
   classOptions: string[];
   categoryOptions: { key: string; label: string }[];
-  defaults: { name?: string; phone?: string; branch?: string; weeklyCapacity?: number; licenseClasses?: string[]; subjects?: string[] };
+  defaults: { name?: string; phone?: string; mebLicenseNo?: string; branch?: string; weeklyCapacity?: number; licenseClasses?: string[]; subjects?: string[] };
   submitLabel: string;
 }) {
   const [state, action, pending] = useActionState(instructorFormAction, emptyInstructorState);
@@ -45,6 +45,10 @@ export function InstructorForm({ instructorId, classOptions, categoryOptions, de
         <label className="flex flex-col gap-1.5">
           <span className="label">Haftalık kapasite (saat)</span>
           <input key={`cap-${formKey}`} name="weeklyCapacity" type="number" min={1} max={80} defaultValue={back?.weeklyCapacity ?? defaults.weeklyCapacity ?? 40} className="input" required />
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="label">MEB izin no <span className="text-muted font-normal">(opsiyonel)</span></span>
+          <input key={`meb-${formKey}`} name="mebLicenseNo" defaultValue={back?.mebLicenseNo ?? defaults.mebLicenseNo ?? ""} className="input" placeholder="Özel MTSK Modülü personel kaydı" />
         </label>
       </div>
 

@@ -72,7 +72,7 @@ export async function vehicleFormAction(_prev: VehicleFormState, formData: FormD
 
 const CostSchema = z.object({
   vehicleId: z.string().min(1),
-  type: z.enum(["FUEL", "SERVICE", "TIRE", "INSURANCE", "INSPECTION", "REPAIR", "OTHER"]),
+  type: z.enum(["FUEL", "SERVICE", "TIRE", "INSURANCE", "INSPECTION", "REPAIR", "PENALTY", "OTHER"]),
   amount: z.coerce.number().positive("Tutar sıfırdan büyük olmalı."),
   km: z.string().trim().optional(),
   note: z.string().trim().optional(),
