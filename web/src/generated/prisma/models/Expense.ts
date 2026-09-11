@@ -38,6 +38,8 @@ export type ExpenseMinAggregateOutputType = {
   id: string | null
   schoolId: string | null
   category: string | null
+  instructorId: string | null
+  subcategory: string | null
   amount: number | null
   note: string | null
   occurredAt: Date | null
@@ -48,6 +50,8 @@ export type ExpenseMaxAggregateOutputType = {
   id: string | null
   schoolId: string | null
   category: string | null
+  instructorId: string | null
+  subcategory: string | null
   amount: number | null
   note: string | null
   occurredAt: Date | null
@@ -58,6 +62,8 @@ export type ExpenseCountAggregateOutputType = {
   id: number
   schoolId: number
   category: number
+  instructorId: number
+  subcategory: number
   amount: number
   note: number
   occurredAt: number
@@ -78,6 +84,8 @@ export type ExpenseMinAggregateInputType = {
   id?: true
   schoolId?: true
   category?: true
+  instructorId?: true
+  subcategory?: true
   amount?: true
   note?: true
   occurredAt?: true
@@ -88,6 +96,8 @@ export type ExpenseMaxAggregateInputType = {
   id?: true
   schoolId?: true
   category?: true
+  instructorId?: true
+  subcategory?: true
   amount?: true
   note?: true
   occurredAt?: true
@@ -98,6 +108,8 @@ export type ExpenseCountAggregateInputType = {
   id?: true
   schoolId?: true
   category?: true
+  instructorId?: true
+  subcategory?: true
   amount?: true
   note?: true
   occurredAt?: true
@@ -195,6 +207,8 @@ export type ExpenseGroupByOutputType = {
   id: string
   schoolId: string
   category: string
+  instructorId: string | null
+  subcategory: string | null
   amount: number
   note: string | null
   occurredAt: Date
@@ -228,22 +242,28 @@ export type ExpenseWhereInput = {
   id?: Prisma.StringFilter<"Expense"> | string
   schoolId?: Prisma.StringFilter<"Expense"> | string
   category?: Prisma.StringFilter<"Expense"> | string
+  instructorId?: Prisma.StringNullableFilter<"Expense"> | string | null
+  subcategory?: Prisma.StringNullableFilter<"Expense"> | string | null
   amount?: Prisma.IntFilter<"Expense"> | number
   note?: Prisma.StringNullableFilter<"Expense"> | string | null
   occurredAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
+  instructor?: Prisma.XOR<Prisma.InstructorNullableScalarRelationFilter, Prisma.InstructorWhereInput> | null
 }
 
 export type ExpenseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  instructorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcategory?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
+  instructor?: Prisma.InstructorOrderByWithRelationInput
 }
 
 export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
@@ -253,17 +273,22 @@ export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
   schoolId?: Prisma.StringFilter<"Expense"> | string
   category?: Prisma.StringFilter<"Expense"> | string
+  instructorId?: Prisma.StringNullableFilter<"Expense"> | string | null
+  subcategory?: Prisma.StringNullableFilter<"Expense"> | string | null
   amount?: Prisma.IntFilter<"Expense"> | number
   note?: Prisma.StringNullableFilter<"Expense"> | string | null
   occurredAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
+  instructor?: Prisma.XOR<Prisma.InstructorNullableScalarRelationFilter, Prisma.InstructorWhereInput> | null
 }, "id">
 
 export type ExpenseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  instructorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcategory?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
@@ -282,6 +307,8 @@ export type ExpenseScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   schoolId?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   category?: Prisma.StringWithAggregatesFilter<"Expense"> | string
+  instructorId?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null
+  subcategory?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null
   amount?: Prisma.IntWithAggregatesFilter<"Expense"> | number
   note?: Prisma.StringNullableWithAggregatesFilter<"Expense"> | string | null
   occurredAt?: Prisma.DateTimeWithAggregatesFilter<"Expense"> | Date | string
@@ -291,17 +318,21 @@ export type ExpenseScalarWhereWithAggregatesInput = {
 export type ExpenseCreateInput = {
   id?: string
   category: string
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
   createdAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutExpensesInput
+  instructor?: Prisma.InstructorCreateNestedOneWithoutExpensesInput
 }
 
 export type ExpenseUncheckedCreateInput = {
   id?: string
   schoolId: string
   category: string
+  instructorId?: string | null
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
@@ -311,17 +342,21 @@ export type ExpenseUncheckedCreateInput = {
 export type ExpenseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutExpensesNestedInput
+  instructor?: Prisma.InstructorUpdateOneWithoutExpensesNestedInput
 }
 
 export type ExpenseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   schoolId?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  instructorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -332,6 +367,8 @@ export type ExpenseCreateManyInput = {
   id?: string
   schoolId: string
   category: string
+  instructorId?: string | null
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
@@ -341,6 +378,7 @@ export type ExpenseCreateManyInput = {
 export type ExpenseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,6 +389,8 @@ export type ExpenseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   schoolId?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  instructorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,6 +411,8 @@ export type ExpenseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  instructorId?: Prisma.SortOrder
+  subcategory?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   note?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
@@ -385,6 +427,8 @@ export type ExpenseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  instructorId?: Prisma.SortOrder
+  subcategory?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   note?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
@@ -395,6 +439,8 @@ export type ExpenseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  instructorId?: Prisma.SortOrder
+  subcategory?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   note?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
@@ -447,18 +493,64 @@ export type ExpenseUncheckedUpdateManyWithoutSchoolNestedInput = {
   deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
 }
 
+export type ExpenseCreateNestedManyWithoutInstructorInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput> | Prisma.ExpenseCreateWithoutInstructorInput[] | Prisma.ExpenseUncheckedCreateWithoutInstructorInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutInstructorInput | Prisma.ExpenseCreateOrConnectWithoutInstructorInput[]
+  createMany?: Prisma.ExpenseCreateManyInstructorInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUncheckedCreateNestedManyWithoutInstructorInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput> | Prisma.ExpenseCreateWithoutInstructorInput[] | Prisma.ExpenseUncheckedCreateWithoutInstructorInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutInstructorInput | Prisma.ExpenseCreateOrConnectWithoutInstructorInput[]
+  createMany?: Prisma.ExpenseCreateManyInstructorInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUpdateManyWithoutInstructorNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput> | Prisma.ExpenseCreateWithoutInstructorInput[] | Prisma.ExpenseUncheckedCreateWithoutInstructorInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutInstructorInput | Prisma.ExpenseCreateOrConnectWithoutInstructorInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutInstructorInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutInstructorInput[]
+  createMany?: Prisma.ExpenseCreateManyInstructorInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutInstructorInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutInstructorInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutInstructorInput | Prisma.ExpenseUpdateManyWithWhereWithoutInstructorInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
+export type ExpenseUncheckedUpdateManyWithoutInstructorNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput> | Prisma.ExpenseCreateWithoutInstructorInput[] | Prisma.ExpenseUncheckedCreateWithoutInstructorInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutInstructorInput | Prisma.ExpenseCreateOrConnectWithoutInstructorInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutInstructorInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutInstructorInput[]
+  createMany?: Prisma.ExpenseCreateManyInstructorInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutInstructorInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutInstructorInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutInstructorInput | Prisma.ExpenseUpdateManyWithWhereWithoutInstructorInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
 export type ExpenseCreateWithoutSchoolInput = {
   id?: string
   category: string
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
   createdAt?: Date | string
+  instructor?: Prisma.InstructorCreateNestedOneWithoutExpensesInput
 }
 
 export type ExpenseUncheckedCreateWithoutSchoolInput = {
   id?: string
   category: string
+  instructorId?: string | null
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
@@ -498,15 +590,67 @@ export type ExpenseScalarWhereInput = {
   id?: Prisma.StringFilter<"Expense"> | string
   schoolId?: Prisma.StringFilter<"Expense"> | string
   category?: Prisma.StringFilter<"Expense"> | string
+  instructorId?: Prisma.StringNullableFilter<"Expense"> | string | null
+  subcategory?: Prisma.StringNullableFilter<"Expense"> | string | null
   amount?: Prisma.IntFilter<"Expense"> | number
   note?: Prisma.StringNullableFilter<"Expense"> | string | null
   occurredAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
 }
 
+export type ExpenseCreateWithoutInstructorInput = {
+  id?: string
+  category: string
+  subcategory?: string | null
+  amount: number
+  note?: string | null
+  occurredAt?: Date | string
+  createdAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutExpensesInput
+}
+
+export type ExpenseUncheckedCreateWithoutInstructorInput = {
+  id?: string
+  schoolId: string
+  category: string
+  subcategory?: string | null
+  amount: number
+  note?: string | null
+  occurredAt?: Date | string
+  createdAt?: Date | string
+}
+
+export type ExpenseCreateOrConnectWithoutInstructorInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput>
+}
+
+export type ExpenseCreateManyInstructorInputEnvelope = {
+  data: Prisma.ExpenseCreateManyInstructorInput | Prisma.ExpenseCreateManyInstructorInput[]
+  skipDuplicates?: boolean
+}
+
+export type ExpenseUpsertWithWhereUniqueWithoutInstructorInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  update: Prisma.XOR<Prisma.ExpenseUpdateWithoutInstructorInput, Prisma.ExpenseUncheckedUpdateWithoutInstructorInput>
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutInstructorInput, Prisma.ExpenseUncheckedCreateWithoutInstructorInput>
+}
+
+export type ExpenseUpdateWithWhereUniqueWithoutInstructorInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateWithoutInstructorInput, Prisma.ExpenseUncheckedUpdateWithoutInstructorInput>
+}
+
+export type ExpenseUpdateManyWithWhereWithoutInstructorInput = {
+  where: Prisma.ExpenseScalarWhereInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateManyMutationInput, Prisma.ExpenseUncheckedUpdateManyWithoutInstructorInput>
+}
+
 export type ExpenseCreateManySchoolInput = {
   id?: string
   category: string
+  instructorId?: string | null
+  subcategory?: string | null
   amount: number
   note?: string | null
   occurredAt?: Date | string
@@ -516,15 +660,19 @@ export type ExpenseCreateManySchoolInput = {
 export type ExpenseUpdateWithoutSchoolInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  instructor?: Prisma.InstructorUpdateOneWithoutExpensesNestedInput
 }
 
 export type ExpenseUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  instructorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -534,6 +682,52 @@ export type ExpenseUncheckedUpdateWithoutSchoolInput = {
 export type ExpenseUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
+  instructorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExpenseCreateManyInstructorInput = {
+  id?: string
+  schoolId: string
+  category: string
+  subcategory?: string | null
+  amount: number
+  note?: string | null
+  occurredAt?: Date | string
+  createdAt?: Date | string
+}
+
+export type ExpenseUpdateWithoutInstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutExpensesNestedInput
+}
+
+export type ExpenseUncheckedUpdateWithoutInstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  schoolId?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExpenseUncheckedUpdateManyWithoutInstructorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  schoolId?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  subcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -546,65 +740,92 @@ export type ExpenseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   schoolId?: boolean
   category?: boolean
+  instructorId?: boolean
+  subcategory?: boolean
   amount?: boolean
   note?: boolean
   occurredAt?: boolean
   createdAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   schoolId?: boolean
   category?: boolean
+  instructorId?: boolean
+  subcategory?: boolean
   amount?: boolean
   note?: boolean
   occurredAt?: boolean
   createdAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   schoolId?: boolean
   category?: boolean
+  instructorId?: boolean
+  subcategory?: boolean
   amount?: boolean
   note?: boolean
   occurredAt?: boolean
   createdAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectScalar = {
   id?: boolean
   schoolId?: boolean
   category?: boolean
+  instructorId?: boolean
+  subcategory?: boolean
   amount?: boolean
   note?: boolean
   occurredAt?: boolean
   createdAt?: boolean
 }
 
-export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "category" | "amount" | "note" | "occurredAt" | "createdAt", ExtArgs["result"]["expense"]>
+export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "category" | "instructorId" | "subcategory" | "amount" | "note" | "occurredAt" | "createdAt", ExtArgs["result"]["expense"]>
 export type ExpenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }
 export type ExpenseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }
 export type ExpenseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  instructor?: boolean | Prisma.Expense$instructorArgs<ExtArgs>
 }
 
 export type $ExpensePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Expense"
   objects: {
     school: Prisma.$SchoolPayload<ExtArgs>
+    instructor: Prisma.$InstructorPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     schoolId: string
     category: string
+    /**
+     * category=SALARY iken belirli bir eğitmene bağlanabilir — eğitmen detayındaki "Maaş ve
+     * avans" hesap ekstresi bu alanla filtrelenir. Boş bırakılırsa genel/dağıtılmamış personel
+     * gideri sayılır (önceki davranış korunur). Yönetici rolleri (OWNER/MANAGER/SECRETARY/
+     * ACCOUNTANT) için ayrı bir profil kaydı yok, bu yüzden şimdilik yalnızca Instructor'a
+     * bağlanabiliyor — en büyük ve en operasyonel personel grubu bu.
+     */
+    instructorId: string | null
+    /**
+     * Yalnızca category=SALARY iken anlamlı: MAAS | AVANS.
+     */
+    subcategory: string | null
     amount: number
     note: string | null
     occurredAt: Date
@@ -1004,6 +1225,7 @@ readonly fields: ExpenseFieldRefs;
 export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  instructor<T extends Prisma.Expense$instructorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Expense$instructorArgs<ExtArgs>>): Prisma.Prisma__InstructorClient<runtime.Types.Result.GetResult<Prisma.$InstructorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1036,6 +1258,8 @@ export interface ExpenseFieldRefs {
   readonly id: Prisma.FieldRef<"Expense", 'String'>
   readonly schoolId: Prisma.FieldRef<"Expense", 'String'>
   readonly category: Prisma.FieldRef<"Expense", 'String'>
+  readonly instructorId: Prisma.FieldRef<"Expense", 'String'>
+  readonly subcategory: Prisma.FieldRef<"Expense", 'String'>
   readonly amount: Prisma.FieldRef<"Expense", 'Int'>
   readonly note: Prisma.FieldRef<"Expense", 'String'>
   readonly occurredAt: Prisma.FieldRef<"Expense", 'DateTime'>
@@ -1438,6 +1662,25 @@ export type ExpenseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Expenses to delete.
    */
   limit?: number
+}
+
+/**
+ * Expense.instructor
+ */
+export type Expense$instructorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Instructor
+   */
+  select?: Prisma.InstructorSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Instructor
+   */
+  omit?: Prisma.InstructorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InstructorInclude<ExtArgs> | null
+  where?: Prisma.InstructorWhereInput
 }
 
 /**

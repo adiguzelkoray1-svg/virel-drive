@@ -285,6 +285,7 @@ export type InstructorWhereInput = {
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   theoryLessons?: Prisma.TheoryLessonListRelationFilter
   vehicles?: Prisma.VehicleListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
 }
 
 export type InstructorOrderByWithRelationInput = {
@@ -306,6 +307,7 @@ export type InstructorOrderByWithRelationInput = {
   drivingLessons?: Prisma.DrivingLessonOrderByRelationAggregateInput
   theoryLessons?: Prisma.TheoryLessonOrderByRelationAggregateInput
   vehicles?: Prisma.VehicleOrderByRelationAggregateInput
+  expenses?: Prisma.ExpenseOrderByRelationAggregateInput
 }
 
 export type InstructorWhereUniqueInput = Prisma.AtLeast<{
@@ -330,6 +332,7 @@ export type InstructorWhereUniqueInput = Prisma.AtLeast<{
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   theoryLessons?: Prisma.TheoryLessonListRelationFilter
   vehicles?: Prisma.VehicleListRelationFilter
+  expenses?: Prisma.ExpenseListRelationFilter
 }, "id" | "userId">
 
 export type InstructorOrderByWithAggregationInput = {
@@ -389,6 +392,7 @@ export type InstructorCreateInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateInput = {
@@ -408,6 +412,7 @@ export type InstructorUncheckedCreateInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUpdateInput = {
@@ -427,6 +432,7 @@ export type InstructorUpdateInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateInput = {
@@ -446,6 +452,7 @@ export type InstructorUncheckedUpdateInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateManyInput = {
@@ -690,6 +697,22 @@ export type InstructorUpdateOneRequiredWithoutDrivingLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutDrivingLessonsInput, Prisma.InstructorUpdateWithoutDrivingLessonsInput>, Prisma.InstructorUncheckedUpdateWithoutDrivingLessonsInput>
 }
 
+export type InstructorCreateNestedOneWithoutExpensesInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutExpensesInput, Prisma.InstructorUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutExpensesInput
+  connect?: Prisma.InstructorWhereUniqueInput
+}
+
+export type InstructorUpdateOneWithoutExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.InstructorCreateWithoutExpensesInput, Prisma.InstructorUncheckedCreateWithoutExpensesInput>
+  connectOrCreate?: Prisma.InstructorCreateOrConnectWithoutExpensesInput
+  upsert?: Prisma.InstructorUpsertWithoutExpensesInput
+  disconnect?: Prisma.InstructorWhereInput | boolean
+  delete?: Prisma.InstructorWhereInput | boolean
+  connect?: Prisma.InstructorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InstructorUpdateToOneWithWhereWithoutExpensesInput, Prisma.InstructorUpdateWithoutExpensesInput>, Prisma.InstructorUncheckedUpdateWithoutExpensesInput>
+}
+
 export type InstructorCreateWithoutSchoolInput = {
   id?: string
   name: string
@@ -706,6 +729,7 @@ export type InstructorCreateWithoutSchoolInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutSchoolInput = {
@@ -724,6 +748,7 @@ export type InstructorUncheckedCreateWithoutSchoolInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutSchoolInput = {
@@ -787,6 +812,7 @@ export type InstructorCreateWithoutUserInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutUserInput = {
@@ -805,6 +831,7 @@ export type InstructorUncheckedCreateWithoutUserInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutUserInput = {
@@ -839,6 +866,7 @@ export type InstructorUpdateWithoutUserInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutUserInput = {
@@ -857,6 +885,7 @@ export type InstructorUncheckedUpdateWithoutUserInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateWithoutVehiclesInput = {
@@ -875,6 +904,7 @@ export type InstructorCreateWithoutVehiclesInput = {
   user?: Prisma.UserCreateNestedOneWithoutInstructorInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutVehiclesInput = {
@@ -893,6 +923,7 @@ export type InstructorUncheckedCreateWithoutVehiclesInput = {
   updatedAt?: Date | string
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutVehiclesInput = {
@@ -927,6 +958,7 @@ export type InstructorUpdateWithoutVehiclesInput = {
   user?: Prisma.UserUpdateOneWithoutInstructorNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutVehiclesInput = {
@@ -945,6 +977,7 @@ export type InstructorUncheckedUpdateWithoutVehiclesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateWithoutTheoryLessonsInput = {
@@ -963,6 +996,7 @@ export type InstructorCreateWithoutTheoryLessonsInput = {
   user?: Prisma.UserCreateNestedOneWithoutInstructorInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutTheoryLessonsInput = {
@@ -981,6 +1015,7 @@ export type InstructorUncheckedCreateWithoutTheoryLessonsInput = {
   updatedAt?: Date | string
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutTheoryLessonsInput = {
@@ -1015,6 +1050,7 @@ export type InstructorUpdateWithoutTheoryLessonsInput = {
   user?: Prisma.UserUpdateOneWithoutInstructorNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutTheoryLessonsInput = {
@@ -1033,6 +1069,7 @@ export type InstructorUncheckedUpdateWithoutTheoryLessonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorCreateWithoutDrivingLessonsInput = {
@@ -1051,6 +1088,7 @@ export type InstructorCreateWithoutDrivingLessonsInput = {
   user?: Prisma.UserCreateNestedOneWithoutInstructorInput
   theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorUncheckedCreateWithoutDrivingLessonsInput = {
@@ -1069,6 +1107,7 @@ export type InstructorUncheckedCreateWithoutDrivingLessonsInput = {
   updatedAt?: Date | string
   theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
   vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutInstructorInput
 }
 
 export type InstructorCreateOrConnectWithoutDrivingLessonsInput = {
@@ -1103,6 +1142,7 @@ export type InstructorUpdateWithoutDrivingLessonsInput = {
   user?: Prisma.UserUpdateOneWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutDrivingLessonsInput = {
@@ -1119,6 +1159,99 @@ export type InstructorUncheckedUpdateWithoutDrivingLessonsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorCreateWithoutExpensesInput = {
+  id?: string
+  name: string
+  phone?: string | null
+  mebLicenseNo?: string | null
+  branch?: string
+  licenseClasses?: string
+  subjects?: string | null
+  weeklyCapacity?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutInstructorsInput
+  user?: Prisma.UserCreateNestedOneWithoutInstructorInput
+  drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutInstructorInput
+  theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutInstructorInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorUncheckedCreateWithoutExpensesInput = {
+  id?: string
+  schoolId: string
+  userId?: string | null
+  name: string
+  phone?: string | null
+  mebLicenseNo?: string | null
+  branch?: string
+  licenseClasses?: string
+  subjects?: string | null
+  weeklyCapacity?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutInstructorInput
+  theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutInstructorInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutInstructorInput
+}
+
+export type InstructorCreateOrConnectWithoutExpensesInput = {
+  where: Prisma.InstructorWhereUniqueInput
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutExpensesInput, Prisma.InstructorUncheckedCreateWithoutExpensesInput>
+}
+
+export type InstructorUpsertWithoutExpensesInput = {
+  update: Prisma.XOR<Prisma.InstructorUpdateWithoutExpensesInput, Prisma.InstructorUncheckedUpdateWithoutExpensesInput>
+  create: Prisma.XOR<Prisma.InstructorCreateWithoutExpensesInput, Prisma.InstructorUncheckedCreateWithoutExpensesInput>
+  where?: Prisma.InstructorWhereInput
+}
+
+export type InstructorUpdateToOneWithWhereWithoutExpensesInput = {
+  where?: Prisma.InstructorWhereInput
+  data: Prisma.XOR<Prisma.InstructorUpdateWithoutExpensesInput, Prisma.InstructorUncheckedUpdateWithoutExpensesInput>
+}
+
+export type InstructorUpdateWithoutExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branch?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutInstructorsNestedInput
+  user?: Prisma.UserUpdateOneWithoutInstructorNestedInput
+  drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
+  theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+}
+
+export type InstructorUncheckedUpdateWithoutExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  schoolId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebLicenseNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branch?: Prisma.StringFieldUpdateOperationsInput | string
+  licenseClasses?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyCapacity?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
 }
@@ -1154,6 +1287,7 @@ export type InstructorUpdateWithoutSchoolInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateWithoutSchoolInput = {
@@ -1172,6 +1306,7 @@ export type InstructorUncheckedUpdateWithoutSchoolInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutInstructorNestedInput
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutInstructorNestedInput
   vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutInstructorNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutInstructorNestedInput
 }
 
 export type InstructorUncheckedUpdateManyWithoutSchoolInput = {
@@ -1198,12 +1333,14 @@ export type InstructorCountOutputType = {
   drivingLessons: number
   theoryLessons: number
   vehicles: number
+  expenses: number
 }
 
 export type InstructorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   drivingLessons?: boolean | InstructorCountOutputTypeCountDrivingLessonsArgs
   theoryLessons?: boolean | InstructorCountOutputTypeCountTheoryLessonsArgs
   vehicles?: boolean | InstructorCountOutputTypeCountVehiclesArgs
+  expenses?: boolean | InstructorCountOutputTypeCountExpensesArgs
 }
 
 /**
@@ -1237,6 +1374,13 @@ export type InstructorCountOutputTypeCountVehiclesArgs<ExtArgs extends runtime.T
   where?: Prisma.VehicleWhereInput
 }
 
+/**
+ * InstructorCountOutputType without action
+ */
+export type InstructorCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExpenseWhereInput
+}
+
 
 export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1257,6 +1401,7 @@ export type InstructorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   drivingLessons?: boolean | Prisma.Instructor$drivingLessonsArgs<ExtArgs>
   theoryLessons?: boolean | Prisma.Instructor$theoryLessonsArgs<ExtArgs>
   vehicles?: boolean | Prisma.Instructor$vehiclesArgs<ExtArgs>
+  expenses?: boolean | Prisma.Instructor$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["instructor"]>
 
@@ -1319,6 +1464,7 @@ export type InstructorInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   drivingLessons?: boolean | Prisma.Instructor$drivingLessonsArgs<ExtArgs>
   theoryLessons?: boolean | Prisma.Instructor$theoryLessonsArgs<ExtArgs>
   vehicles?: boolean | Prisma.Instructor$vehiclesArgs<ExtArgs>
+  expenses?: boolean | Prisma.Instructor$expensesArgs<ExtArgs>
   _count?: boolean | Prisma.InstructorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InstructorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1338,6 +1484,7 @@ export type $InstructorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     drivingLessons: Prisma.$DrivingLessonPayload<ExtArgs>[]
     theoryLessons: Prisma.$TheoryLessonPayload<ExtArgs>[]
     vehicles: Prisma.$VehiclePayload<ExtArgs>[]
+    expenses: Prisma.$ExpensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1752,6 +1899,7 @@ export interface Prisma__InstructorClient<T, Null = never, ExtArgs extends runti
   drivingLessons<T extends Prisma.Instructor$drivingLessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$drivingLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DrivingLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   theoryLessons<T extends Prisma.Instructor$theoryLessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$theoryLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TheoryLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   vehicles<T extends Prisma.Instructor$vehiclesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  expenses<T extends Prisma.Instructor$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Instructor$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2283,6 +2431,30 @@ export type Instructor$vehiclesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.VehicleScalarFieldEnum | Prisma.VehicleScalarFieldEnum[]
+}
+
+/**
+ * Instructor.expenses
+ */
+export type Instructor$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Expense
+   */
+  select?: Prisma.ExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Expense
+   */
+  omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  where?: Prisma.ExpenseWhereInput
+  orderBy?: Prisma.ExpenseOrderByWithRelationInput | Prisma.ExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.ExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[]
 }
 
 /**

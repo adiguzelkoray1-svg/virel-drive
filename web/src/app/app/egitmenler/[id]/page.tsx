@@ -2,15 +2,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { getInstructorDetail } from "@/lib/instructor";
 import { Icon } from "@/components/icons";
 import { Badge, Card, PersonAvatar, ProgressBar } from "@/components/ui";
-import { INSTRUCTOR_BRANCH_LABEL, THEORY_CATEGORY_LABEL, VEHICLE_STATUS_LABEL, splitCsv } from "@/lib/constants";
-import { date, fullName, time } from "@/lib/format";
+import { EXPENSE_SUBCATEGORY_LABEL, INSTRUCTOR_BRANCH_LABEL, THEORY_CATEGORY_LABEL, VEHICLE_STATUS_LABEL, splitCsv } from "@/lib/constants";
+import { date, fullName, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { toggleInstructorActiveAction } from "@/app/actions/instructors";
 import { grantInstructorAccessAction } from "@/app/actions/users";
 import { AccessGrantForm } from "@/components/AccessGrantForm";
+import { InstructorPaymentForm } from "./InstructorPaymentForm";
 
 export async function generateMetadata({ params }: PageProps<"/app/egitmenler/[id]">): Promise<Metadata> {
   const { id } = await params;
@@ -24,6 +26,7 @@ const NOTICE: Record<string, string> = {
   guncellendi: "Bilgiler güncellendi.",
   aktif: "Eğitmen tekrar aktif olarak işaretlendi.",
   izinde: "Eğitmen izinli olarak işaretlendi.",
+  eklendi: "Ödeme kaydedildi.",
 };
 
 export default async function InstructorDetailPage({ params, searchParams }: PageProps<"/app/egitmenler/[id]">) {
@@ -36,6 +39,13 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
   const { instructor, upcoming, past, students, loadHours, kind } = d;
   const canWrite = can(user.role, "instructor.write");
   const canManageUsers = can(user.role, "users.manage");
+  const showFinance = can(user.role, "finance.read");
+  const canPay = can(user.role, "finance.write");
+  const payments = showFinance
+    ? await prisma.expense.findMany({ where: { schoolId: user.schoolId, instructorId: instructor.id, category: "SALARY" }, orderBy: { occurredAt: "desc" } })
+    : [];
+  const paidSalary = payments.filter((p) => p.subcategory !== "AVANS").reduce((s, p) => s + p.amount, 0);
+  const paidAdvance = payments.filter((p) => p.subcategory === "AVANS").reduce((s, p) => s + p.amount, 0);
   const loadPercent = instructor.weeklyCapacity ? Math.round((loadHours / instructor.weeklyCapacity) * 100) : 0;
   const notice = Object.entries(NOTICE).find(([k]) => typeof sp[k] === "string")?.[1];
 
@@ -195,6 +205,37 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
               })}
             </div>
           )}
+        </Card>
+      )}
+
+      {showFinance && (
+        <Card id="odeme" title="Maaş ve avans" sub="Bu eğitmene yapılan ödemelerin hesap ekstresi">
+          <div className="px-5 pb-5 pt-1 flex flex-col gap-4">
+            <div className="grid grid-cols-3 gap-4">
+              <Metric label="Ödenen maaş" value={money(paidSalary)} />
+              <Metric label="Ödenen avans" value={money(paidAdvance)} />
+              <Metric label="Toplam" value={money(paidSalary + paidAdvance)} />
+            </div>
+
+            {canPay && (
+              <div className="border-t border-border pt-3.5">
+                <InstructorPaymentForm instructorId={instructor.id} today={new Date().toISOString().slice(0, 10)} />
+              </div>
+            )}
+
+            {payments.length > 0 && (
+              <div className="pt-3.5 border-t border-border flex flex-col gap-1.5">
+                {payments.map((p) => (
+                  <div key={p.id} className="flex items-center gap-2.5 text-[13px] py-1">
+                    <Badge kind={p.subcategory === "AVANS" ? "warning" : "neutral"}>{EXPENSE_SUBCATEGORY_LABEL[p.subcategory ?? "MAAS"]}</Badge>
+                    <span className="text-text-2 truncate">{p.note || "—"}</span>
+                    <span className="text-xs text-muted tabular ml-auto">{date(p.occurredAt)}</span>
+                    <span className="tabular font-semibold w-[96px] text-right">{money(p.amount)}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </Card>
       )}
 

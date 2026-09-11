@@ -2719,6 +2719,8 @@ export const ExpenseScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   category: 'category',
+  instructorId: 'instructorId',
+  subcategory: 'subcategory',
   amount: 'amount',
   note: 'note',
   occurredAt: 'occurredAt',

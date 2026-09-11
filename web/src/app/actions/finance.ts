@@ -102,10 +102,17 @@ const ExpenseSchema = z.object({
   amount: z.coerce.number().positive("Tutar sıfırdan büyük olmalı."),
   occurredAt: z.string().min(1, "Tarih seçin."),
   note: z.string().trim().optional(),
+  instructorId: z.string().trim().optional(),
+  subcategory: z.enum(["MAAS", "AVANS"]).optional(),
 });
 
-/** Gider kaydı. Araç giderleri araç detayından girildiğinde VehicleCost'a yazılır;
- *  buradaki "Araç" kategorisi plakaya bağlanamayan genel filo giderleri içindir. */
+/**
+ * Gider kaydı. Araç giderleri araç detayından girildiğinde VehicleCost'a yazılır; buradaki
+ * "Araç" kategorisi plakaya bağlanamayan genel filo giderleri içindir. `instructorId`/
+ * `subcategory` yalnızca eğitmen detayındaki "Maaş ve avans" formundan gelir (kategori orada
+ * sabit SALARY) — Giderler ekranındaki genel form bu ikisini hiç göndermez, o yüzden eski
+ * davranış (bağlı olmayan genel personel gideri) hiç bozulmadı.
+ */
 export async function expenseFormAction(_prev: ExpenseFormState, formData: FormData): Promise<ExpenseFormState> {
   const user = await requirePermission("finance.write");
   const back = values(formData);
@@ -116,12 +123,26 @@ export async function expenseFormAction(_prev: ExpenseFormState, formData: FormD
   const occurredAt = atNoon(v.occurredAt);
   if (occurredAt.getTime() > Date.now() + 86_400_000) return { values: back, error: "İleri tarihli gider kaydedilemez." };
 
+  let instructorId: string | null = null;
+  if (v.instructorId) {
+    const instructor = await prisma.instructor.findFirst({ where: { id: v.instructorId, schoolId: user.schoolId } });
+    if (!instructor) return { values: back, error: "Eğitmen bulunamadı." };
+    instructorId = instructor.id;
+  }
+
   const created = await prisma.expense.create({
-    data: { schoolId: user.schoolId, category: v.category, amount: toKurus(v.amount), note: v.note || null, occurredAt },
+    data: {
+      schoolId: user.schoolId, category: v.category, amount: toKurus(v.amount), note: v.note || null, occurredAt,
+      instructorId, subcategory: instructorId ? (v.subcategory ?? "MAAS") : null,
+    },
   });
-  await audit({ schoolId: user.schoolId, actorId: user.id, action: "expense.create", target: created.id, meta: { category: v.category, amount: toKurus(v.amount) } });
+  await audit({ schoolId: user.schoolId, actorId: user.id, action: "expense.create", target: created.id, meta: { category: v.category, amount: toKurus(v.amount), instructorId } });
   revalidatePath("/app/finans/giderler");
   revalidatePath("/app/finans");
+  if (instructorId) {
+    revalidatePath(`/app/egitmenler/${instructorId}`);
+    redirect(`/app/egitmenler/${instructorId}?eklendi=1#odeme`);
+  }
   redirect("/app/finans/giderler?eklendi=1");
 }
 

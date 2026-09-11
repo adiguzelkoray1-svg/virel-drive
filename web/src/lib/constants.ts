@@ -142,6 +142,7 @@ export const PAYMENT_METHOD_LABEL: Record<string, string> = { CASH: "Nakit", CAR
 export const EXPENSE_CATEGORY_LABEL: Record<string, string> = {
   RENT: "Kira", SALARY: "Personel", VEHICLE: "Araç", UTILITY: "Fatura", MARKETING: "Pazarlama", OTHER: "Diğer",
 };
+export const EXPENSE_SUBCATEGORY_LABEL: Record<string, string> = { MAAS: "Maaş", AVANS: "Avans" };
 
 // ---------- Araç ----------
 export const VEHICLE_STATUS_LABEL: Record<string, { label: string; kind: BadgeKind }> = {

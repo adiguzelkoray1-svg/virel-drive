@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
 import { can } from "@/lib/permissions";
@@ -6,7 +7,7 @@ import { deleteExpenseAction } from "@/app/actions/finance";
 import { Badge, Card, EmptyState, Notice, PageHeader, ProgressBar } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { ExpenseForm } from "./ExpenseForm";
-import { EXPENSE_CATEGORY_LABEL } from "@/lib/constants";
+import { EXPENSE_CATEGORY_LABEL, EXPENSE_SUBCATEGORY_LABEL } from "@/lib/constants";
 import { date, money } from "@/lib/format";
 import { FinanceTabs } from "../tabs";
 
@@ -25,7 +26,7 @@ export default async function ExpensesPage({ searchParams }: PageProps<"/app/fin
   const to = new Date(from.getFullYear(), from.getMonth() + 1, 1);
 
   const [expenses, vehicleCosts] = await Promise.all([
-    prisma.expense.findMany({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, orderBy: { occurredAt: "desc" } }),
+    prisma.expense.findMany({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, include: { instructor: true }, orderBy: { occurredAt: "desc" } }),
     // Araç giderleri ayrı tabloda tutuluyor; ay toplamında görünmezse tablo yanıltıcı olur.
     prisma.vehicleCost.aggregate({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, _sum: { amount: true }, _count: true }),
   ]);
@@ -71,11 +72,20 @@ export default async function ExpensesPage({ searchParams }: PageProps<"/app/fin
                 <div key={e.id} className="flex items-center gap-3 py-3 border-t border-border">
                   <span className="w-9 h-9 rounded-md bg-blue-050 text-blue flex items-center justify-center shrink-0"><Icon name="wallet" size={17} /></span>
                   <span className="flex flex-col gap-0.5 min-w-0">
-                    <span className="text-sm font-semibold truncate">{e.note || EXPENSE_CATEGORY_LABEL[e.category] || e.category}</span>
-                    <span className="text-xs text-muted">{date(e.occurredAt)}</span>
+                    <span className="text-sm font-semibold truncate">
+                      {e.instructor ? e.instructor.name : e.note || EXPENSE_CATEGORY_LABEL[e.category] || e.category}
+                    </span>
+                    <span className="text-xs text-muted">{date(e.occurredAt)}{e.instructor && e.note ? ` · ${e.note}` : ""}</span>
                   </span>
-                  {/* Açıklama yoksa başlık zaten kategori adı; rozeti tekrar etmeye gerek yok. */}
-                  {e.note && <Badge kind="neutral">{EXPENSE_CATEGORY_LABEL[e.category] ?? e.category}</Badge>}
+                  {e.instructor ? (
+                    <>
+                      <Badge kind={e.subcategory === "AVANS" ? "warning" : "neutral"}>{EXPENSE_SUBCATEGORY_LABEL[e.subcategory ?? "MAAS"]}</Badge>
+                      <Link href={`/app/egitmenler/${e.instructor.id}`} className="text-xs font-semibold text-blue">Eğitmen →</Link>
+                    </>
+                  ) : (
+                    /* Açıklama yoksa başlık zaten kategori adı; rozeti tekrar etmeye gerek yok. */
+                    e.note && <Badge kind="neutral">{EXPENSE_CATEGORY_LABEL[e.category] ?? e.category}</Badge>
+                  )}
                   <span className="ml-auto text-[13px] tabular font-semibold">{money(e.amount)}</span>
                   {canWrite && (
                     <form action={deleteExpenseAction}>
