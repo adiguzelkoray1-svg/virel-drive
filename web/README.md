@@ -140,10 +140,9 @@ saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/e
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
 anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
-hakkında"), **Kullanıcılar ve roller**, **Belge kuralları** ve **Denetim kaydı** (bkz. aşağıdaki
-bölümler) artık gerçek sayfalar — sonuncusu `AuditLog`'u zaten her aksiyonun doldurduğu, yalnızca
-görüntüleme ekranı eksik olan en düşük efor kalemdi. Diğer 4 ayar kategorisi (Kurs profili,
-Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür ama
+hakkında"), **Kullanıcılar ve roller**, **Belge kuralları**, **Denetim kaydı** ve **Mesaj
+şablonları** (bkz. aşağıdaki ilgili bölümler) artık gerçek sayfalar. Diğer 3 ayar kategorisi
+(Kurs profili, Fiyat/ödeme, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür ama
 tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu listede
 değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
 
@@ -221,11 +220,14 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 çalışırsa `requireSchoolUser` onu geri yollar.
 
 **Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no, araç ceza takibi,
-Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi) ve Belge kuralları da eklendi (bkz.
-ilgili bölümler). Kalan işler pazar analizinden çıkan, bilinçli olarak ertelenmiş "eklenebilir"
-kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API (hâlâ simüle ediliyor) · çoklu
-şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR) hakkında" —
-PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu yüzden pasif.
+Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi), Belge kuralları, Denetim kaydı ve
+Mesaj şablonları da eklendi (bkz. ilgili bölümler). Ayarlar'da yalnızca Fiyat ve ödeme ile
+Güvenlik ve KVKK "Yakında" kaldı (Kurs profili zaten `/app/kurs`'ta var, ayrı bir kategori
+olarak listede değil). Bunların ötesinde kalan işler pazar analizinden çıkan, bilinçli olarak
+ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API (hâlâ
+simüle ediliyor) · çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR)
+hakkında" — PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu
+yüzden pasif.
 
 ### Yedi rolün tamamı tek tek denendi (son kontrol)
 OWNER, SECRETARY, ACCOUNTANT, DRIVING_INSTRUCTOR, THEORY_TEACHER, STUDENT, SUPER_ADMIN —
@@ -538,6 +540,50 @@ gerek yok, yalnızca o kursiyerin okunmamış gelen mesajlarını `READ` yapar.
 
 **Arama istemci tarafında.** `/app/mesajlar` bir `layout.tsx`; layout'lar `searchParams` almaz,
 bu yüzden gelen kutusu araması sunucu round-trip'i yerine `ThreadList` içinde anlık filtrelenir.
+
+### Denetim kaydı hakkında
+**En düşük efor kalemdi çünkü veri zaten vardı.** `audit()` (`lib/auth.ts`) kurs açılışından
+kullanıcı pasife almaya kadar her önemli aksiyonda zaten `AuditLog` satırı yazıyordu — eksik olan
+tek şey bunu görüntüleyecek bir ekrandı. `lib/audit.ts::schoolAuditLog(schoolId, {q, page})`
+metin aramasını (aktör, aksiyon, hedef) ve 40'lık sayfalama (`PAGE_SIZE`) uyguluyor;
+`/app/ayarlar/denetim` bunu `?q=`/`?sayfa=` query string'inden okuyan basit bir sunucu bileşeni.
+Süper admin konsolundaki global denetim kaydından farkı: bu ekran yalnızca **o kursun kendi**
+`schoolId`'sine ait satırları gösteriyor — kiracılar arası veri sızıntısı olmasın diye.
+
+### Mesaj şablonları hakkında
+
+**Altı şablon artık `DEFAULT_MESSAGE_TEMPLATES`'ten tohumlanan bir `MessageTemplateRule`
+tablosu — koda gömülü sabit bir dizi değil.** `LicenseClassRule`/`DocumentTypeRule` ile birebir
+aynı gerekçe: bir kurs kendi diline/üslubuna uygun yeni bir şablon eklemek ya da mevcut birini
+düzenlemek isteyebilir. Anahtar (`key`) yine kullanıcıdan istenmiyor, `keyFromLabel()` etiketten
+otomatik türetiyor. Bu üçüncü tekrar üzerine `keyFromLabel` (ve yeni `fillTemplate`) `lib/text.ts`'e
+çıkarıldı — `lib/document-types.ts`/`lib/message-templates.ts` onu yeniden dışa aktarıyor.
+`lib/text.ts` bilerek `server-only` değil: `fillTemplate`'i konuşma ekranındaki `Composer.tsx`
+(bir client component) şablon seçilir seçilmez tarayıcıda çağırıyor.
+
+**Gerçek bir hata burada da bulundu: `WELCOME` şablonu her kursta "Yıldız Sürücü Kursu" yazıyordu.**
+Eski `MESSAGE_TEMPLATES` sabiti koda gömülüydü ve hoş geldin metni bizim demo kursumuzun adını
+taşıyordu — yani gerçekte Drive'ı kullanan HER BAŞKA kurs, kursiyerine yanlışlıkla bir başka
+işletmenin adıyla "hoş geldiniz" mesajı gönderecekti. Düzeltme: `{ad}`'ın yanına ikinci bir yer
+tutucu, `{kurs}`, eklendi; gönderim anında `Composer.tsx` bunu `user.school.name` ile dolduruyor
+(`Composer` çağrısı `mesajlar/[id]/page.tsx`'te `schoolName={user.school.name}` alıyor —
+`requireUser()` zaten `user.school`'u dolu döndürdüğü için ek sorguya gerek kalmadı). Bu düzeltme
+yalnızca kod okumayla değil, tarayıcıda gerçekten doğrulandı: dev veritabanında farklı isimli
+("Rota Sürücü Akademisi") geçici bir kurs açılıp `WELCOME` şablonu dolduruldu, metnin gerçekten
+"Yıldız" değil o kursun kendi adını içerdiği görüldü, sonra kurs silindi — aksi halde aynı adı
+taşıyan mevcut demo kursta test etmek, eski sabit metinle tesadüfen aynı sonucu verip hatayı
+gizleyebilirdi.
+
+**Silinmez, yalnızca pasife alınır — bu üçüncü kez aynı desen, bu kez regresyon testiyle birlikte
+doğrulandı.** `tests/school-creation.test.ts`'e eklenen iki assertion (`templates.length ===
+DEFAULT_MESSAGE_TEMPLATES.length` ve hiçbir şablon gövdesinin "Yıldız" içermediği) önce
+`school.ts`'teki seed satırı bilerek yorum satırı yapılıp gerçekten kızardığı (`0 !== 6`)
+doğrulandı, sonra geri alınıp yeşile döndüğü teyit edildi. **Belge türlerinden farklı olarak
+yeni bir şablon eklendiğinde geriye dönük bir "backfill" yok** — şablonların, belge eksikliği
+gibi kursiyer başına bir tamlık KPI'sı yok; yeni şablon yalnızca bundan sonraki konuşmalarda
+seçenek olarak çıkar. Bu özellikten önce açılmış kurslar için tek seferlik
+`scripts/backfill-message-templates.ts` (idempotent, `documentTypeRule` eşleniğiyle aynı desen)
+yazıldı ve yerel veritabanına çalıştırıldı.
 
 ### Belgeler hakkında
 **Gerçek dosya yükleme yok.** `fileUrl` alanı şemada duruyor ama bu modül yalnızca belge

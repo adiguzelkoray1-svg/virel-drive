@@ -417,6 +417,7 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   DocumentTypeRule: 'DocumentTypeRule',
+  MessageTemplateRule: 'MessageTemplateRule',
   RegulationSetting: 'RegulationSetting',
   PaymentLink: 'PaymentLink',
   AuditLog: 'AuditLog',
@@ -436,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "documentTypeRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
+    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "documentTypeRule" | "messageTemplateRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1920,6 +1921,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MessageTemplateRule: {
+      payload: Prisma.$MessageTemplateRulePayload<ExtArgs>
+      fields: Prisma.MessageTemplateRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MessageTemplateRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MessageTemplateRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        findFirst: {
+          args: Prisma.MessageTemplateRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MessageTemplateRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        findMany: {
+          args: Prisma.MessageTemplateRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>[]
+        }
+        create: {
+          args: Prisma.MessageTemplateRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        createMany: {
+          args: Prisma.MessageTemplateRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MessageTemplateRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>[]
+        }
+        delete: {
+          args: Prisma.MessageTemplateRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        update: {
+          args: Prisma.MessageTemplateRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.MessageTemplateRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MessageTemplateRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MessageTemplateRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.MessageTemplateRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MessageTemplateRulePayload>
+        }
+        aggregate: {
+          args: Prisma.MessageTemplateRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMessageTemplateRule>
+        }
+        groupBy: {
+          args: Prisma.MessageTemplateRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageTemplateRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MessageTemplateRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MessageTemplateRuleCountAggregateOutputType> | number
+        }
+      }
+    }
     RegulationSetting: {
       payload: Prisma.$RegulationSettingPayload<ExtArgs>
       fields: Prisma.RegulationSettingFieldRefs
@@ -2614,6 +2689,21 @@ export const DocumentTypeRuleScalarFieldEnum = {
 export type DocumentTypeRuleScalarFieldEnum = (typeof DocumentTypeRuleScalarFieldEnum)[keyof typeof DocumentTypeRuleScalarFieldEnum]
 
 
+export const MessageTemplateRuleScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  key: 'key',
+  label: 'label',
+  body: 'body',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageTemplateRuleScalarFieldEnum = (typeof MessageTemplateRuleScalarFieldEnum)[keyof typeof MessageTemplateRuleScalarFieldEnum]
+
+
 export const RegulationSettingScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2935,6 +3025,7 @@ export type GlobalOmitConfig = {
   messageLog?: Prisma.MessageLogOmit
   licenseClassRule?: Prisma.LicenseClassRuleOmit
   documentTypeRule?: Prisma.DocumentTypeRuleOmit
+  messageTemplateRule?: Prisma.MessageTemplateRuleOmit
   regulationSetting?: Prisma.RegulationSettingOmit
   paymentLink?: Prisma.PaymentLinkOmit
   auditLog?: Prisma.AuditLogOmit

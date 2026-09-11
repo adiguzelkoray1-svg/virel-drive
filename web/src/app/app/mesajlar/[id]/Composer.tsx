@@ -3,9 +3,14 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/icons";
 import { sendMessageAction } from "@/app/actions/messages";
 import { emptySendMessageState } from "@/lib/message-form";
-import { MESSAGE_CHANNEL_LABEL, MESSAGE_TEMPLATES } from "@/lib/constants";
+import { MESSAGE_CHANNEL_LABEL } from "@/lib/constants";
+import { fillTemplate } from "@/lib/text";
 
-export function Composer({ studentId, firstName, defaultChannel }: { studentId: string; firstName: string; defaultChannel: string }) {
+type Template = { key: string; label: string; body: string };
+
+export function Composer({ studentId, firstName, schoolName, defaultChannel, templates }: {
+  studentId: string; firstName: string; schoolName: string; defaultChannel: string; templates: Template[];
+}) {
   const [state, action, pending] = useActionState(sendMessageAction, emptySendMessageState);
   const [body, setBody] = useState("");
   const [template, setTemplate] = useState("");
@@ -19,10 +24,10 @@ export function Composer({ studentId, firstName, defaultChannel }: { studentId: 
   }, [state]);
 
   const applyTemplate = (key: string) => {
-    const t = MESSAGE_TEMPLATES.find((x) => x.key === key);
+    const t = templates.find((x) => x.key === key);
     if (!t) return;
     setTemplate(key);
-    setBody(t.body.replace("{ad}", firstName));
+    setBody(fillTemplate(t.body, { ad: firstName, kurs: schoolName }));
   };
 
   return (
@@ -31,7 +36,7 @@ export function Composer({ studentId, firstName, defaultChannel }: { studentId: 
       <input type="hidden" name="template" value={template} />
 
       <div className="flex items-center gap-2 flex-wrap">
-        {MESSAGE_TEMPLATES.map((t) => (
+        {templates.map((t) => (
           <button key={t.key} type="button" onClick={() => applyTemplate(t.key)} className="chip" data-active={template === t.key}>
             {t.label}
           </button>

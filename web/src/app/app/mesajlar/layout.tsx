@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { requirePermission } from "@/lib/auth";
+import { can } from "@/lib/permissions";
 import { Card, PageHeader } from "@/components/ui";
 import { Icon } from "@/components/icons";
-import { MESSAGE_TEMPLATES } from "@/lib/constants";
 import { messageSummary, threadList } from "@/lib/messages";
+import { listMessageTemplateRules } from "@/lib/message-templates";
 import { smsConfigured } from "@/lib/sms";
 import { prisma } from "@/lib/prisma";
 import { number } from "@/lib/format";
@@ -12,10 +14,11 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
   const user = await requirePermission("message.send");
   // Arama istemci tarafında yapılır (bkz. ThreadList) — layout'lar searchParams almaz
   // ve küçük bir thread listesi için sunucu round-trip'i gereksizdir.
-  const [threads, summary, school] = await Promise.all([
+  const [threads, summary, school, templates] = await Promise.all([
     threadList(user.schoolId),
     messageSummary(user.schoolId),
     prisma.school.findUniqueOrThrow({ where: { id: user.schoolId }, select: { netgsmUsername: true, netgsmPassword: true, netgsmHeader: true } }),
+    listMessageTemplateRules(user.schoolId, { activeOnly: true }),
   ]);
 
   return (
@@ -38,7 +41,7 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
         <div className="flex flex-col gap-4">
           <Card title="Şablonlar" sub="konuşma ekranında tek tıkla kullanılır">
             <div className="px-4 pb-4 pt-1 flex flex-col gap-2">
-              {MESSAGE_TEMPLATES.map((t) => (
+              {templates.map((t) => (
                 <div key={t.key} className="flex items-center gap-2.5 py-2 border-t border-border first:border-0">
                   <span className="w-7 h-7 rounded-sm bg-blue-050 text-blue flex items-center justify-center shrink-0"><Icon name="file" size={14} /></span>
                   <span className="text-[13px] truncate">{t.label}</span>
@@ -47,6 +50,9 @@ export default async function MessagesLayout({ children }: LayoutProps<"/app/mes
               <p className="text-xs text-muted leading-relaxed pt-2 border-t border-border">
                 Bu sürümde otomatik/zamanlanmış gönderim yok; şablonlar yalnızca konuşma ekranında elle kullanılabilir.
               </p>
+              {can(user.role, "settings.write") && (
+                <Link href="/app/ayarlar/mesaj-sablonlari" className="text-[13px] font-semibold text-blue">Şablonları düzenle →</Link>
+              )}
             </div>
           </Card>
 

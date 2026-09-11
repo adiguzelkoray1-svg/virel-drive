@@ -63,6 +63,7 @@ model School {
   messages     MessageLog[]
   classRules   LicenseClassRule[]
   documentTypeRules DocumentTypeRule[]
+  messageTemplateRules MessageTemplateRule[]
   regulations  RegulationSetting[]
   auditLogs    AuditLog[]
   paymentLinks PaymentLink[]
@@ -474,6 +475,27 @@ model DocumentTypeRule {
   isActive       Boolean  @default(true)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@unique([schoolId, key])
+  @@index([schoolId, isActive])
+}
+
+/// Mesajlar modülünde konuşma ekranında tek tıkla kullanılan hazır şablonlar — DocumentTypeRule
+/// ile aynı gerekçeyle koda gömülü değil: kurs kendi diline uygun bir şablon eklemek/düzenlemek
+/// isteyebilir. `body` içinde `{ad}` kursiyer adıyla, `{kurs}` kursun kendi adıyla değiştirilir
+/// (bkz. Composer.tsx) — ikincisi olmadan "Hoş geldiniz" gibi şablonlar başka bir kursun adını
+/// taşıyabilirdi (gerçek bir hata: WELCOME şablonu eskiden "Yıldız Sürücü Kursu" diye sabitti).
+model MessageTemplateRule {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  key       String   // LESSON_REMINDER | ... ya da özel eklenen şablon için etiketten türetilmiş anahtar
+  label     String
+  body      String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([schoolId, key])
   @@index([schoolId, isActive])

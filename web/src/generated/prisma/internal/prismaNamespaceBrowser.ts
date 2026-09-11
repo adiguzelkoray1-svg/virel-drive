@@ -71,6 +71,7 @@ export const ModelName = {
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
   DocumentTypeRule: 'DocumentTypeRule',
+  MessageTemplateRule: 'MessageTemplateRule',
   RegulationSetting: 'RegulationSetting',
   PaymentLink: 'PaymentLink',
   AuditLog: 'AuditLog',
@@ -450,6 +451,21 @@ export const DocumentTypeRuleScalarFieldEnum = {
 } as const
 
 export type DocumentTypeRuleScalarFieldEnum = (typeof DocumentTypeRuleScalarFieldEnum)[keyof typeof DocumentTypeRuleScalarFieldEnum]
+
+
+export const MessageTemplateRuleScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  key: 'key',
+  label: 'label',
+  body: 'body',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageTemplateRuleScalarFieldEnum = (typeof MessageTemplateRuleScalarFieldEnum)[keyof typeof MessageTemplateRuleScalarFieldEnum]
 
 
 export const RegulationSettingScalarFieldEnum = {

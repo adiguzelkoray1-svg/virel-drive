@@ -6,6 +6,7 @@ import { PersonAvatar } from "@/components/ui";
 import { Icon } from "@/components/icons";
 import { STAGE_LABEL, type StudentStage } from "@/lib/constants";
 import { getThread } from "@/lib/messages";
+import { listMessageTemplateRules } from "@/lib/message-templates";
 import { dateLong, time } from "@/lib/format";
 import { MarkThreadRead } from "./MarkThreadRead";
 import { Composer } from "./Composer";
@@ -21,7 +22,10 @@ export default async function ThreadPage({ params }: PageProps<"/app/mesajlar/[i
   const user = await requirePermission("message.send");
   const { id } = await params;
 
-  const d = await getThread(user.schoolId, id);
+  const [d, templates] = await Promise.all([
+    getThread(user.schoolId, id),
+    listMessageTemplateRules(user.schoolId, { activeOnly: true }),
+  ]);
   if (!d) notFound();
 
   const name = `${d.student.firstName} ${d.student.lastName}`;
@@ -85,7 +89,7 @@ export default async function ThreadPage({ params }: PageProps<"/app/mesajlar/[i
       </div>
 
       <div className="px-5 pb-5 shrink-0">
-        <Composer studentId={d.student.id} firstName={d.student.firstName} defaultChannel={lastChannel} />
+        <Composer studentId={d.student.id} firstName={d.student.firstName} schoolName={user.school.name} defaultChannel={lastChannel} templates={templates} />
       </div>
     </section>
   );

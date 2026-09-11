@@ -16,7 +16,7 @@ const testSchoolIds: string[] = [];
 
 after(async () => {
   const { prisma } = await import("../src/lib/prisma");
-  // School siliniyor; User/LicenseClassRule/DocumentTypeRule/RegulationSetting onDelete: Cascade ile onunla gider.
+  // School siliniyor; User/LicenseClassRule/DocumentTypeRule/MessageTemplateRule/RegulationSetting onDelete: Cascade ile onunla gider.
   await prisma.school.deleteMany({ where: { id: { in: testSchoolIds } } });
   await prisma.user.deleteMany({ where: { email: { in: testEmails } } });
   await prisma.$disconnect();
@@ -25,7 +25,7 @@ after(async () => {
 test("yeni kurs sertifika sınıflarıyla ve mevzuat ayarlarıyla birlikte açılır", async () => {
   const { prisma } = await import("../src/lib/prisma");
   const { createSchoolWithDefaults } = await import("../src/lib/school");
-  const { DEFAULT_LICENSE_CLASSES, DEFAULT_DOCUMENT_TYPES, REGULATION_DEFAULTS } = await import("../src/lib/constants");
+  const { DEFAULT_LICENSE_CLASSES, DEFAULT_DOCUMENT_TYPES, DEFAULT_MESSAGE_TEMPLATES, REGULATION_DEFAULTS } = await import("../src/lib/constants");
 
   const ownerEmail = `test-school-${Date.now()}@ornek.com`;
   testEmails.push(ownerEmail);
@@ -55,6 +55,11 @@ test("yeni kurs sertifika sınıflarıyla ve mevzuat ayarlarıyla birlikte açı
   const docTypes = await prisma.documentTypeRule.findMany({ where: { schoolId: school.id } });
   assert.equal(docTypes.length, DEFAULT_DOCUMENT_TYPES.length, "her varsayılan belge türü yazılmalı");
   assert.ok(docTypes.every((d) => d.isActive), "yeni belge türleri aktif açılmalı");
+
+  // Aynı sınıftan bir hata daha: bu yazılmazsa Mesajlar ekranında hiç şablon çıkmaz.
+  const templates = await prisma.messageTemplateRule.findMany({ where: { schoolId: school.id } });
+  assert.equal(templates.length, DEFAULT_MESSAGE_TEMPLATES.length, "her varsayılan mesaj şablonu yazılmalı");
+  assert.ok(templates.every((t) => !t.body.includes("Yıldız")), "şablon metni başka bir kursun adını içermemeli");
 });
 
 test("kursiyer ekleme formunun ihtiyaç duyduğu ehliyet sınıfı listesi asla boş dönmez", async () => {

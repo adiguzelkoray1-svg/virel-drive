@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import crypto from "node:crypto";
 import { prisma } from "./prisma";
-import { SCHOOL_PLAN_LIMITS, DEFAULT_LICENSE_CLASSES, DEFAULT_DOCUMENT_TYPES, REGULATION_DEFAULTS } from "./constants";
+import { SCHOOL_PLAN_LIMITS, DEFAULT_LICENSE_CLASSES, DEFAULT_DOCUMENT_TYPES, DEFAULT_MESSAGE_TEMPLATES, REGULATION_DEFAULTS } from "./constants";
 
 /** Bilerek `server-only` korumasız — bu dosya hem `createSchoolAction`'dan hem
  *  `tests/school-creation.test.ts`'ten (düz `tsx`, Next.js bağlamı olmadan) çağrılır. */
@@ -55,6 +55,7 @@ export async function createSchoolWithDefaults(input: NewSchoolInput) {
     await tx.user.create({ data: { email: input.ownerEmail, name: input.ownerName, role: "OWNER", passwordHash, schoolId: created.id } });
     await tx.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: created.id, ...c, examAttempts: 4, passScore: 70 })) });
     await tx.documentTypeRule.createMany({ data: DEFAULT_DOCUMENT_TYPES.map((d, i) => ({ schoolId: created.id, ...d, sortOrder: i })) });
+    await tx.messageTemplateRule.createMany({ data: DEFAULT_MESSAGE_TEMPLATES.map((m, i) => ({ schoolId: created.id, ...m, sortOrder: i })) });
     await tx.regulationSetting.createMany({ data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: created.id, key, value })) });
     return created;
   });

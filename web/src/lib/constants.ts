@@ -229,16 +229,21 @@ export const MESSAGE_STATUS_LABEL: Record<string, { label: string; kind: BadgeKi
   READ: { label: "Okundu", kind: "success" },
   FAILED: { label: "Başarısız", kind: "danger" },
 };
-/** Konuşma ekranındaki hazır şablonlar. `{ad}` gönderim anında kursiyerin adıyla değiştirilir. */
-export const MESSAGE_TEMPLATES = [
+/**
+ * Yeni bir kurs açılırken yazılan başlangıç mesaj şablonları (bkz. DEFAULT_LICENSE_CLASSES ile
+ * aynı gerekçe) — MessageTemplateRule tablosuna tohum olarak yazılır, koda gömülü sabit liste
+ * olarak KULLANILMAZ. `{ad}` kursiyerin, `{kurs}` kursun adıyla değiştirilir (bkz. Composer.tsx).
+ * `{kurs}` olmadan WELCOME şablonu her okulda "Yıldız Sürücü Kursu"ymuş gibi sabit kalırdı —
+ * bu gerçek bir hataydı, düzeltildi.
+ */
+export const DEFAULT_MESSAGE_TEMPLATES = [
   { key: "LESSON_REMINDER", label: "Ders hatırlatması", body: "Sayın {ad}, yarınki dersiniz için hatırlatma: lütfen zamanında hazır olun." },
   { key: "PAYMENT_REMINDER", label: "Ödeme hatırlatması", body: "Sayın {ad}, taksitinizin vadesi yaklaşıyor. Ödeme planınızı kursiyer panelinden görüntüleyebilirsiniz." },
   { key: "EXAM_INFO", label: "Sınav bilgilendirmesi", body: "Sayın {ad}, sınav tarihiniz belirlendi. Detaylar için bizi arayabilirsiniz." },
   { key: "DOCUMENT_MISSING", label: "Evrak eksik uyarısı", body: "Sayın {ad}, kaydınızın tamamlanması için eksik belgelerinizi en kısa sürede iletmenizi rica ederiz." },
   { key: "LESSON_CANCELLED", label: "Ders iptali", body: "Sayın {ad}, bugünkü dersiniz iptal edilmiştir. Yeni tarih için sizinle iletişime geçeceğiz." },
-  { key: "WELCOME", label: "Hoş geldiniz", body: "Sayın {ad}, Yıldız Sürücü Kursu ailesine hoş geldiniz! Sorularınız için bu hattan yazabilirsiniz." },
+  { key: "WELCOME", label: "Hoş geldiniz", body: "Sayın {ad}, {kurs} ailesine hoş geldiniz! Sorularınız için bu hattan yazabilirsiniz." },
 ] as const;
-export const MESSAGE_TEMPLATE_LABEL: Record<string, string> = Object.fromEntries(MESSAGE_TEMPLATES.map((t) => [t.key, t.label]));
 
 // ---------- Mevzuat ayarları ----------
 export const VEHICLE_KIND_OPTIONS = ["Otomobil", "Motosiklet", "Kamyon", "Otobüs", "Çekici", "Minibüs"] as const;

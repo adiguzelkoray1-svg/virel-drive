@@ -122,6 +122,15 @@ export type LicenseClassRule = Prisma.LicenseClassRuleModel
  */
 export type DocumentTypeRule = Prisma.DocumentTypeRuleModel
 /**
+ * Model MessageTemplateRule
+ * Mesajlar modülünde konuşma ekranında tek tıkla kullanılan hazır şablonlar — DocumentTypeRule
+ * ile aynı gerekçeyle koda gömülü değil: kurs kendi diline uygun bir şablon eklemek/düzenlemek
+ * isteyebilir. `body` içinde `{ad}` kursiyer adıyla, `{kurs}` kursun kendi adıyla değiştirilir
+ * (bkz. Composer.tsx) — ikincisi olmadan "Hoş geldiniz" gibi şablonlar başka bir kursun adını
+ * taşıyabilirdi (gerçek bir hata: WELCOME şablonu eskiden "Yıldız Sürücü Kursu" diye sabitti).
+ */
+export type MessageTemplateRule = Prisma.MessageTemplateRuleModel
+/**
  * Model RegulationSetting
  * Serbest anahtar/değer: ders süresi, günlük azami ders, devam oranı, iptal süresi vb.
  */

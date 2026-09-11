@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { REGULATION_DEFAULTS, DEFAULT_LICENSE_CLASSES } from "../src/lib/constants";
-import { DEFAULT_DOCUMENT_TYPES, SKILLS, THEORY_CATEGORIES } from "../src/lib/constants";
+import { DEFAULT_DOCUMENT_TYPES, DEFAULT_MESSAGE_TEMPLATES, SKILLS, THEORY_CATEGORIES } from "../src/lib/constants";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
@@ -66,6 +66,7 @@ async function main() {
   });
   await prisma.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: school.id, ...c, examAttempts: 4, passScore: 70 })) });
   await prisma.documentTypeRule.createMany({ data: DEFAULT_DOCUMENT_TYPES.map((d, i) => ({ schoolId: school.id, ...d, sortOrder: i })) });
+  await prisma.messageTemplateRule.createMany({ data: DEFAULT_MESSAGE_TEMPLATES.map((m, i) => ({ schoolId: school.id, ...m, sortOrder: i })) });
   const hoursOf = (code: string) => DEFAULT_LICENSE_CLASSES.find((c) => c.code === code)?.drivingHours ?? 14;
 
   // ---------- Kullanıcılar ----------
