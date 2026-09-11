@@ -137,6 +137,15 @@ export type MessageLog = Prisma.MessageLogModel
  */
 export type LicenseClassRule = Prisma.LicenseClassRuleModel
 /**
+ * Model DocumentTypeRule
+ * Kursiyer kaydında toplanması zorunlu belge türleri. Mevzuata bağlı sayılar gibi koda
+ * gömülmez (bkz. dosya başındaki not) — okul yeni bir yerel belge eklemek isteyebilir.
+ * Silinmez, yalnızca pasifleştirilir: mevcut kursiyerlerin o türdeki `Document` satırı
+ * (schema'da @@unique([studentId, type]) ile korunan, serbest metin `type` referansı)
+ * kuralın kendisi silinse bile anlamlı kalmaya devam etmeli — LicenseClassRule ile aynı gerekçe.
+ */
+export type DocumentTypeRule = Prisma.DocumentTypeRuleModel
+/**
  * Model RegulationSetting
  * Serbest anahtar/değer: ders süresi, günlük azami ders, devam oranı, iptal süresi vb.
  */

@@ -1,6 +1,6 @@
 // Virel Drive — çok kiracılı veri modeli (sürücü kursları)
 // PostgreSQL. Durum alanları String + sabitler (src/lib/constants.ts).
-// Mevzuata bağlı sayılar koda gömülmez: LicenseClassRule + RegulationSetting.
+// Mevzuata bağlı sayılar koda gömülmez: LicenseClassRule + RegulationSetting + DocumentTypeRule.
 
 generator client {
   provider = "prisma-client"
@@ -62,6 +62,7 @@ model School {
   expenses     Expense[]
   messages     MessageLog[]
   classRules   LicenseClassRule[]
+  documentTypeRules DocumentTypeRule[]
   regulations  RegulationSetting[]
   auditLogs    AuditLog[]
   paymentLinks PaymentLink[]
@@ -455,6 +456,27 @@ model LicenseClassRule {
   updatedAt      DateTime @updatedAt
 
   @@unique([schoolId, code])
+}
+
+/// Kursiyer kaydında toplanması zorunlu belge türleri. Mevzuata bağlı sayılar gibi koda
+/// gömülmez (bkz. dosya başındaki not) — okul yeni bir yerel belge eklemek isteyebilir.
+/// Silinmez, yalnızca pasifleştirilir: mevcut kursiyerlerin o türdeki `Document` satırı
+/// (schema'da @@unique([studentId, type]) ile korunan, serbest metin `type` referansı)
+/// kuralın kendisi silinse bile anlamlı kalmaya devam etmeli — LicenseClassRule ile aynı gerekçe.
+model DocumentTypeRule {
+  id             String   @id @default(cuid())
+  schoolId       String
+  school         School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  key            String   // NATIONAL_ID | DIPLOMA | ... ya da özel eklenen tür için etiketten türetilmiş anahtar
+  label          String
+  validityMonths Int?     // örn. sağlık raporu 24 ay geçerli; boşsa süresiz
+  sortOrder      Int      @default(0)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([schoolId, key])
+  @@index([schoolId, isActive])
 }
 
 /// Serbest anahtar/değer: ders süresi, günlük azami ders, devam oranı, iptal süresi vb.

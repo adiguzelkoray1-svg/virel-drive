@@ -3,15 +3,13 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { audit, requirePermission } from "@/lib/auth";
-import { DOCUMENT_TYPES } from "@/lib/constants";
 import type { DocumentFormState } from "@/lib/document-form";
 
-const TYPE_KEYS = DOCUMENT_TYPES.map((t) => t.key) as [string, ...string[]];
 const STATUS_KEYS = ["MISSING", "PENDING", "REVIEW", "OK"] as const;
 
 const Schema = z.object({
   studentId: z.string().min(1),
-  type: z.enum(TYPE_KEYS),
+  type: z.string().min(1),
   status: z.enum(STATUS_KEYS),
   validUntil: z.string().trim().optional(),
   note: z.string().trim().optional(),
@@ -32,6 +30,12 @@ export async function updateDocumentAction(_prev: DocumentFormState, formData: F
 
   const student = await prisma.student.findFirst({ where: { id: v.studentId, schoolId: user.schoolId } });
   if (!student) return { error: "Kursiyer bulunamadı." };
+
+  // `type` artık sabit bir zod enum'a karşı değil, kursun kendi DocumentTypeRule'larına karşı
+  // doğrulanıyor (bkz. Ayarlar › Belge kuralları) — liste okula göre değişebildiği için modül
+  // yüklenirken sabit bir enum kurulamıyor.
+  const typeExists = await prisma.documentTypeRule.findFirst({ where: { schoolId: user.schoolId, key: v.type } });
+  if (!typeExists) return { error: "Belge türü bulunamadı." };
 
   await prisma.document.upsert({
     where: { studentId_type: { studentId: v.studentId, type: v.type } },

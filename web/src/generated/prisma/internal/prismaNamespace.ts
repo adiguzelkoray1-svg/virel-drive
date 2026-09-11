@@ -416,6 +416,7 @@ export const ModelName = {
   Expense: 'Expense',
   MessageLog: 'MessageLog',
   LicenseClassRule: 'LicenseClassRule',
+  DocumentTypeRule: 'DocumentTypeRule',
   RegulationSetting: 'RegulationSetting',
   PaymentLink: 'PaymentLink',
   AuditLog: 'AuditLog',
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
+    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "documentTypeRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1845,6 +1846,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DocumentTypeRule: {
+      payload: Prisma.$DocumentTypeRulePayload<ExtArgs>
+      fields: Prisma.DocumentTypeRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentTypeRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentTypeRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentTypeRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentTypeRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        findMany: {
+          args: Prisma.DocumentTypeRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>[]
+        }
+        create: {
+          args: Prisma.DocumentTypeRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        createMany: {
+          args: Prisma.DocumentTypeRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DocumentTypeRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>[]
+        }
+        delete: {
+          args: Prisma.DocumentTypeRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        update: {
+          args: Prisma.DocumentTypeRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentTypeRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentTypeRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DocumentTypeRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.DocumentTypeRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTypeRulePayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentTypeRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentTypeRule>
+        }
+        groupBy: {
+          args: Prisma.DocumentTypeRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentTypeRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentTypeRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentTypeRuleCountAggregateOutputType> | number
+        }
+      }
+    }
     RegulationSetting: {
       payload: Prisma.$RegulationSettingPayload<ExtArgs>
       fields: Prisma.RegulationSettingFieldRefs
@@ -2524,6 +2599,21 @@ export const LicenseClassRuleScalarFieldEnum = {
 export type LicenseClassRuleScalarFieldEnum = (typeof LicenseClassRuleScalarFieldEnum)[keyof typeof LicenseClassRuleScalarFieldEnum]
 
 
+export const DocumentTypeRuleScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  key: 'key',
+  label: 'label',
+  validityMonths: 'validityMonths',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DocumentTypeRuleScalarFieldEnum = (typeof DocumentTypeRuleScalarFieldEnum)[keyof typeof DocumentTypeRuleScalarFieldEnum]
+
+
 export const RegulationSettingScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2844,6 +2934,7 @@ export type GlobalOmitConfig = {
   expense?: Prisma.ExpenseOmit
   messageLog?: Prisma.MessageLogOmit
   licenseClassRule?: Prisma.LicenseClassRuleOmit
+  documentTypeRule?: Prisma.DocumentTypeRuleOmit
   regulationSetting?: Prisma.RegulationSettingOmit
   paymentLink?: Prisma.PaymentLinkOmit
   auditLog?: Prisma.AuditLogOmit

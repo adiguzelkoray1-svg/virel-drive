@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import crypto from "node:crypto";
 import { prisma } from "./prisma";
-import { SCHOOL_PLAN_LIMITS, DEFAULT_LICENSE_CLASSES, REGULATION_DEFAULTS } from "./constants";
+import { SCHOOL_PLAN_LIMITS, DEFAULT_LICENSE_CLASSES, DEFAULT_DOCUMENT_TYPES, REGULATION_DEFAULTS } from "./constants";
 
 /** Bilerek `server-only` korumasız — bu dosya hem `createSchoolAction`'dan hem
  *  `tests/school-creation.test.ts`'ten (düz `tsx`, Next.js bağlamı olmadan) çağrılır. */
@@ -24,12 +24,16 @@ export type NewSchoolInput = {
 
 /**
  * Yeni bir kurs (kiracı), ilk OWNER kullanıcısı ve kursun hemen kullanılabilir olması için
- * gereken başlangıç verisini (sertifika sınıfları + mevzuat ayarları) tek işlemde açar.
+ * gereken başlangıç verisini (sertifika sınıfları + belge türleri + mevzuat ayarları) tek
+ * işlemde açar.
  *
- * Bu ikisi eksik kalırsa kurs kursiyer bile ekleyemez: kursiyer formundaki "Ehliyet sınıfı"
+ * İlk ikisi eksik kalırsa kurs kursiyer bile ekleyemez: kursiyer formundaki "Ehliyet sınıfı"
  * seçimi LicenseClassRule'a bağlıdır, boşsa hiç seçenek çıkmaz (gerçek bir production hatası —
- * bkz. tests/school-creation.test.ts). RegulationSetting yazılmasa da `getRegulation()` REGULATION_DEFAULTS'a
- * düşer, o yüzden onsuz da çalışır ama ayarlar ekranı "hiç kaydedilmemiş" gösterirdi.
+ * bkz. tests/school-creation.test.ts); DocumentTypeRule boş kalırsa `openDocumentSlots` hiç
+ * belge satırı açmaz, yeni kursiyer "0/0 belge" ile yanlışlıkla "evrakları tamam" görünür
+ * (belge kaydı bulunurken yakalanan, benzer sınıftaki bir hata — bkz. README). RegulationSetting
+ * yazılmasa da `getRegulation()` REGULATION_DEFAULTS'a düşer, o yüzden onsuz da çalışır ama
+ * ayarlar ekranı "hiç kaydedilmemiş" gösterirdi.
  */
 export async function createSchoolWithDefaults(input: NewSchoolInput) {
   let slug = slugify(input.name);
@@ -50,6 +54,7 @@ export async function createSchoolWithDefaults(input: NewSchoolInput) {
     });
     await tx.user.create({ data: { email: input.ownerEmail, name: input.ownerName, role: "OWNER", passwordHash, schoolId: created.id } });
     await tx.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: created.id, ...c, examAttempts: 4, passScore: 70 })) });
+    await tx.documentTypeRule.createMany({ data: DEFAULT_DOCUMENT_TYPES.map((d, i) => ({ schoolId: created.id, ...d, sortOrder: i })) });
     await tx.regulationSetting.createMany({ data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: created.id, key, value })) });
     return created;
   });

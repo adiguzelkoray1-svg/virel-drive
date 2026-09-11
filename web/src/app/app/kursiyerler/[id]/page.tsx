@@ -5,7 +5,8 @@ import { requirePermission } from "@/lib/auth";
 import { getStudentDetail } from "@/lib/student";
 import { Icon } from "@/components/icons";
 import { Badge, Card, ExamAttempts, Notice, PageHeader, PersonAvatar, ProgressBar } from "@/components/ui";
-import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPES, SCORE_LABEL, STAGE_LABEL, STUDENT_STATUS_LABEL, INSTALLMENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
+import { DOCUMENT_STATUS_LABEL, SCORE_LABEL, STAGE_LABEL, STUDENT_STATUS_LABEL, INSTALLMENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
+import { listDocumentTypeRules } from "@/lib/document-types";
 import { date, fullName, maskNationalId, maskPhone, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { grantStudentAccessAction } from "@/app/actions/users";
@@ -22,7 +23,10 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
   const { id } = await params;
   const sp = await searchParams;
   const user = await requirePermission("student.read");
-  const d = await getStudentDetail(user.schoolId, id);
+  const [d, documentTypes] = await Promise.all([
+    getStudentDetail(user.schoolId, id),
+    listDocumentTypeRules(user.schoolId),
+  ]);
   if (!d) notFound();
 
   const s = d.student;
@@ -31,7 +35,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
   const showEdit = can(user.role, "student.write");
   const canManageUsers = can(user.role, "users.manage");
   const status = STUDENT_STATUS_LABEL[s.status] ?? STUDENT_STATUS_LABEL.ACTIVE;
-  const docLabel = new Map<string, string>(DOCUMENT_TYPES.map((t) => [t.key, t.label]));
+  const docLabel = new Map<string, string>(documentTypes.map((t) => [t.key, t.label]));
   const nextStep =
     s.stage === "DRIVING" ? `direksiyon eğitiminin kalan ${Math.max(0, d.requiredHours - d.doneHours).toFixed(1)} saati`
     : s.stage === "THEORY" ? "teorik eğitimin tamamlanması"

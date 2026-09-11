@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { REGULATION_DEFAULTS, DEFAULT_LICENSE_CLASSES } from "../src/lib/constants";
-import { DOCUMENT_TYPES, SKILLS, THEORY_CATEGORIES } from "../src/lib/constants";
+import { DEFAULT_DOCUMENT_TYPES, SKILLS, THEORY_CATEGORIES } from "../src/lib/constants";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
@@ -65,6 +65,7 @@ async function main() {
     data: Object.entries(REGULATION_DEFAULTS).map(([key, value]) => ({ schoolId: school.id, key, value })),
   });
   await prisma.licenseClassRule.createMany({ data: DEFAULT_LICENSE_CLASSES.map((c) => ({ schoolId: school.id, ...c, examAttempts: 4, passScore: 70 })) });
+  await prisma.documentTypeRule.createMany({ data: DEFAULT_DOCUMENT_TYPES.map((d, i) => ({ schoolId: school.id, ...d, sortOrder: i })) });
   const hoursOf = (code: string) => DEFAULT_LICENSE_CLASSES.find((c) => c.code === code)?.drivingHours ?? 14;
 
   // ---------- Kullanıcılar ----------
@@ -199,7 +200,7 @@ async function main() {
   // ---------- Evraklar ----------
   for (const s of students) {
     const complete = s.stage !== "PRE_REGISTRATION" && s.stage !== "DOCUMENTS" ? true : rnd() > 0.6;
-    for (const d of DOCUMENT_TYPES) {
+    for (const d of DEFAULT_DOCUMENT_TYPES) {
       const status = complete ? "OK" : pick(["OK", "OK", "PENDING", "MISSING", "REVIEW"]);
       await prisma.document.create({
         data: { schoolId: school.id, studentId: s.id, type: d.key, status, verifiedAt: status === "OK" ? at(today, -int(10, 80), 12) : null },

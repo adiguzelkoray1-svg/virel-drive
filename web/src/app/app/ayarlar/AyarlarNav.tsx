@@ -6,6 +6,7 @@ import { Icon, type IconName } from "@/components/icons";
 const LINKS: { href: string; icon: IconName; label: string }[] = [
   { href: "/app/ayarlar", icon: "shield", label: "Mevzuat ve kurs ayarları" },
   { href: "/app/ayarlar/kullanicilar", icon: "users", label: "Kullanıcılar ve roller" },
+  { href: "/app/ayarlar/belgeler", icon: "folder", label: "Belge kuralları" },
   { href: "/app/ayarlar/entegrasyonlar", icon: "link", label: "Entegrasyonlar" },
 ];
 
@@ -13,7 +14,6 @@ const LINKS: { href: string; icon: IconName; label: string }[] = [
  *  etiketiyle gösterilir, tıklanamaz bağlantı olarak sunulmaz. */
 const SOON: { icon: IconName; label: string }[] = [
   { icon: "building", label: "Kurs profili" },
-  { icon: "folder", label: "Belge kuralları" },
   { icon: "wallet", label: "Fiyat ve ödeme" },
   { icon: "message", label: "Mesaj şablonları" },
   { icon: "lock", label: "Güvenlik ve KVKK" },

@@ -140,11 +140,11 @@ saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/e
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
 anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
-hakkında") ve **Kullanıcılar ve roller** (bkz. aşağıdaki bölüm) artık gerçek sayfalar. Diğer 6
-ayar kategorisi (Kurs profili, Belge kuralları, Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK,
-Denetim kaydı) sol menüde "Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları
-yok. ("Kurs profili"nin kendisi zaten var ama bu listede değil, ayrı bir üst menü öğesi olarak:
-`/app/kurs`.)
+hakkında"), **Kullanıcılar ve roller** ve **Belge kuralları** (ikisi de aşağıdaki bölümlerde)
+artık gerçek sayfalar. Diğer 5 ayar kategorisi (Kurs profili, Fiyat/ödeme, Mesaj şablonları,
+Güvenlik/KVKK, Denetim kaydı) sol menüde "Yakında" etiketiyle görünür ama tıklanabilir değil —
+henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu listede değil, ayrı bir üst
+menü öğesi olarak: `/app/kurs`.)
 
 ### Kullanıcılar ve roller hakkında
 
@@ -219,11 +219,11 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 `permissions.ts`, STUDENT boş dizi) giriş doğrudan `/kursiyer`'e gider; `/app`'e sızmaya
 çalışırsa `requireSchoolUser` onu geri yollar.
 
-**Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no ve araç ceza takibi
-de eklendi (bkz. "Eğitmenler ve araçlar" hakkında). Kalan işler pazar analizinden çıkan, bilinçli
-olarak ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API
-(hâlâ simüle ediliyor) · çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri
-(PayTR) hakkında" —
+**Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no, araç ceza takibi,
+Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi) ve Belge kuralları da eklendi (bkz.
+ilgili bölümler). Kalan işler pazar analizinden çıkan, bilinçli olarak ertelenmiş "eklenebilir"
+kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API (hâlâ simüle ediliyor) · çoklu
+şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR) hakkında" —
 PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu yüzden pasif.
 
 ### Yedi rolün tamamı tek tek denendi (son kontrol)
@@ -543,13 +543,49 @@ bu yüzden gelen kutusu araması sunucu round-trip'i yerine `ThreadList` içinde
 *durumunu* takip ediyor (Eksik / Bekliyor / Kontrol ediliyor / Tamamlandı); gerçek bir depolama
 servisi bağlanmadı. "Belge yükle" akışı bilinçli olarak kapsam dışı bırakıldı.
 
-**Her kursiyer için 7 satır önceden açılır.** Seed her kursiyere `DOCUMENT_TYPES` kadar `Document`
-satırı oluşturuyor (`@@unique([studentId, type])`), bu yüzden güncelleme aksiyonu yeni satır
-açmıyor, yalnızca `upsert` ile mevcut satırı güncelliyor.
+**Her kursiyer için, kursun tanımladığı kadar satır önceden açılır.** `openDocumentSlots`
+(`lib/student.ts`) `DocumentTypeRule`'dan okuduğu aktif türler kadar `Document` satırı oluşturuyor
+(`@@unique([studentId, type])`), bu yüzden güncelleme aksiyonu yeni satır açmıyor, yalnızca
+`upsert` ile mevcut satırı güncelliyor. Belge türleri artık koda gömülü sabit bir liste değil —
+bkz. "Belge kuralları hakkında".
 
 **"Eksik" sayısı bekleyeni de kapsar.** Bir kursiyerde gerçekten eksik (MISSING) bir belge varsa,
 satırdaki "eksik" sayısı henüz gelmemiş (PENDING) belgeleri de sayar — ikisi de kayıt sürecini
 durduruyor. Yalnızca bekleyen belge varsa (hiç eksik yoksa) ayrıca "bekliyor" olarak gösterilir.
+
+### Belge kuralları hakkında
+
+**Yedi belge türü artık `DEFAULT_DOCUMENT_TYPES`'tan tohumlanan bir `DocumentTypeRule` tablosu
+— koda gömülü sabit bir dizi değil.** `LicenseClassRule`/`RegulationSetting` ile aynı gerekçe
+(dosya başındaki not): bir kurs kendine özel yerel bir belge eklemek isteyebilir (ör. askerlik
+durum belgesi). Anahtar (`key`) `LicenseClassRule.code`'dan farklı olarak kullanıcıdan
+istenmiyor — `keyFromLabel()` etiketten otomatik türetiyor, çünkü belge türü anahtarının
+(NATIONAL_ID gibi) kullanıcı için hiçbir anlamı yok, sınıf kodunun (B, A2) aksine.
+
+**Silinmez, yalnızca pasife alınır — ama bunun documentSummary/missingDocuments üzerinde
+gerçek, tarayıcıda yakalanan bir yan etkisi var.** Bir tür pasife alındığında o türe ait eski
+`Document` satırları veritabanında kalmaya devam eder (kursiyerin geçmişi bozulmasın diye), ama
+`documentMatrix`/`documentSummary`/`getStudentDocuments`/`openDocumentSlots` artık yalnızca
+AKTİF türleri sayıyor. İlk halde `documentSummary`'nin `docs` sorgusu tür filtresi olmadan
+TÜM satırları çekiyordu — bir tür pasife alınınca "satır sayısı" (tüm zamanlar) ile "aktif tür
+sayısı" bir daha asla eşleşmiyordu, bu yüzden "Evrağı tam" KPI'sı kalıcı olarak 0'da kilitleniyordu.
+Aynı şekilde `missingDocuments` pasif bir türün eski MISSING satırını hâlâ "eksik evrak" listesinde
+gösteriyordu — artık istenmeyen bir belgeyi hatırlatmak yanlış. İkisi de düzeltildi: her ikisi de
+artık sorgularını aktif tür anahtarlarıyla (`type: { in: activeKeys } }`) filtreliyor.
+
+**Yeni bir tür eklenince mevcut kursiyerlere geriye dönük MISSING satırı açılır.** Bu, projenin
+daha önce yakaladığı "yeni kursiyer 0/0 belgeyle yanlışlıkla tamam görünüyor" hatasının tam
+tersi versiyonu: tür eklenip geriye dönük satır açılmasaydı, var olan tüm kursiyerler o türü hiç
+almadığı için `documentMatrix`'te "eksik" görünür ama `missingDocuments`'ta hiç görünmezdi (satır
+hiç yoktu) — iki ekran arasında sessiz bir tutarsızlık. `documentTypeFormAction`'ın oluşturma
+dalı artık okulun tüm aktif/mezun kursiyerlerine bu satırı MISSING olarak açıyor; bu, "Evrağı tam"
+sayısının yeni bir tür eklenince (gerçekte kimse o belgeyi henüz vermediği için) 0'a düşmesine
+neden olur — bu bir hata değil, doğru ve beklenen davranış.
+
+**Geçerlilik süresi (`validityMonths`) bilgi amaçlı, henüz otomatik tarih doldurmuyor.** Belge
+kuralları ekranında ve Belgeler'deki "Belge kuralları" kartında "24 ay geçerli" gibi gösteriliyor,
+ama `DocRowForm`'daki geçerlilik tarihi hâlâ elle giriliyor — bilinçli olarak dar tutulan bir
+kapsam; otomatik tarih önerisi ayrı bir iyileştirme olarak bırakıldı.
 
 ### CRM hakkında
 **Aday ile kursiyer ayrı kayıtlardır.** `Lead` huninin içindeki kişidir; kayıt kesinleştiğinde

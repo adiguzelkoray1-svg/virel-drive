@@ -88,14 +88,18 @@ export const THEORY_CATEGORIES = [
 export const THEORY_CATEGORY_LABEL: Record<string, string> = Object.fromEntries(THEORY_CATEGORIES.map((c) => [c.key, c.label]));
 
 // ---------- Evrak ----------
-export const DOCUMENT_TYPES = [
-  { key: "NATIONAL_ID", label: "Nüfus cüzdanı fotokopisi" },
-  { key: "DIPLOMA", label: "Diploma / öğrenim belgesi" },
-  { key: "HEALTH_REPORT", label: "Sağlık raporu" },
-  { key: "CRIMINAL_RECORD", label: "Adli sicil kaydı" },
-  { key: "PHOTO", label: "Biyometrik fotoğraf" },
-  { key: "DRIVER_CONSENT", label: "Sürücü olur belgesi" },
-  { key: "BLOOD_TYPE", label: "Kan grubu belgesi" },
+/** Yeni bir kurs açılırken yazılan başlangıç belge türleri (bkz. DEFAULT_LICENSE_CLASSES ile
+ *  aynı gerekçe) — DocumentTypeRule tablosuna tohum olarak yazılır, koda gömülü sabit liste
+ *  olarak KULLANILMAZ; kurs kendi yerel bir belge türü eklemek isteyebilir (bkz. Ayarlar ›
+ *  Belge kuralları). `validityMonths` boşsa belge süresiz kabul edilir. */
+export const DEFAULT_DOCUMENT_TYPES = [
+  { key: "NATIONAL_ID", label: "Nüfus cüzdanı fotokopisi", validityMonths: null },
+  { key: "DIPLOMA", label: "Diploma / öğrenim belgesi", validityMonths: null },
+  { key: "HEALTH_REPORT", label: "Sağlık raporu", validityMonths: 24 },
+  { key: "CRIMINAL_RECORD", label: "Adli sicil kaydı", validityMonths: 6 },
+  { key: "PHOTO", label: "Biyometrik fotoğraf", validityMonths: null },
+  { key: "DRIVER_CONSENT", label: "Sürücü olur belgesi", validityMonths: null },
+  { key: "BLOOD_TYPE", label: "Kan grubu belgesi", validityMonths: null },
 ] as const;
 export const DOCUMENT_STATUS_LABEL: Record<string, { label: string; kind: BadgeKind }> = {
   OK: { label: "Tamamlandı", kind: "success" },

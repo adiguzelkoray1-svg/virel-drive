@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
+import { can } from "@/lib/permissions";
 import { Badge, Card, EmptyState, PageHeader, PersonAvatar } from "@/components/ui";
 import { Icon } from "@/components/icons";
-import { DOCUMENT_TYPES } from "@/lib/constants";
 import { documentMatrix, documentSummary, missingDocuments } from "@/lib/documents";
+import { listDocumentTypeRules } from "@/lib/document-types";
 import { date, number } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Belgeler" };
@@ -16,9 +17,8 @@ const CELL_STYLE: Record<string, { bg: string; fg: string; icon: "check" | "eye"
   MISSING: { bg: "bg-danger-bg", fg: "text-danger", icon: "x" },
 };
 
-const COLS = `minmax(170px,1fr) 44px 100px repeat(${DOCUMENT_TYPES.length}, 44px) 150px 16px`;
-
-// Sütun başlıkları dar olduğu için kısaltılır; tam ad hücrenin title'ında görünür.
+// Sütun başlıkları dar olduğu için kısaltılır; tam ad hücrenin title'ında görünür. Kurs kendi
+// yerel bir belge türü eklerse burada karşılığı yok — Belge etiketinin ilk 3 harfine düşülür.
 const DOC_ABBR: Record<string, string> = {
   NATIONAL_ID: "NÜF", DIPLOMA: "DİP", HEALTH_REPORT: "SAĞ", CRIMINAL_RECORD: "ADL",
   PHOTO: "FOT", DRIVER_CONSENT: "OLR", BLOOD_TYPE: "KAN",
@@ -30,16 +30,18 @@ export default async function DocumentsPage({ searchParams }: PageProps<"/app/be
   const q = String(sp.q ?? "").trim();
   const onlyMissing = sp.filtre === "eksik";
 
-  const [rows, summary, missing] = await Promise.all([
+  const [rows, summary, missing, types] = await Promise.all([
     documentMatrix(user.schoolId, q),
     documentSummary(user.schoolId),
     missingDocuments(user.schoolId),
+    listDocumentTypeRules(user.schoolId, { activeOnly: true }),
   ]);
   const visible = onlyMissing ? rows.filter((r) => r.missingCount > 0) : rows;
+  const COLS = `minmax(170px,1fr) 44px 100px repeat(${types.length}, 44px) 150px 16px`;
 
   return (
     <>
-      <PageHeader title="Belgeler" sub={`Kursiyer evraklarının dijital takibi · ${DOCUMENT_TYPES.length} zorunlu belge`} />
+      <PageHeader title="Belgeler" sub={`Kursiyer evraklarının dijital takibi · ${types.length} zorunlu belge`} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Stat label="Evrağı tam" value={number(summary.complete)} sub={`${summary.students} aktif kursiyerden`} tone="text-success" />
@@ -69,12 +71,12 @@ export default async function DocumentsPage({ searchParams }: PageProps<"/app/be
           <EmptyState icon="folder" title="Kayıt bulunamadı." desc="Aramayı ya da filtreyi değiştirin." />
         ) : (
           <div className="px-5 pb-5 overflow-x-auto">
-            <div style={{ minWidth: `${180 + 44 + 100 + DOCUMENT_TYPES.length * 40 + 150 + 40}px` }}>
+            <div style={{ minWidth: `${180 + 44 + 100 + types.length * 40 + 150 + 40}px` }}>
               <div className="grid gap-3 items-center pb-2.5" style={{ gridTemplateColumns: COLS }}>
                 <div className="th">Kursiyer</div>
                 <div className="th">Sınıf</div>
                 <div className="th">Kayıt</div>
-                {DOCUMENT_TYPES.map((t) => (
+                {types.map((t) => (
                   <div key={t.key} className="th text-center leading-tight truncate" title={t.label}>
                     {DOC_ABBR[t.key] ?? t.label.slice(0, 3).toLocaleUpperCase("tr")}
                   </div>
@@ -99,7 +101,7 @@ export default async function DocumentsPage({ searchParams }: PageProps<"/app/be
                     </span>
                     <span><Badge kind="brand">{r.licenseClass}</Badge></span>
                     <span className="text-[13px] text-text-2 tabular">{date(r.registeredAt)}</span>
-                    {DOCUMENT_TYPES.map((t) => {
+                    {types.map((t) => {
                       const st = r.byType[t.key]?.status ?? "MISSING";
                       const c = CELL_STYLE[st];
                       return (
@@ -150,14 +152,19 @@ export default async function DocumentsPage({ searchParams }: PageProps<"/app/be
 
         <Card title="Belge kuralları" sub="zorunlu belgeler ve türleri">
           <div className="px-5 pb-5 pt-1 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {DOCUMENT_TYPES.map((t) => (
+            {types.map((t) => (
               <div key={t.key} className="flex items-center gap-2.5 px-3 py-2.5 border border-border rounded-sm">
                 <Icon name="file" size={15} className="text-muted shrink-0" />
-                <span className="text-[13px] truncate">{t.label}</span>
-                <span className="ml-auto text-xs text-muted shrink-0">Zorunlu</span>
+                <span className="text-[13px] truncate" title={t.label}>{t.label}</span>
+                <span className="ml-auto text-xs text-muted shrink-0">{t.validityMonths ? `${t.validityMonths} ay geçerli` : "Süresiz"}</span>
               </div>
             ))}
           </div>
+          {can(user.role, "settings.write") && (
+            <div className="px-5 pb-5 pt-1">
+              <Link href="/app/ayarlar/belgeler" className="text-[13px] font-semibold text-blue">Belge türlerini düzenle →</Link>
+            </div>
+          )}
         </Card>
       </div>
     </>

@@ -1,16 +1,19 @@
 import "server-only";
 import { prisma } from "./prisma";
-import { STAGE_WEIGHT, SKILLS, DOCUMENT_TYPES, type StudentStage } from "./constants";
+import { STAGE_WEIGHT, SKILLS, type StudentStage } from "./constants";
 import { getRegulation, regInt } from "./regulation";
+import { listDocumentTypeRules } from "./document-types";
 
 export type TimelineStep = { key: string; title: string; date: string; sub?: string; state: "done" | "now" | "todo" };
 
-/** Yeni kursiyer için 7 zorunlu belge satırını MISSING olarak açar — Belgeler modülünün
- *  kursiyer × belge türü matrisi bunlara dayanır. Bu çağrılmazsa kursiyer 0/0 belgeyle
- *  yanlışlıkla "evrakları tamam" görünür (bkz. kursiyerler/[id] "docsOk === docsTotal"). */
+/** Yeni kursiyer için kursun tanımladığı AKTİF belge türleri kadar satırı MISSING olarak açar
+ *  — Belgeler modülünün kursiyer × belge türü matrisi bunlara dayanır. Bu çağrılmazsa kursiyer
+ *  0/0 belgeyle yanlışlıkla "evrakları tamam" görünür (bkz. kursiyerler/[id] "docsOk === docsTotal").
+ *  Liste artık koda gömülü değil, DocumentTypeRule'dan geliyor (bkz. Ayarlar › Belge kuralları). */
 export async function openDocumentSlots(schoolId: string, studentId: string) {
+  const types = await listDocumentTypeRules(schoolId, { activeOnly: true });
   await prisma.document.createMany({
-    data: DOCUMENT_TYPES.map((d) => ({ schoolId, studentId, type: d.key, status: "MISSING" })),
+    data: types.map((d) => ({ schoolId, studentId, type: d.key, status: "MISSING" })),
   });
 }
 
