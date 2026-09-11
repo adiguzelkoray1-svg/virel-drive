@@ -87,6 +87,46 @@ export async function toggleLicenseClassActiveAction(formData: FormData) {
   redirect(`/app/ayarlar?sinif=${rule.isActive ? "pasif" : "aktif"}`);
 }
 
+/** Tutarlar formda TL girilir, veritabanında kuruş saklanır (finance.ts'teki desenle aynı). */
+const toKurus = (tl: number) => Math.round(tl * 100);
+
+/**
+ * Bir sınıfın varsayılan ücret/peşinat/taksit sayısını kaydeder — üçü de boş bırakılabilir
+ * (null'a döner), bu durumda Finans'taki ödeme planı formu veri temelli öneriye geri düşer
+ * (bkz. schema.prisma'daki not). Sınıfın kendisi burada değil "Mevzuat ve kurs ayarları"nda
+ * eklenip düzenlenir — bu form yalnızca zaten var olan bir sınıfın fiyat alanlarını günceller.
+ */
+export async function updateClassPricingAction(formData: FormData) {
+  const user = await requirePermission("settings.write");
+  const ruleId = String(formData.get("ruleId") ?? "");
+  const rule = await prisma.licenseClassRule.findFirst({ where: { id: ruleId, schoolId: user.schoolId } });
+  if (!rule) redirect("/app/ayarlar/fiyatlandirma?hata=bulunamadi");
+
+  const priceRaw = String(formData.get("price") ?? "").trim();
+  const downRaw = String(formData.get("downPayment") ?? "").trim();
+  const countRaw = String(formData.get("installmentCount") ?? "").trim();
+
+  const priceTl = priceRaw ? Number(priceRaw) : null;
+  if (priceTl !== null && (!Number.isFinite(priceTl) || priceTl <= 0)) redirect("/app/ayarlar/fiyatlandirma?hata=fiyat");
+  const downTl = downRaw ? Number(downRaw) : null;
+  if (downTl !== null && (!Number.isFinite(downTl) || downTl < 0)) redirect("/app/ayarlar/fiyatlandirma?hata=pesinat");
+
+  const price = priceTl !== null ? toKurus(priceTl) : null;
+  const downPayment = downTl !== null ? toKurus(downTl) : null;
+  if (price !== null && downPayment !== null && downPayment > price) redirect("/app/ayarlar/fiyatlandirma?hata=pesinat-fazla");
+
+  const installmentCount = countRaw ? Math.round(Number(countRaw)) : null;
+  if (installmentCount !== null && (!Number.isInteger(installmentCount) || installmentCount < 1 || installmentCount > 24)) {
+    redirect("/app/ayarlar/fiyatlandirma?hata=taksit");
+  }
+
+  await prisma.licenseClassRule.update({ where: { id: ruleId }, data: { defaultPrice: price, defaultDownPayment: downPayment, defaultInstallmentCount: installmentCount } });
+  await audit({ schoolId: user.schoolId, actorId: user.id, action: "class-rule.pricing-update", target: ruleId, meta: { code: rule.code, price } });
+  revalidatePath("/app/ayarlar/fiyatlandirma");
+  revalidatePath("/app/finans");
+  redirect("/app/ayarlar/fiyatlandirma?fiyat=guncellendi");
+}
+
 const IntegrationsSchema = z.object({
   netgsmUsername: z.string().trim().max(190).optional(),
   netgsmPassword: z.string().trim().max(190).optional(),

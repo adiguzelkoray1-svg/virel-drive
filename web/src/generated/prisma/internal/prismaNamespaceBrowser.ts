@@ -430,6 +430,9 @@ export const LicenseClassRuleScalarFieldEnum = {
   theoryLessons: 'theoryLessons',
   examAttempts: 'examAttempts',
   passScore: 'passScore',
+  defaultPrice: 'defaultPrice',
+  defaultDownPayment: 'defaultDownPayment',
+  defaultInstallmentCount: 'defaultInstallmentCount',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

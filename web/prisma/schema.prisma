@@ -452,6 +452,14 @@ model LicenseClassRule {
   theoryLessons  Int      // zorunlu teorik ders sayısı
   examAttempts   Int      @default(4)
   passScore      Int      @default(70)
+  /// Üçü de boş bırakılabilir (null) — o zaman Finans'taki ödeme planı formu, o sınıftaki
+  /// mevcut planların en sık görülen tutarını önerir (bkz. finans/kursiyer/[id]/page.tsx).
+  /// Doldurulunca o veri temelli tahminin yerini alır: yeni açılan bir kursta ya da bir
+  /// sınıfın ilk kursiyerinde veri temelli öneri hiç çalışmaz (soğuk başlangıç sorunu),
+  /// ayrıca fiyat artışında "en sık görülen" eski fiyatta uzun süre takılı kalabilir.
+  defaultPrice            Int? // kuruş
+  defaultDownPayment      Int? // kuruş
+  defaultInstallmentCount Int?
   isActive       Boolean  @default(true)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

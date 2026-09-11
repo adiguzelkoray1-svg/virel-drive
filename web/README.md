@@ -140,11 +140,11 @@ saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/e
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
 anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
-hakkında"), **Kullanıcılar ve roller**, **Belge kuralları**, **Denetim kaydı** ve **Mesaj
-şablonları** (bkz. aşağıdaki ilgili bölümler) artık gerçek sayfalar. Diğer 3 ayar kategorisi
-(Kurs profili, Fiyat/ödeme, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür ama
-tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu listede
-değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
+hakkında"), **Kullanıcılar ve roller**, **Belge kuralları**, **Denetim kaydı**, **Mesaj
+şablonları** ve **Fiyat ve ödeme** (bkz. aşağıdaki ilgili bölümler) artık gerçek sayfalar.
+Diğer 2 ayar kategorisi (Kurs profili, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür
+ama tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu
+listede değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
 
 ### Kullanıcılar ve roller hakkında
 
@@ -220,10 +220,12 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 çalışırsa `requireSchoolUser` onu geri yollar.
 
 **Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no, araç ceza takibi,
-Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi), Belge kuralları, Denetim kaydı ve
-Mesaj şablonları da eklendi (bkz. ilgili bölümler). Ayarlar'da yalnızca Fiyat ve ödeme ile
+Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi), Belge kuralları, Denetim kaydı,
+Mesaj şablonları ve Fiyat ve ödeme de eklendi (bkz. ilgili bölümler). Ayarlar'da yalnızca
 Güvenlik ve KVKK "Yakında" kaldı (Kurs profili zaten `/app/kurs`'ta var, ayrı bir kategori
-olarak listede değil). Bunların ötesinde kalan işler pazar analizinden çıkan, bilinçli olarak
+olarak listede değil) — bilerek en sona bırakıldı, gerçek KVKK metni yazmak yerine temkinli
+ve dar kapsamlı ele alınacak (ör. kendi kendine şifre değiştirme). Bunların ötesinde kalan
+işler pazar analizinden çıkan, bilinçli olarak
 ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API (hâlâ
 simüle ediliyor) · çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR)
 hakkında" — PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu
@@ -670,6 +672,30 @@ güncelleyen bir cron olmadan da listeler doğru çalışır.
 **Araç giderleri ayrı tabloda.** Plakaya bağlı giderler `VehicleCost` içinde tutulur ve araçlar
 modülünden girilir; finans özetinde (aylık/yıllık gider, net durum, gelir-gider grafiği) toplam
 gidere dahil edilir ama gider listesinde ayrı gösterilir.
+
+### Fiyat ve ödeme hakkında
+
+**Yeni bir tablo değil — `LicenseClassRule`'a üç alan.** Belge kuralları/mesaj şablonlarından
+farklı olarak burası kendi kuralı olan bağımsız bir kayıt değil: fiyat zaten sınıfa ait bir
+özellik olduğu için `defaultPrice`/`defaultDownPayment`/`defaultInstallmentCount` doğrudan
+`LicenseClassRule`'a eklendi (`drivingHours`/`examAttempts` gibi). Sınıfın kendisi hâlâ
+"Mevzuat ve kurs ayarları"nda eklenir/düzenlenir; bu ekran yalnızca zaten var olan sınıfların
+fiyat alanlarını günceller — ayrı bir ekle/sil akışı yok.
+
+**Gerçek bir gizli özelliği açığa çıkardı: veri temelli fiyat önerisi zaten vardı.**
+`finans/kursiyer/[id]/page.tsx`'teki ödeme planı formu, boş bir kursiyer için o sınıftaki mevcut
+planların en sık görülen toplamını zaten öneriyordu — ama bu örtük, kullanıcının hiç göremediği
+ya da bilerek değiştiremediği bir davranıştı. İki gerçek sorunu vardı: **soğuk başlangıç**
+(yeni bir kurs ya da bir sınıfın ilk kursiyerinde hiç öneri yok, alan boş çıkıyordu) ve
+**fiyat artışı gecikmesi** ("en sık görülen" tanım gereği eski fiyatta uzun süre takılı kalır,
+yeni fiyat çoğunluğu geçene kadar). Açık bir ayarlar ekranı ikisini de çözüyor: doldurulmuşsa
+sınıfın kendi varsayımı esas alınır, boşsa eski veri temelli öneriye aynen düşülür — davranış
+hiç bozulmadı, yalnızca üstüne bilinçli bir öncelik eklendi.
+
+**Peşinat ve taksit sayısı için önceden hiç varsayılan yoktu.** Peşinat alanı her zaman boş
+açılıyordu, taksit sayısı da sınıftan bağımsız sabit "4"tü — ikisi de artık sınıfa göre
+önceden doldurulabiliyor (yine yalnızca yeni plan için; mevcut bir planı yeniden kurarken
+kendi güncel değerleri esas alınır, sınıf varsayımı hiç devreye girmez).
 
 ### Takvim hakkında
 

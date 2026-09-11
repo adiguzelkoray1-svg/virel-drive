@@ -31,6 +31,9 @@ export type LicenseClassRuleAvgAggregateOutputType = {
   theoryLessons: number | null
   examAttempts: number | null
   passScore: number | null
+  defaultPrice: number | null
+  defaultDownPayment: number | null
+  defaultInstallmentCount: number | null
 }
 
 export type LicenseClassRuleSumAggregateOutputType = {
@@ -38,6 +41,9 @@ export type LicenseClassRuleSumAggregateOutputType = {
   theoryLessons: number | null
   examAttempts: number | null
   passScore: number | null
+  defaultPrice: number | null
+  defaultDownPayment: number | null
+  defaultInstallmentCount: number | null
 }
 
 export type LicenseClassRuleMinAggregateOutputType = {
@@ -49,6 +55,9 @@ export type LicenseClassRuleMinAggregateOutputType = {
   theoryLessons: number | null
   examAttempts: number | null
   passScore: number | null
+  defaultPrice: number | null
+  defaultDownPayment: number | null
+  defaultInstallmentCount: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,6 +72,9 @@ export type LicenseClassRuleMaxAggregateOutputType = {
   theoryLessons: number | null
   examAttempts: number | null
   passScore: number | null
+  defaultPrice: number | null
+  defaultDownPayment: number | null
+  defaultInstallmentCount: number | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +89,9 @@ export type LicenseClassRuleCountAggregateOutputType = {
   theoryLessons: number
   examAttempts: number
   passScore: number
+  defaultPrice: number
+  defaultDownPayment: number
+  defaultInstallmentCount: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -89,6 +104,9 @@ export type LicenseClassRuleAvgAggregateInputType = {
   theoryLessons?: true
   examAttempts?: true
   passScore?: true
+  defaultPrice?: true
+  defaultDownPayment?: true
+  defaultInstallmentCount?: true
 }
 
 export type LicenseClassRuleSumAggregateInputType = {
@@ -96,6 +114,9 @@ export type LicenseClassRuleSumAggregateInputType = {
   theoryLessons?: true
   examAttempts?: true
   passScore?: true
+  defaultPrice?: true
+  defaultDownPayment?: true
+  defaultInstallmentCount?: true
 }
 
 export type LicenseClassRuleMinAggregateInputType = {
@@ -107,6 +128,9 @@ export type LicenseClassRuleMinAggregateInputType = {
   theoryLessons?: true
   examAttempts?: true
   passScore?: true
+  defaultPrice?: true
+  defaultDownPayment?: true
+  defaultInstallmentCount?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -121,6 +145,9 @@ export type LicenseClassRuleMaxAggregateInputType = {
   theoryLessons?: true
   examAttempts?: true
   passScore?: true
+  defaultPrice?: true
+  defaultDownPayment?: true
+  defaultInstallmentCount?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -135,6 +162,9 @@ export type LicenseClassRuleCountAggregateInputType = {
   theoryLessons?: true
   examAttempts?: true
   passScore?: true
+  defaultPrice?: true
+  defaultDownPayment?: true
+  defaultInstallmentCount?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -236,6 +266,9 @@ export type LicenseClassRuleGroupByOutputType = {
   theoryLessons: number
   examAttempts: number
   passScore: number
+  defaultPrice: number | null
+  defaultDownPayment: number | null
+  defaultInstallmentCount: number | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -273,6 +306,9 @@ export type LicenseClassRuleWhereInput = {
   theoryLessons?: Prisma.IntFilter<"LicenseClassRule"> | number
   examAttempts?: Prisma.IntFilter<"LicenseClassRule"> | number
   passScore?: Prisma.IntFilter<"LicenseClassRule"> | number
+  defaultPrice?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultDownPayment?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultInstallmentCount?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
   isActive?: Prisma.BoolFilter<"LicenseClassRule"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
@@ -288,6 +324,9 @@ export type LicenseClassRuleOrderByWithRelationInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -307,6 +346,9 @@ export type LicenseClassRuleWhereUniqueInput = Prisma.AtLeast<{
   theoryLessons?: Prisma.IntFilter<"LicenseClassRule"> | number
   examAttempts?: Prisma.IntFilter<"LicenseClassRule"> | number
   passScore?: Prisma.IntFilter<"LicenseClassRule"> | number
+  defaultPrice?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultDownPayment?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultInstallmentCount?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
   isActive?: Prisma.BoolFilter<"LicenseClassRule"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
@@ -322,6 +364,9 @@ export type LicenseClassRuleOrderByWithAggregationInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrderInput | Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -344,6 +389,9 @@ export type LicenseClassRuleScalarWhereWithAggregatesInput = {
   theoryLessons?: Prisma.IntWithAggregatesFilter<"LicenseClassRule"> | number
   examAttempts?: Prisma.IntWithAggregatesFilter<"LicenseClassRule"> | number
   passScore?: Prisma.IntWithAggregatesFilter<"LicenseClassRule"> | number
+  defaultPrice?: Prisma.IntNullableWithAggregatesFilter<"LicenseClassRule"> | number | null
+  defaultDownPayment?: Prisma.IntNullableWithAggregatesFilter<"LicenseClassRule"> | number | null
+  defaultInstallmentCount?: Prisma.IntNullableWithAggregatesFilter<"LicenseClassRule"> | number | null
   isActive?: Prisma.BoolWithAggregatesFilter<"LicenseClassRule"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LicenseClassRule"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"LicenseClassRule"> | Date | string
@@ -357,6 +405,9 @@ export type LicenseClassRuleCreateInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -372,6 +423,9 @@ export type LicenseClassRuleUncheckedCreateInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -385,6 +439,9 @@ export type LicenseClassRuleUpdateInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,6 +457,9 @@ export type LicenseClassRuleUncheckedUpdateInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,6 +474,9 @@ export type LicenseClassRuleCreateManyInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -427,6 +490,9 @@ export type LicenseClassRuleUpdateManyMutationInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -441,6 +507,9 @@ export type LicenseClassRuleUncheckedUpdateManyInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -470,6 +539,9 @@ export type LicenseClassRuleCountOrderByAggregateInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -480,6 +552,9 @@ export type LicenseClassRuleAvgOrderByAggregateInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrder
 }
 
 export type LicenseClassRuleMaxOrderByAggregateInput = {
@@ -491,6 +566,9 @@ export type LicenseClassRuleMaxOrderByAggregateInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -505,6 +583,9 @@ export type LicenseClassRuleMinOrderByAggregateInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -515,6 +596,9 @@ export type LicenseClassRuleSumOrderByAggregateInput = {
   theoryLessons?: Prisma.SortOrder
   examAttempts?: Prisma.SortOrder
   passScore?: Prisma.SortOrder
+  defaultPrice?: Prisma.SortOrder
+  defaultDownPayment?: Prisma.SortOrder
+  defaultInstallmentCount?: Prisma.SortOrder
 }
 
 export type LicenseClassRuleCreateNestedManyWithoutSchoolInput = {
@@ -567,6 +651,9 @@ export type LicenseClassRuleCreateWithoutSchoolInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -580,6 +667,9 @@ export type LicenseClassRuleUncheckedCreateWithoutSchoolInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -623,6 +713,9 @@ export type LicenseClassRuleScalarWhereInput = {
   theoryLessons?: Prisma.IntFilter<"LicenseClassRule"> | number
   examAttempts?: Prisma.IntFilter<"LicenseClassRule"> | number
   passScore?: Prisma.IntFilter<"LicenseClassRule"> | number
+  defaultPrice?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultDownPayment?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
+  defaultInstallmentCount?: Prisma.IntNullableFilter<"LicenseClassRule"> | number | null
   isActive?: Prisma.BoolFilter<"LicenseClassRule"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"LicenseClassRule"> | Date | string
@@ -636,6 +729,9 @@ export type LicenseClassRuleCreateManySchoolInput = {
   theoryLessons: number
   examAttempts?: number
   passScore?: number
+  defaultPrice?: number | null
+  defaultDownPayment?: number | null
+  defaultInstallmentCount?: number | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -649,6 +745,9 @@ export type LicenseClassRuleUpdateWithoutSchoolInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -662,6 +761,9 @@ export type LicenseClassRuleUncheckedUpdateWithoutSchoolInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -675,6 +777,9 @@ export type LicenseClassRuleUncheckedUpdateManyWithoutSchoolInput = {
   theoryLessons?: Prisma.IntFieldUpdateOperationsInput | number
   examAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   passScore?: Prisma.IntFieldUpdateOperationsInput | number
+  defaultPrice?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultDownPayment?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  defaultInstallmentCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -691,6 +796,9 @@ export type LicenseClassRuleSelect<ExtArgs extends runtime.Types.Extensions.Inte
   theoryLessons?: boolean
   examAttempts?: boolean
   passScore?: boolean
+  defaultPrice?: boolean
+  defaultDownPayment?: boolean
+  defaultInstallmentCount?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -706,6 +814,9 @@ export type LicenseClassRuleSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   theoryLessons?: boolean
   examAttempts?: boolean
   passScore?: boolean
+  defaultPrice?: boolean
+  defaultDownPayment?: boolean
+  defaultInstallmentCount?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -721,6 +832,9 @@ export type LicenseClassRuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   theoryLessons?: boolean
   examAttempts?: boolean
   passScore?: boolean
+  defaultPrice?: boolean
+  defaultDownPayment?: boolean
+  defaultInstallmentCount?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -736,12 +850,15 @@ export type LicenseClassRuleSelectScalar = {
   theoryLessons?: boolean
   examAttempts?: boolean
   passScore?: boolean
+  defaultPrice?: boolean
+  defaultDownPayment?: boolean
+  defaultInstallmentCount?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LicenseClassRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "code" | "vehicleKind" | "drivingHours" | "theoryLessons" | "examAttempts" | "passScore" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["licenseClassRule"]>
+export type LicenseClassRuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "code" | "vehicleKind" | "drivingHours" | "theoryLessons" | "examAttempts" | "passScore" | "defaultPrice" | "defaultDownPayment" | "defaultInstallmentCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["licenseClassRule"]>
 export type LicenseClassRuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -766,6 +883,16 @@ export type $LicenseClassRulePayload<ExtArgs extends runtime.Types.Extensions.In
     theoryLessons: number
     examAttempts: number
     passScore: number
+    /**
+     * Üçü de boş bırakılabilir (null) — o zaman Finans'taki ödeme planı formu, o sınıftaki
+     * mevcut planların en sık görülen tutarını önerir (bkz. finans/kursiyer/[id]/page.tsx).
+     * Doldurulunca o veri temelli tahminin yerini alır: yeni açılan bir kursta ya da bir
+     * sınıfın ilk kursiyerinde veri temelli öneri hiç çalışmaz (soğuk başlangıç sorunu),
+     * ayrıca fiyat artışında "en sık görülen" eski fiyatta uzun süre takılı kalabilir.
+     */
+    defaultPrice: number | null
+    defaultDownPayment: number | null
+    defaultInstallmentCount: number | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1201,6 +1328,9 @@ export interface LicenseClassRuleFieldRefs {
   readonly theoryLessons: Prisma.FieldRef<"LicenseClassRule", 'Int'>
   readonly examAttempts: Prisma.FieldRef<"LicenseClassRule", 'Int'>
   readonly passScore: Prisma.FieldRef<"LicenseClassRule", 'Int'>
+  readonly defaultPrice: Prisma.FieldRef<"LicenseClassRule", 'Int'>
+  readonly defaultDownPayment: Prisma.FieldRef<"LicenseClassRule", 'Int'>
+  readonly defaultInstallmentCount: Prisma.FieldRef<"LicenseClassRule", 'Int'>
   readonly isActive: Prisma.FieldRef<"LicenseClassRule", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LicenseClassRule", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LicenseClassRule", 'DateTime'>

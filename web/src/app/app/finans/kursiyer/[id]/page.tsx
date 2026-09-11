@@ -34,15 +34,21 @@ export default async function StudentFinancePage({ params, searchParams }: PageP
   const hasPaidDown = paidRows.some((i) => i.seq === 0);
   const overdue = open.filter((i) => effectiveStatus(i) === "OVERDUE");
 
-  // Aynı ehliyet sınıfındaki mevcut planların en sık görülen toplamı, yeni plan için makul bir başlangıç.
-  const peers = d.plan ? [] : await prisma.paymentPlan.findMany({
+  // Sınıfın "Fiyat ve ödeme" ayarlarında bir varsayılan varsa o esas alınır (bilinçli, kurs
+  // tarafından girilmiş bir karar); yoksa aynı sınıftaki mevcut planların en sık görülen
+  // toplamına düşülür — ikisi de yalnızca YENİ plan için bir başlangıç önerisi, plan zaten
+  // varsa hiç kullanılmaz.
+  const classRule = d.plan ? null : await prisma.licenseClassRule.findFirst({ where: { schoolId: user.schoolId, code: d.student.licenseClass } });
+  const peers = d.plan || classRule?.defaultPrice ? [] : await prisma.paymentPlan.findMany({
     where: { schoolId: user.schoolId, student: { licenseClass: d.student.licenseClass } },
     select: { total: true }, take: 200,
   });
-  const suggested = peers.length
-    ? Number(Object.entries(peers.reduce<Record<string, number>>((acc, p) => { acc[p.total] = (acc[p.total] ?? 0) + 1; return acc; }, {}))
-        .sort((a, b) => b[1] - a[1])[0][0]) / 100
-    : 0;
+  const suggested = classRule?.defaultPrice
+    ? classRule.defaultPrice / 100
+    : peers.length
+      ? Number(Object.entries(peers.reduce<Record<string, number>>((acc, p) => { acc[p.total] = (acc[p.total] ?? 0) + 1; return acc; }, {}))
+          .sort((a, b) => b[1] - a[1])[0][0]) / 100
+      : 0;
 
   const nextMonth = new Date();
   nextMonth.setDate(1);
@@ -152,8 +158,8 @@ export default async function StudentFinancePage({ params, searchParams }: PageP
               firstSeq={paidRows.reduce((m, i) => Math.max(m, i.seq), 0) + 1}
               defaults={{
                 total: d.plan ? String(d.total / 100) : suggested ? String(suggested) : "",
-                downPayment: d.plan ? String(d.plan.downPayment / 100) : "",
-                count: String(Math.max(1, open.length || 4)),
+                downPayment: d.plan ? String(d.plan.downPayment / 100) : classRule?.defaultDownPayment ? String(classRule.defaultDownPayment / 100) : "",
+                count: String(Math.max(1, open.length || classRule?.defaultInstallmentCount || 4)),
                 firstDueAt: (open[0]?.dueAt ?? nextMonth).toISOString().slice(0, 10),
               }}
             />

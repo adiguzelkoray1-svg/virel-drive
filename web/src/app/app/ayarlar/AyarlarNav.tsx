@@ -8,6 +8,7 @@ const LINKS: { href: string; icon: IconName; label: string }[] = [
   { href: "/app/ayarlar/kullanicilar", icon: "users", label: "Kullanıcılar ve roller" },
   { href: "/app/ayarlar/belgeler", icon: "folder", label: "Belge kuralları" },
   { href: "/app/ayarlar/mesaj-sablonlari", icon: "message", label: "Mesaj şablonları" },
+  { href: "/app/ayarlar/fiyatlandirma", icon: "wallet", label: "Fiyat ve ödeme" },
   { href: "/app/ayarlar/entegrasyonlar", icon: "link", label: "Entegrasyonlar" },
   { href: "/app/ayarlar/denetim", icon: "list", label: "Denetim kaydı" },
 ];
@@ -16,7 +17,6 @@ const LINKS: { href: string; icon: IconName; label: string }[] = [
  *  etiketiyle gösterilir, tıklanamaz bağlantı olarak sunulmaz. */
 const SOON: { icon: IconName; label: string }[] = [
   { icon: "building", label: "Kurs profili" },
-  { icon: "wallet", label: "Fiyat ve ödeme" },
   { icon: "lock", label: "Güvenlik ve KVKK" },
 ];
 
