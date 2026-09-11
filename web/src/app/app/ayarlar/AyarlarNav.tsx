@@ -8,6 +8,7 @@ const LINKS: { href: string; icon: IconName; label: string }[] = [
   { href: "/app/ayarlar/kullanicilar", icon: "users", label: "Kullanıcılar ve roller" },
   { href: "/app/ayarlar/belgeler", icon: "folder", label: "Belge kuralları" },
   { href: "/app/ayarlar/entegrasyonlar", icon: "link", label: "Entegrasyonlar" },
+  { href: "/app/ayarlar/denetim", icon: "list", label: "Denetim kaydı" },
 ];
 
 /** Yalnızca görsel bağlam için: gerçek bir alt sayfası olmayan kategoriler "yakında"
@@ -17,7 +18,6 @@ const SOON: { icon: IconName; label: string }[] = [
   { icon: "wallet", label: "Fiyat ve ödeme" },
   { icon: "message", label: "Mesaj şablonları" },
   { icon: "lock", label: "Güvenlik ve KVKK" },
-  { icon: "list", label: "Denetim kaydı" },
 ];
 
 export function AyarlarNav() {

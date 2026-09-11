@@ -140,11 +140,12 @@ saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/e
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
 anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
-hakkında"), **Kullanıcılar ve roller** ve **Belge kuralları** (ikisi de aşağıdaki bölümlerde)
-artık gerçek sayfalar. Diğer 5 ayar kategorisi (Kurs profili, Fiyat/ödeme, Mesaj şablonları,
-Güvenlik/KVKK, Denetim kaydı) sol menüde "Yakında" etiketiyle görünür ama tıklanabilir değil —
-henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu listede değil, ayrı bir üst
-menü öğesi olarak: `/app/kurs`.)
+hakkında"), **Kullanıcılar ve roller**, **Belge kuralları** ve **Denetim kaydı** (bkz. aşağıdaki
+bölümler) artık gerçek sayfalar — sonuncusu `AuditLog`'u zaten her aksiyonun doldurduğu, yalnızca
+görüntüleme ekranı eksik olan en düşük efor kalemdi. Diğer 4 ayar kategorisi (Kurs profili,
+Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür ama
+tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu listede
+değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
 
 ### Kullanıcılar ve roller hakkında
 
