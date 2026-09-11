@@ -3,6 +3,7 @@ import { requireStudentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
 import { PersonAvatar } from "@/components/ui";
+import { ChangePasswordForm } from "@/components/ChangePasswordForm";
 import { STAGE_LABEL, type StudentStage } from "@/lib/constants";
 import { date, fullName, maskPhone } from "@/lib/format";
 
@@ -32,6 +33,11 @@ export default async function StudentProfilePage() {
         <Row label="Süreç aşaması" value={STAGE_LABEL[s.stage as StudentStage] ?? s.stage} />
         <Row label="Kayıt tarihi" value={date(s.registeredAt)} />
         {s.fileNo && <Row label="Dosya no" value={s.fileNo} />}
+      </div>
+
+      <div className="card p-4 flex flex-col gap-3.5">
+        <span className="text-[13px] font-bold">Şifre değiştir</span>
+        <ChangePasswordForm />
       </div>
 
       <form action="/api/auth/cikis" method="post">

@@ -3,6 +3,7 @@ import { requireInstructorUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
 import { PersonAvatar } from "@/components/ui";
+import { ChangePasswordForm } from "@/components/ChangePasswordForm";
 import { INSTRUCTOR_BRANCH_LABEL } from "@/lib/constants";
 
 export const metadata: Metadata = { title: "Profil" };
@@ -29,6 +30,11 @@ export default async function InstructorProfilePage() {
         <Row label="Branş" value={INSTRUCTOR_BRANCH_LABEL[instructor.branch] ?? instructor.branch} />
         <Row label="Ehliyet sınıfları" value={instructor.licenseClasses} />
         <Row label="Haftalık kapasite" value={`${instructor.weeklyCapacity} saat`} />
+      </div>
+
+      <div className="card p-4 flex flex-col gap-3.5">
+        <span className="text-[13px] font-bold">Şifre değiştir</span>
+        <ChangePasswordForm />
       </div>
 
       <a href="/app" className="btn btn-secondary w-full justify-center"><Icon name="grid" size={16} />Masaüstü görünüme geç</a>

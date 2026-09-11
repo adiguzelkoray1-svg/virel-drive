@@ -11,13 +11,13 @@ const LINKS: { href: string; icon: IconName; label: string }[] = [
   { href: "/app/ayarlar/fiyatlandirma", icon: "wallet", label: "Fiyat ve ödeme" },
   { href: "/app/ayarlar/entegrasyonlar", icon: "link", label: "Entegrasyonlar" },
   { href: "/app/ayarlar/denetim", icon: "list", label: "Denetim kaydı" },
+  { href: "/app/ayarlar/guvenlik", icon: "lock", label: "Güvenlik ve KVKK" },
 ];
 
 /** Yalnızca görsel bağlam için: gerçek bir alt sayfası olmayan kategoriler "yakında"
  *  etiketiyle gösterilir, tıklanamaz bağlantı olarak sunulmaz. */
 const SOON: { icon: IconName; label: string }[] = [
   { icon: "building", label: "Kurs profili" },
-  { icon: "lock", label: "Güvenlik ve KVKK" },
 ];
 
 export function AyarlarNav() {

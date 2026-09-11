@@ -141,10 +141,9 @@ devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapa
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
 anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
 hakkında"), **Kullanıcılar ve roller**, **Belge kuralları**, **Denetim kaydı**, **Mesaj
-şablonları** ve **Fiyat ve ödeme** (bkz. aşağıdaki ilgili bölümler) artık gerçek sayfalar.
-Diğer 2 ayar kategorisi (Kurs profili, Güvenlik/KVKK) sol menüde "Yakında" etiketiyle görünür
-ama tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin kendisi zaten var ama bu
-listede değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
+şablonları**, **Fiyat ve ödeme** ve **Güvenlik ve KVKK** (bkz. aşağıdaki ilgili bölümler)
+artık gerçek sayfalar — listede "Yakında" kalan tek kategori Kurs profili, o da zaten
+`/app/kurs`'ta ayrı bir üst menü öğesi olarak var, bu listede tekrar edilmedi.
 
 ### Kullanıcılar ve roller hakkında
 
@@ -221,15 +220,34 @@ Eğitmen masaüstü erişimini **kaybetmiyor**: `/app` girişi değişmedi, side
 
 **Sırada:** Orijinal brief'in tüm modülleri tamamlandı; eğitmen MEB izin no, araç ceza takibi,
 Kullanıcılar ve roller (+ eğitmen/kursiyer giriş erişimi), Belge kuralları, Denetim kaydı,
-Mesaj şablonları ve Fiyat ve ödeme de eklendi (bkz. ilgili bölümler). Ayarlar'da yalnızca
-Güvenlik ve KVKK "Yakında" kaldı (Kurs profili zaten `/app/kurs`'ta var, ayrı bir kategori
-olarak listede değil) — bilerek en sona bırakıldı, gerçek KVKK metni yazmak yerine temkinli
-ve dar kapsamlı ele alınacak (ör. kendi kendine şifre değiştirme). Bunların ötesinde kalan
-işler pazar analizinden çıkan, bilinçli olarak
+Mesaj şablonları, Fiyat ve ödeme ve Güvenlik ve KVKK de eklendi (bkz. ilgili bölümler).
+Ayarlar'daki tüm kategoriler artık gerçek sayfalar (Kurs profili zaten `/app/kurs`'ta var,
+ayrı bir kategori olarak listede değil). Güvenlik ve KVKK bilerek en sona ve dar kapsamlı
+bırakıldı — gerçek bir KVKK metni yazmak bu projenin sınırları dışında, bunun yerine
+kendi kendine şifre değiştirme eklendi (bkz. "Güvenlik ve KVKK hakkında"). Bunların
+ötesinde kalan işler pazar analizinden çıkan, bilinçli olarak
 ertelenmiş "eklenebilir" kalemler (düşükten yükseğe efor): gerçek WhatsApp Business API (hâlâ
 simüle ediliyor) · çoklu şube desteği (mimari genişleme gerektirir). Bkz. "Ödeme linkleri (PayTR)
 hakkında" — PayTR kodu hazır ama kullanıcının henüz bir üye işyeri hesabı/sözleşmesi yok, bu
 yüzden pasif.
+
+### Güvenlik ve KVKK hakkında
+
+**Bilerek dar kapsamlı: gerçek bir KVKK metni yazılmadı.** Aydınlatma metni/açık rıza gibi
+hukuki içerik bu projenin (ve benim) yetki alanının dışında — kullanıcının kendi hukuk
+danışmanıyla hazırlaması gereken bir belge. Bunun yerine ekranın "Güvenlik" tarafına, gerçekten
+eksik olan tek şey eklendi: **kendi kendine şifre değiştirme.** Daha önce bir kullanıcının
+şifresini yalnızca bir yönetici, "Kullanıcılar ve roller"deki geçici şifre akışıyla
+değiştirebiliyordu (bkz. yukarıdaki bölüm) — oturumu açık birinin kendi isteğiyle, mevcut
+şifresini bilerek değiştirmesinin hiçbir yolu yoktu.
+
+**Tek aksiyon, üç yüzeyde paylaşılıyor.** `changePasswordFormAction` (`actions/account.ts`)
+`requireUser()` kullanıyor — role bakmıyor — bu yüzden aynı aksiyon ve aynı `ChangePasswordForm`
+bileşeni hem `/app/ayarlar/guvenlik`de hem eğitmen hem kursiyer mobil `Profil` sayfasında
+birebir aynı şekilde çalışıyor; süper admin dahil hiçbir rol dışarıda kalmıyor. Mevcut şifre
+`verifyPassword` ile doğrulanmadan yenisi asla yazılmıyor; yeni şifre eskisiyle aynıysa da
+reddediliyor. Üçü de aynı `User.passwordHash`'i değiştirdiği için giriş ekranındaki
+`loginAction` hiç değişmedi.
 
 ### Yedi rolün tamamı tek tek denendi (son kontrol)
 OWNER, SECRETARY, ACCOUNTANT, DRIVING_INSTRUCTOR, THEORY_TEACHER, STUDENT, SUPER_ADMIN —
