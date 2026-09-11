@@ -60,6 +60,7 @@ export async function getStudentDetail(schoolId: string, studentId: string) {
       documents: true,
       paymentPlan: { include: { installments: { orderBy: { seq: "asc" } } } },
       exams: { orderBy: [{ type: "asc" }, { attemptNo: "asc" }] },
+      user: { select: { email: true, lastLoginAt: true } },
     },
   });
   if (!student) return null;

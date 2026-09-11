@@ -9,6 +9,8 @@ import { INSTRUCTOR_BRANCH_LABEL, THEORY_CATEGORY_LABEL, VEHICLE_STATUS_LABEL, s
 import { date, fullName, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { toggleInstructorActiveAction } from "@/app/actions/instructors";
+import { grantInstructorAccessAction } from "@/app/actions/users";
+import { AccessGrantForm } from "@/components/AccessGrantForm";
 
 export async function generateMetadata({ params }: PageProps<"/app/egitmenler/[id]">): Promise<Metadata> {
   const { id } = await params;
@@ -33,6 +35,7 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
 
   const { instructor, upcoming, past, students, loadHours, kind } = d;
   const canWrite = can(user.role, "instructor.write");
+  const canManageUsers = can(user.role, "users.manage");
   const loadPercent = instructor.weeklyCapacity ? Math.round((loadHours / instructor.weeklyCapacity) * 100) : 0;
   const notice = Object.entries(NOTICE).find(([k]) => typeof sp[k] === "string")?.[1];
 
@@ -192,6 +195,14 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
               })}
             </div>
           )}
+        </Card>
+      )}
+
+      {canManageUsers && (
+        <Card title="Giriş erişimi" sub="Mobil eğitmen portalına (/egitmen) giriş bilgisi">
+          <div className="px-5 pb-5 pt-1">
+            <AccessGrantForm action={grantInstructorAccessAction} entityId={instructor.id} existing={instructor.user} />
+          </div>
         </Card>
       )}
 

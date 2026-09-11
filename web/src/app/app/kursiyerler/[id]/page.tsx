@@ -8,6 +8,8 @@ import { Badge, Card, ExamAttempts, Notice, PageHeader, PersonAvatar, ProgressBa
 import { DOCUMENT_STATUS_LABEL, DOCUMENT_TYPES, SCORE_LABEL, STAGE_LABEL, STUDENT_STATUS_LABEL, INSTALLMENT_STATUS_LABEL, type StudentStage } from "@/lib/constants";
 import { date, fullName, maskNationalId, maskPhone, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
+import { grantStudentAccessAction } from "@/app/actions/users";
+import { AccessGrantForm } from "@/components/AccessGrantForm";
 
 export async function generateMetadata({ params }: PageProps<"/app/kursiyerler/[id]">): Promise<Metadata> {
   const { id } = await params;
@@ -27,6 +29,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
   const showFinance = can(user.role, "finance.read");
   const showDocEdit = can(user.role, "document.write");
   const showEdit = can(user.role, "student.write");
+  const canManageUsers = can(user.role, "users.manage");
   const status = STUDENT_STATUS_LABEL[s.status] ?? STUDENT_STATUS_LABEL.ACTIVE;
   const docLabel = new Map<string, string>(DOCUMENT_TYPES.map((t) => [t.key, t.label]));
   const nextStep =
@@ -195,6 +198,14 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
               )}
             </div>
           </Card>
+
+          {canManageUsers && (
+            <Card title="Kursiyer portalı" sub="Mobil kursiyer erişimi (/kursiyer)">
+              <div className="px-5 pb-5 pt-1">
+                <AccessGrantForm action={grantStudentAccessAction} entityId={s.id} defaultEmail={s.email ?? undefined} existing={s.user} />
+              </div>
+            </Card>
+          )}
 
           {showFinance && (
             <Card>

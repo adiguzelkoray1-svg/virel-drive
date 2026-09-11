@@ -139,11 +139,55 @@ tarih aralığı seçimi · gerçek CSV dışa aktarım (PDF/Excel yok, bkz. aş
 saati, teorik ders sayısı, sınav hakkı, başarı barajı — ekle/düzenle/etkin-pasif) · ders ve
 devam kuralları (6 sayısal ayar) · sınav ve süreç kuralları (5 açma/kapama) — hepsi tek
 formdan kaydediliyor ve `RegulationSetting`/`LicenseClassRule` üzerinden sistem genelinde
-anında etkili oluyor. **Entegrasyonlar artık gerçek bir sayfa** (NetGSM kurs-başına kimlik
-bilgileri, bkz. "Mesajlar hakkında"). Diğer 7 ayar kategorisi (Kurs profili, Kullanıcılar,
-Belge kuralları, Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK, Denetim kaydı) sol menüde
-"Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları yok. ("Kurs profili"nin
-kendisi zaten var ama bu listede değil, ayrı bir üst menü öğesi olarak: `/app/kurs`.)
+anında etkili oluyor. **Entegrasyonlar** (NetGSM kurs-başına kimlik bilgileri, bkz. "Mesajlar
+hakkında") ve **Kullanıcılar ve roller** (bkz. aşağıdaki bölüm) artık gerçek sayfalar. Diğer 6
+ayar kategorisi (Kurs profili, Belge kuralları, Fiyat/ödeme, Mesaj şablonları, Güvenlik/KVKK,
+Denetim kaydı) sol menüde "Yakında" etiketiyle görünür ama tıklanabilir değil — henüz sayfaları
+yok. ("Kurs profili"nin kendisi zaten var ama bu listede değil, ayrı bir üst menü öğesi olarak:
+`/app/kurs`.)
+
+### Kullanıcılar ve roller hakkında
+
+**Gerçek bir üretim boşluğu bulundu: OWNER dışında hiçbir rol hiç giriş yapamıyordu.**
+`instructorFormAction`/`createStudentAction` (Eğitmenler ve Kursiyerler ekleme formları)
+yalnızca `Instructor`/`Student` satırı yazıyor, hiçbir zaman bir `User` (login) oluşturmuyordu —
+yalnızca `prisma/seed.ts` demo verisi için `User` + `Instructor`/`Student`'ı birlikte
+oluşturuyordu. Yani gerçek (seed dışı) kullanımda: bir kurs sahibi yeni bir sekreter, muhasebeci,
+eğitmen ya da kursiyer eklediğinde, o kişi **hiçbir zaman** `/app`, `/egitmen` ya da `/kursiyer`'e
+giriş yapamıyordu — `Permission` matrisinde zaten hazır duran ama hiç kullanılmayan
+`users.manage` yetkisi bunun izini taşıyordu.
+
+**Üç ayrı giriş noktası, tek bir gerekçeyle ayrıldı: aynı bilgiyi iki kere toplamamak.**
+- `/app/ayarlar/kullanicilar` — yalnızca OWNER/MANAGER/SECRETARY/ACCOUNTANT hesabı açar (saf
+  giriş bilgisi, branşa bağlı bir profili yok).
+- Direksiyon eğitmeni/teorik öğretmen girişi **Eğitmenler** sayfasından, ilgili `Instructor`
+  kaydına bağlanır (branş/sınıf zaten orada toplanıyor; ayrıca burada tekrar sormak yerine
+  `Instructor.userId`'yi dolduran bir "Giriş erişimi oluştur" formu eklendi).
+- Kursiyer portalı erişimi de aynı gerekçeyle **Kursiyer detayı**ndan, `Student.userId`'yi
+  dolduran aynı deseni kullanır.
+
+`grantInstructorAccessAction`/`grantStudentAccessAction` (`app/actions/users.ts`) ve paylaşılan
+`AccessGrantForm` bileşeni bu ikisi için ortak; `createUserAction` idari roller için ayrı.
+Üçü de `lib/school.ts::genTempPassword()`'ü yeniden kullanıyor — kurs açarkenki "geçici şifre
+bir kez gösterilir" deseniyle birebir aynı.
+
+**Gerçek bir React/Next hatası burada yakalandı ve düzeltildi.** İlk taslakta üst sayfa
+(`app/app/egitmenler/[id]/page.tsx` vb.) `{instructor.user ? <Statik/> : <AccessGrantForm/>}`
+şeklinde koşullu render ediyordu. Sunucu aksiyonu tamamlanınca Next sayfayı otomatik yeniden
+çekiyor; `instructor.user` artık dolu olduğu için üst bileşen `AccessGrantForm`'u anında
+unmount edip `<Statik/>`'e geçiyor — bu da `AccessGrantForm`'un kendi `useActionState`
+durumundaki (`state.ok`, tek seferlik geçici şifre) bilgiyi hiç gösterilmeden kaybettiriyordu.
+Tarayıcıda gerçekten test edilirken yakalandı (form her seferinde "başarılı" yerine sanki
+hiç gönderilmemiş gibi görünüyordu). Düzeltme: üst bileşen artık `AccessGrantForm`'u hiç
+koşullu değiştirmiyor, bunun yerine `existing` prop'unu geçiyor; bileşenin kendisi önce kendi
+`state.ok`'una, sonra `existing`'e, en son boş forma bakıyor — aynı bileşen örneği yerinde
+kalıyor, üst bileşenin yeniden render olması onu unmount etmiyor.
+
+**Güvenlik korkulukları:** kimse kendi hesabını pasife alamaz; kurstaki etkin son `OWNER`
+pasife alınamaz (aksi halde kursun kullanıcı yönetebilecek hiç kimsesi kalmazdı) — ikisi de
+sunucu tarafında (`toggleUserActiveAction`), yalnızca arayüzde gizlenmiyor. `User.email` global
+benzersiz olduğu için (schema'da `@unique`, kursa özel değil) çakışma kontrolü `createSchoolAction`
+ile birebir aynı desen.
 
 **Süper admin konsolu tamamlandı:** `/admin` altında ayrı bir alan — kurs (kiracı) listesi
 (durum/plan süzgeci, arama, kullanım çubukları) · yeni kurs açma (otomatik slug + OWNER hesabı,
