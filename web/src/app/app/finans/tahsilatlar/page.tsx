@@ -92,6 +92,7 @@ export default async function PaymentsPage({ searchParams }: PageProps<"/app/fin
                   <Badge kind="neutral">{PAYMENT_METHOD_LABEL[p.method] ?? p.method}</Badge>
                   <span className="ml-auto text-[13px] tabular text-text-2">{date(p.receivedAt)}</span>
                   <span className="text-[13px] tabular font-semibold w-[104px] text-right">{money(p.amount)}</span>
+                  <Link href={`/app/finans/makbuz/${p.id}`} className="btn btn-ghost btn-xs" aria-label="Makbuz" title="Makbuz"><Icon name="download" size={14} /></Link>
                 </div>
               );
             })}

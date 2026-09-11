@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
 import { getCertificate } from "@/lib/driving-certificate";
 import { dateLong, fullName } from "@/lib/format";
-import { PrintButton } from "./PrintButton";
+import { PrintButton } from "@/components/PrintButton";
 
 export const metadata: Metadata = { title: "K Sınıfı Sürücü Aday Belgesi" };
 

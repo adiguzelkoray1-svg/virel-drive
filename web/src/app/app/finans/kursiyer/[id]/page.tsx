@@ -135,6 +135,7 @@ export default async function StudentFinancePage({ params, searchParams }: PageP
                       <span className="text-xs text-muted">{date(p.receivedAt)} · {PAYMENT_METHOD_LABEL[p.method] ?? p.method}</span>
                     </span>
                     <span className="ml-auto text-[13px] tabular font-semibold">{money(p.amount)}</span>
+                    <Link href={`/app/finans/makbuz/${p.id}`} className="btn btn-ghost btn-xs" aria-label="Makbuz" title="Makbuz"><Icon name="download" size={14} /></Link>
                     {canWrite && (
                       <form action={deletePaymentAction}>
                         <input type="hidden" name="paymentId" value={p.id} />

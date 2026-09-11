@@ -691,6 +691,24 @@ güncelleyen bir cron olmadan da listeler doğru çalışır.
 modülünden girilir; finans özetinde (aylık/yıllık gider, net durum, gelir-gider grafiği) toplam
 gidere dahil edilir ama gider listesinde ayrı gösterilir.
 
+### Tahsilat makbuzu hakkında
+
+**Rakip analizinden çıkan ikinci küçük kazanım (bkz. "K Sınıfı Sürücü Aday Belgesi hakkında").**
+TABİM'in "tahsilat makbuzu kesimi" özelliğinin karşılığı: `/app/finans/makbuz/[id]` var olan
+bir `Payment` satırını okuyup yazdırılabilir bir makbuz üretir — yeni bir tablo ya da ayrı bir
+sıra numarası sayacı yok, makbuz no `Payment.id`'den türetiliyor (`receiptNo`). Bu, K belgesi
+formuyla aynı deseni ikinci kez kullanıyor (PDF kütüphanesi değil, var olan `@media print` +
+`window.print()`) — o yüzden paylaşılan `PrintButton` bileşeni `@/components/PrintButton`'a
+çıkarıldı, ikisi de aynı kod satırını kullanıyor.
+
+**Tutar yazıyla da yazılıyor — gerçek Türk makbuz geleneği, kozmetik değil.** `lib/format.ts::
+moneyInWords`/`numberToWordsTr` sıfırdan yazıldı ("yüz" tek başınayken "biryüz" değil, "bin" tek
+başınayken "birbin" değil gibi Türkçe sayı okuma kurallarına dikkat edilerek); milyara kadar
+doğru çalıştığı elle test edildi (100 → "yüz", 1000 → "bin", 1234567 → "bir milyon iki yüz otuz
+dört bin beş yüz altmış yedi"). "Fatura" değil bilerek "makbuz" deniyor: KDV/vergi no gibi resmi
+fatura alanları şemada tutulmuyor, bu kapsam dışı bırakıldı — gerçek bir e-Fatura/e-Arşiv
+entegrasyonu ayrı, çok daha büyük bir iştir.
+
 ### Fiyat ve ödeme hakkında
 
 **Yeni bir tablo değil — `LicenseClassRule`'a üç alan.** Belge kuralları/mesaj şablonlarından
