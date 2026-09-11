@@ -1,6 +1,10 @@
 // Durum ve rol sabitleri. Prisma alanları String; etiketler ve rozet tonları burada.
 export type BadgeKind = "success" | "warning" | "danger" | "info" | "brand" | "neutral";
 
+/** MEB'in Özel MTSK Modülü'ne giriş sayfası — üçüncü taraf API'si olmadığı için (bkz.
+ *  "Entegrasyonlar" hakkında notu) gerçek entegrasyon yerine yalnızca hızlı erişim linki. */
+export const MEBBIS_URL = "https://mebbis.meb.gov.tr";
+
 export const ROLES = ["SUPER_ADMIN", "OWNER", "MANAGER", "SECRETARY", "THEORY_TEACHER", "DRIVING_INSTRUCTOR", "ACCOUNTANT", "STUDENT"] as const;
 export type Role = (typeof ROLES)[number];
 export const ROLE_LABEL: Record<Role, string> = {

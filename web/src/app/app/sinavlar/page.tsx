@@ -4,7 +4,7 @@ import { requirePermission } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
 import { Badge, Card, EmptyState, ExamAttempts, PageHeader, PersonAvatar, Tabs } from "@/components/ui";
-import { EXAM_STATUS_LABEL } from "@/lib/constants";
+import { EXAM_STATUS_LABEL, MEBBIS_URL } from "@/lib/constants";
 import { examSummary, attemptInfo } from "@/lib/exam";
 import { date, dateTime, fullName } from "@/lib/format";
 
@@ -30,6 +30,9 @@ export default async function ExamsPage({ searchParams }: PageProps<"/app/sinavl
   return (
     <>
       <PageHeader title="Sınavlar" sub="e-Sınav, direksiyon sınavı, sonuçlar ve haklar">
+        <a href={MEBBIS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">
+          <Icon name="globe" size={15} />MEBBİS&apos;e git
+        </a>
         <Link href="/app/takvim" className="btn btn-secondary btn-sm"><Icon name="calendar" size={15} />Sınav takvimi</Link>
         <Link href="/app/sinavlar/yeni" className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Sınav planla</Link>
       </PageHeader>

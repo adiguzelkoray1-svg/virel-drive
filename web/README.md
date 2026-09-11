@@ -813,6 +813,12 @@ Bu yüzden özellik canlıya alındığında mevcut direksiyon aşamasındaki t�
 "eksik" görünecek — bu bir hata değil, personelin bir kereliğine gerçek tarihleri girmesi
 gereken, beklenen bir geçiş durumu.
 
+**"MEBBİS'e git" düğmesi — entegrasyon değil, yalnızca kısayol.** Kullanıcı "en azından bir
+düğmeyle MEBBİS'in kendi sitesine götürsün" dedi; `MEBBIS_URL` (`lib/constants.ts`) sabiti
+`Ayarlar › Entegrasyonlar` ve `Sınavlar` sayfalarında yeni sekmede `mebbis.meb.gov.tr`'yi açan
+düz bir `<a target="_blank">`. Kimlik bilgisi Virel Drive'a hiç uğramıyor; personel MEBBİS'e
+her zamanki gibi kendi kullanıcı adı/şifresiyle giriyor.
+
 ### Ders formu
 
 Uygunluk sorgusu formu göndermez; `checkAvailabilityAction` doğrudan çağrılır. Sebebi:

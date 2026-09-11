@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Icon } from "@/components/icons";
+import { MEBBIS_URL } from "@/lib/constants";
 import { IntegrationsForm } from "./IntegrationsForm";
 
 export const metadata: Metadata = { title: "Entegrasyonlar · Ayarlar" };
@@ -30,13 +31,18 @@ export default async function IntegrationsPage() {
 
       <div className="card p-5 flex items-start gap-3">
         <Icon name="info" size={17} className="text-muted shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 min-w-0">
           <span className="text-[13px] font-semibold">Resmî sistem entegrasyonları</span>
           <span className="text-[13px] text-text-2 leading-relaxed max-w-[680px]">
             MEBBİS / Özel MTSK modülüne bağlantı yalnızca resmî ve izin verilen bir API bulunduğunda kurulur.
             Böyle bir API bu sürümde yok; Virel Drive sahte bir entegrasyon göstermez — veri aktarımı
-            manuel giriş ve resmî çıktıların elle işlenmesiyle yapılır.
+            manuel giriş ve resmî çıktıların elle işlenmesiyle yapılır. Aşağıdaki düğme yalnızca
+            MEBBİS&apos;in kendi giriş sayfasını yeni sekmede açar; kullanıcı adı/şifrenizi Virel Drive
+            hiçbir zaman görmez ya da saklamaz.
           </span>
+          <a href={MEBBIS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm self-start mt-1">
+            <Icon name="globe" size={15} />MEBBİS&apos;e git
+          </a>
         </div>
       </div>
     </>
