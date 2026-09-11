@@ -308,6 +308,7 @@ export type StudentWhereInput = {
   attendances?: Prisma.AttendanceListRelationFilter
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateListRelationFilter
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanNullableScalarRelationFilter, Prisma.PaymentPlanWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
   messages?: Prisma.MessageLogListRelationFilter
@@ -341,6 +342,7 @@ export type StudentOrderByWithRelationInput = {
   attendances?: Prisma.AttendanceOrderByRelationAggregateInput
   drivingLessons?: Prisma.DrivingLessonOrderByRelationAggregateInput
   exams?: Prisma.ExamOrderByRelationAggregateInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateOrderByRelationAggregateInput
   paymentPlan?: Prisma.PaymentPlanOrderByWithRelationInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   messages?: Prisma.MessageLogOrderByRelationAggregateInput
@@ -377,6 +379,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   attendances?: Prisma.AttendanceListRelationFilter
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateListRelationFilter
   paymentPlan?: Prisma.XOR<Prisma.PaymentPlanNullableScalarRelationFilter, Prisma.PaymentPlanWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
   messages?: Prisma.MessageLogListRelationFilter
@@ -460,6 +463,7 @@ export type StudentCreateInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -491,6 +495,7 @@ export type StudentUncheckedCreateInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -522,6 +527,7 @@ export type StudentUpdateInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -553,6 +559,7 @@ export type StudentUncheckedUpdateInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -847,6 +854,20 @@ export type StudentUpdateOneRequiredWithoutDrivingLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutDrivingLessonsInput, Prisma.StudentUpdateWithoutDrivingLessonsInput>, Prisma.StudentUncheckedUpdateWithoutDrivingLessonsInput>
 }
 
+export type StudentCreateNestedOneWithoutDrivingCandidateCertificatesInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutDrivingCandidateCertificatesInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutDrivingCandidateCertificatesNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutDrivingCandidateCertificatesInput
+  upsert?: Prisma.StudentUpsertWithoutDrivingCandidateCertificatesInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutDrivingCandidateCertificatesInput, Prisma.StudentUpdateWithoutDrivingCandidateCertificatesInput>, Prisma.StudentUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+}
+
 export type StudentCreateNestedOneWithoutExamsInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutExamsInput, Prisma.StudentUncheckedCreateWithoutExamsInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutExamsInput
@@ -929,6 +950,7 @@ export type StudentCreateWithoutSchoolInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -959,6 +981,7 @@ export type StudentUncheckedCreateWithoutSchoolInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1041,6 +1064,7 @@ export type StudentCreateWithoutUserInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1071,6 +1095,7 @@ export type StudentUncheckedCreateWithoutUserInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1117,6 +1142,7 @@ export type StudentUpdateWithoutUserInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1147,6 +1173,7 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -1178,6 +1205,7 @@ export type StudentCreateWithoutLeadInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1208,6 +1236,7 @@ export type StudentUncheckedCreateWithoutLeadInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1254,6 +1283,7 @@ export type StudentUpdateWithoutLeadInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1284,6 +1314,7 @@ export type StudentUncheckedUpdateWithoutLeadInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -1313,6 +1344,7 @@ export type StudentCreateWithoutDocumentsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1343,6 +1375,7 @@ export type StudentUncheckedCreateWithoutDocumentsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1389,6 +1422,7 @@ export type StudentUpdateWithoutDocumentsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1419,6 +1453,7 @@ export type StudentUncheckedUpdateWithoutDocumentsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -1449,6 +1484,7 @@ export type StudentCreateWithoutAttendancesInput = {
   documents?: Prisma.DocumentCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1479,6 +1515,7 @@ export type StudentUncheckedCreateWithoutAttendancesInput = {
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1525,6 +1562,7 @@ export type StudentUpdateWithoutAttendancesInput = {
   documents?: Prisma.DocumentUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1555,6 +1593,7 @@ export type StudentUncheckedUpdateWithoutAttendancesInput = {
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -1585,6 +1624,7 @@ export type StudentCreateWithoutDrivingLessonsInput = {
   documents?: Prisma.DocumentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1615,6 +1655,7 @@ export type StudentUncheckedCreateWithoutDrivingLessonsInput = {
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1661,6 +1702,7 @@ export type StudentUpdateWithoutDrivingLessonsInput = {
   documents?: Prisma.DocumentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1690,6 +1732,147 @@ export type StudentUncheckedUpdateWithoutDrivingLessonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
+  paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
+  messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
+  lead?: Prisma.LeadUncheckedUpdateOneWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutDrivingCandidateCertificatesInput = {
+  id?: string
+  fileNo?: string | null
+  firstName: string
+  lastName: string
+  phone: string
+  email?: string | null
+  nationalId?: string | null
+  birthDate?: Date | string | null
+  address?: string | null
+  photoUrl?: string | null
+  licenseClass: string
+  stage?: string
+  status?: string
+  registeredAt?: Date | string
+  graduatedAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutStudentsInput
+  user?: Prisma.UserCreateNestedOneWithoutStudentInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
+  exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
+  messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
+  lead?: Prisma.LeadCreateNestedOneWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutDrivingCandidateCertificatesInput = {
+  id?: string
+  schoolId: string
+  userId?: string | null
+  fileNo?: string | null
+  firstName: string
+  lastName: string
+  phone: string
+  email?: string | null
+  nationalId?: string | null
+  birthDate?: Date | string | null
+  address?: string | null
+  photoUrl?: string | null
+  licenseClass: string
+  stage?: string
+  status?: string
+  registeredAt?: Date | string
+  graduatedAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
+  messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
+  lead?: Prisma.LeadUncheckedCreateNestedOneWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutDrivingCandidateCertificatesInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+}
+
+export type StudentUpsertWithoutDrivingCandidateCertificatesInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutDrivingCandidateCertificatesInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutDrivingCandidateCertificatesInput, Prisma.StudentUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+}
+
+export type StudentUpdateWithoutDrivingCandidateCertificatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseClass?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  graduatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutStudentsNestedInput
+  user?: Prisma.UserUpdateOneWithoutStudentNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
+  messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
+  lead?: Prisma.LeadUpdateOneWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutDrivingCandidateCertificatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  schoolId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseClass?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  graduatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -1721,6 +1904,7 @@ export type StudentCreateWithoutExamsInput = {
   documents?: Prisma.DocumentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
@@ -1751,6 +1935,7 @@ export type StudentUncheckedCreateWithoutExamsInput = {
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
@@ -1797,6 +1982,7 @@ export type StudentUpdateWithoutExamsInput = {
   documents?: Prisma.DocumentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -1827,6 +2013,7 @@ export type StudentUncheckedUpdateWithoutExamsInput = {
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -1858,6 +2045,7 @@ export type StudentCreateWithoutPaymentPlanInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadCreateNestedOneWithoutStudentInput
@@ -1888,6 +2076,7 @@ export type StudentUncheckedCreateWithoutPaymentPlanInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadUncheckedCreateNestedOneWithoutStudentInput
@@ -1934,6 +2123,7 @@ export type StudentUpdateWithoutPaymentPlanInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUpdateOneWithoutStudentNestedInput
@@ -1964,6 +2154,7 @@ export type StudentUncheckedUpdateWithoutPaymentPlanInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUncheckedUpdateOneWithoutStudentNestedInput
@@ -1994,6 +2185,7 @@ export type StudentCreateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   messages?: Prisma.MessageLogCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadCreateNestedOneWithoutStudentInput
@@ -2024,6 +2216,7 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadUncheckedCreateNestedOneWithoutStudentInput
@@ -2070,6 +2263,7 @@ export type StudentUpdateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUpdateOneWithoutStudentNestedInput
@@ -2100,6 +2294,7 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUncheckedUpdateOneWithoutStudentNestedInput
@@ -2130,6 +2325,7 @@ export type StudentCreateWithoutMessagesInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadCreateNestedOneWithoutStudentInput
@@ -2160,6 +2356,7 @@ export type StudentUncheckedCreateWithoutMessagesInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutStudentInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutStudentInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutStudentInput
   paymentPlan?: Prisma.PaymentPlanUncheckedCreateNestedOneWithoutStudentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutStudentInput
   lead?: Prisma.LeadUncheckedCreateNestedOneWithoutStudentInput
@@ -2206,6 +2403,7 @@ export type StudentUpdateWithoutMessagesInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUpdateOneWithoutStudentNestedInput
@@ -2236,6 +2434,7 @@ export type StudentUncheckedUpdateWithoutMessagesInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   lead?: Prisma.LeadUncheckedUpdateOneWithoutStudentNestedInput
@@ -2287,6 +2486,7 @@ export type StudentUpdateWithoutSchoolInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUpdateManyWithoutStudentNestedInput
@@ -2317,6 +2517,7 @@ export type StudentUncheckedUpdateWithoutSchoolInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutStudentNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutStudentNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutStudentNestedInput
   paymentPlan?: Prisma.PaymentPlanUncheckedUpdateOneWithoutStudentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutStudentNestedInput
   messages?: Prisma.MessageLogUncheckedUpdateManyWithoutStudentNestedInput
@@ -2355,6 +2556,7 @@ export type StudentCountOutputType = {
   attendances: number
   drivingLessons: number
   exams: number
+  drivingCandidateCertificates: number
   payments: number
   messages: number
 }
@@ -2364,6 +2566,7 @@ export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   attendances?: boolean | StudentCountOutputTypeCountAttendancesArgs
   drivingLessons?: boolean | StudentCountOutputTypeCountDrivingLessonsArgs
   exams?: boolean | StudentCountOutputTypeCountExamsArgs
+  drivingCandidateCertificates?: boolean | StudentCountOutputTypeCountDrivingCandidateCertificatesArgs
   payments?: boolean | StudentCountOutputTypeCountPaymentsArgs
   messages?: boolean | StudentCountOutputTypeCountMessagesArgs
 }
@@ -2409,6 +2612,13 @@ export type StudentCountOutputTypeCountExamsArgs<ExtArgs extends runtime.Types.E
 /**
  * StudentCountOutputType without action
  */
+export type StudentCountOutputTypeCountDrivingCandidateCertificatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DrivingCandidateCertificateWhereInput
+}
+
+/**
+ * StudentCountOutputType without action
+ */
 export type StudentCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PaymentWhereInput
 }
@@ -2448,6 +2658,7 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   attendances?: boolean | Prisma.Student$attendancesArgs<ExtArgs>
   drivingLessons?: boolean | Prisma.Student$drivingLessonsArgs<ExtArgs>
   exams?: boolean | Prisma.Student$examsArgs<ExtArgs>
+  drivingCandidateCertificates?: boolean | Prisma.Student$drivingCandidateCertificatesArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.Student$paymentPlanArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
   messages?: boolean | Prisma.Student$messagesArgs<ExtArgs>
@@ -2536,6 +2747,7 @@ export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   attendances?: boolean | Prisma.Student$attendancesArgs<ExtArgs>
   drivingLessons?: boolean | Prisma.Student$drivingLessonsArgs<ExtArgs>
   exams?: boolean | Prisma.Student$examsArgs<ExtArgs>
+  drivingCandidateCertificates?: boolean | Prisma.Student$drivingCandidateCertificatesArgs<ExtArgs>
   paymentPlan?: boolean | Prisma.Student$paymentPlanArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
   messages?: boolean | Prisma.Student$messagesArgs<ExtArgs>
@@ -2560,6 +2772,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     attendances: Prisma.$AttendancePayload<ExtArgs>[]
     drivingLessons: Prisma.$DrivingLessonPayload<ExtArgs>[]
     exams: Prisma.$ExamPayload<ExtArgs>[]
+    drivingCandidateCertificates: Prisma.$DrivingCandidateCertificatePayload<ExtArgs>[]
     paymentPlan: Prisma.$PaymentPlanPayload<ExtArgs> | null
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     messages: Prisma.$MessageLogPayload<ExtArgs>[]
@@ -2986,6 +3199,7 @@ export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.
   attendances<T extends Prisma.Student$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   drivingLessons<T extends Prisma.Student$drivingLessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$drivingLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DrivingLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exams<T extends Prisma.Student$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  drivingCandidateCertificates<T extends Prisma.Student$drivingCandidateCertificatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$drivingCandidateCertificatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DrivingCandidateCertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paymentPlan<T extends Prisma.Student$paymentPlanArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$paymentPlanArgs<ExtArgs>>): Prisma.Prisma__PaymentPlanClient<runtime.Types.Result.GetResult<Prisma.$PaymentPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.Student$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.Student$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3552,6 +3766,30 @@ export type Student$examsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.ExamScalarFieldEnum | Prisma.ExamScalarFieldEnum[]
+}
+
+/**
+ * Student.drivingCandidateCertificates
+ */
+export type Student$drivingCandidateCertificatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DrivingCandidateCertificate
+   */
+  select?: Prisma.DrivingCandidateCertificateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DrivingCandidateCertificate
+   */
+  omit?: Prisma.DrivingCandidateCertificateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DrivingCandidateCertificateInclude<ExtArgs> | null
+  where?: Prisma.DrivingCandidateCertificateWhereInput
+  orderBy?: Prisma.DrivingCandidateCertificateOrderByWithRelationInput | Prisma.DrivingCandidateCertificateOrderByWithRelationInput[]
+  cursor?: Prisma.DrivingCandidateCertificateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DrivingCandidateCertificateScalarFieldEnum | Prisma.DrivingCandidateCertificateScalarFieldEnum[]
 }
 
 /**

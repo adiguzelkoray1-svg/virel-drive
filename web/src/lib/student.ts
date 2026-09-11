@@ -3,6 +3,7 @@ import { prisma } from "./prisma";
 import { STAGE_WEIGHT, SKILLS, type StudentStage } from "./constants";
 import { getRegulation, regInt } from "./regulation";
 import { listDocumentTypeRules } from "./document-types";
+import { certificateStatus, K_CERT_EXEMPT_CLASS } from "./driving-certificate";
 
 export type TimelineStep = { key: string; title: string; date: string; sub?: string; state: "done" | "now" | "todo" };
 
@@ -68,7 +69,7 @@ export async function getStudentDetail(schoolId: string, studentId: string) {
   });
   if (!student) return null;
 
-  const [lessons, attendance, rule, reg] = await Promise.all([
+  const [lessons, attendance, rule, reg, certificates] = await Promise.all([
     prisma.drivingLesson.findMany({
       where: { schoolId, studentId },
       include: { instructor: true, vehicle: true, ratings: true },
@@ -77,6 +78,7 @@ export async function getStudentDetail(schoolId: string, studentId: string) {
     prisma.attendance.findMany({ where: { schoolId, studentId }, include: { theoryLesson: true } }),
     prisma.licenseClassRule.findFirst({ where: { schoolId, code: student.licenseClass } }),
     getRegulation(schoolId),
+    prisma.drivingCandidateCertificate.findMany({ where: { schoolId, studentId }, orderBy: { startedAt: "desc" } }),
   ]);
 
   const minutes = (l: { startsAt: Date; endsAt: Date }) => (l.endsAt.getTime() - l.startsAt.getTime()) / 60000;
@@ -104,6 +106,14 @@ export async function getStudentDetail(schoolId: string, studentId: string) {
   const etestPassed = etest.find((e) => e.result === "PASSED");
   const drivingPassed = drivingExams.find((e) => e.result === "PASSED");
   const attemptsAllowed = rule?.examAttempts ?? 4;
+
+  // K Sınıfı Sürücü Aday Belgesi — en son düzenlenen dönem ve o dönemde kullanılan hak sayısı.
+  const latestCert = certificates[0] ?? null;
+  const kCertAttemptsUsed = latestCert
+    ? drivingExams.filter((e) => e.status === "DONE" && (e.scheduledAt ?? e.createdAt) >= latestCert.startedAt).length
+    : 0;
+  const kCert = certificateStatus(latestCert, kCertAttemptsUsed);
+  const kCertExempt = student.licenseClass === K_CERT_EXEMPT_CLASS;
 
   const docsOk = student.documents.filter((d) => d.status === "OK").length;
   const docsTotal = student.documents.length;
@@ -141,6 +151,7 @@ export async function getStudentDetail(schoolId: string, studentId: string) {
     skillScores, skillAverage,
     etest, drivingExams, etestPassed, drivingPassed, attemptsAllowed,
     docsOk, docsTotal,
+    certificates, latestCert, kCert, kCertExempt,
     payment: { total, paid, rest: total - paid, percent: total ? Math.round((paid / total) * 100) : 0, installments: inst, overdue, nextDue },
     overallPercent, timeline,
   };

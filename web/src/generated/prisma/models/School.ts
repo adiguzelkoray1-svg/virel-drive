@@ -399,6 +399,7 @@ export type SchoolWhereInput = {
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   skillRatings?: Prisma.SkillRatingListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
   paymentPlans?: Prisma.PaymentPlanListRelationFilter
   installments?: Prisma.InstallmentListRelationFilter
@@ -451,6 +452,7 @@ export type SchoolOrderByWithRelationInput = {
   drivingLessons?: Prisma.DrivingLessonOrderByRelationAggregateInput
   skillRatings?: Prisma.SkillRatingOrderByRelationAggregateInput
   exams?: Prisma.ExamOrderByRelationAggregateInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateOrderByRelationAggregateInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
   paymentPlans?: Prisma.PaymentPlanOrderByRelationAggregateInput
   installments?: Prisma.InstallmentOrderByRelationAggregateInput
@@ -506,6 +508,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   drivingLessons?: Prisma.DrivingLessonListRelationFilter
   skillRatings?: Prisma.SkillRatingListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
   paymentPlans?: Prisma.PaymentPlanListRelationFilter
   installments?: Prisma.InstallmentListRelationFilter
@@ -624,6 +627,7 @@ export type SchoolCreateInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -676,6 +680,7 @@ export type SchoolUncheckedCreateInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -728,6 +733,7 @@ export type SchoolUpdateInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -780,6 +786,7 @@ export type SchoolUncheckedUpdateInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1168,6 +1175,20 @@ export type SchoolUpdateOneRequiredWithoutSkillRatingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutSkillRatingsInput, Prisma.SchoolUpdateWithoutSkillRatingsInput>, Prisma.SchoolUncheckedUpdateWithoutSkillRatingsInput>
 }
 
+export type SchoolCreateNestedOneWithoutDrivingCandidateCertificatesInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDrivingCandidateCertificatesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutDrivingCandidateCertificatesNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDrivingCandidateCertificatesInput
+  upsert?: Prisma.SchoolUpsertWithoutDrivingCandidateCertificatesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUpdateWithoutDrivingCandidateCertificatesInput>, Prisma.SchoolUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+}
+
 export type SchoolCreateNestedOneWithoutExamsInput = {
   create?: Prisma.XOR<Prisma.SchoolCreateWithoutExamsInput, Prisma.SchoolUncheckedCreateWithoutExamsInput>
   connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutExamsInput
@@ -1375,6 +1396,7 @@ export type SchoolCreateWithoutUsersInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -1426,6 +1448,7 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -1493,6 +1516,7 @@ export type SchoolUpdateWithoutUsersInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -1544,6 +1568,7 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1595,6 +1620,7 @@ export type SchoolCreateWithoutStudentsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -1646,6 +1672,7 @@ export type SchoolUncheckedCreateWithoutStudentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -1713,6 +1740,7 @@ export type SchoolUpdateWithoutStudentsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -1764,6 +1792,7 @@ export type SchoolUncheckedUpdateWithoutStudentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1815,6 +1844,7 @@ export type SchoolCreateWithoutLeadsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -1866,6 +1896,7 @@ export type SchoolUncheckedCreateWithoutLeadsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -1933,6 +1964,7 @@ export type SchoolUpdateWithoutLeadsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -1984,6 +2016,7 @@ export type SchoolUncheckedUpdateWithoutLeadsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2036,6 +2069,7 @@ export type SchoolCreateWithoutDocumentsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentCreateNestedManyWithoutSchoolInput
@@ -2087,6 +2121,7 @@ export type SchoolUncheckedCreateWithoutDocumentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2154,6 +2189,7 @@ export type SchoolUpdateWithoutDocumentsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutSchoolNestedInput
@@ -2205,6 +2241,7 @@ export type SchoolUncheckedUpdateWithoutDocumentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2255,6 +2292,7 @@ export type SchoolCreateWithoutInstructorsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -2306,6 +2344,7 @@ export type SchoolUncheckedCreateWithoutInstructorsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2373,6 +2412,7 @@ export type SchoolUpdateWithoutInstructorsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -2424,6 +2464,7 @@ export type SchoolUncheckedUpdateWithoutInstructorsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2475,6 +2516,7 @@ export type SchoolCreateWithoutVehiclesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -2526,6 +2568,7 @@ export type SchoolUncheckedCreateWithoutVehiclesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2593,6 +2636,7 @@ export type SchoolUpdateWithoutVehiclesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -2644,6 +2688,7 @@ export type SchoolUncheckedUpdateWithoutVehiclesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2695,6 +2740,7 @@ export type SchoolCreateWithoutVehicleCostsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -2746,6 +2792,7 @@ export type SchoolUncheckedCreateWithoutVehicleCostsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2813,6 +2860,7 @@ export type SchoolUpdateWithoutVehicleCostsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -2864,6 +2912,7 @@ export type SchoolUncheckedUpdateWithoutVehicleCostsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2915,6 +2964,7 @@ export type SchoolCreateWithoutTheoryLessonsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -2966,6 +3016,7 @@ export type SchoolUncheckedCreateWithoutTheoryLessonsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3033,6 +3084,7 @@ export type SchoolUpdateWithoutTheoryLessonsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -3084,6 +3136,7 @@ export type SchoolUncheckedUpdateWithoutTheoryLessonsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3135,6 +3188,7 @@ export type SchoolCreateWithoutAttendancesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -3186,6 +3240,7 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3253,6 +3308,7 @@ export type SchoolUpdateWithoutAttendancesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -3304,6 +3360,7 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3355,6 +3412,7 @@ export type SchoolCreateWithoutDrivingLessonsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -3406,6 +3464,7 @@ export type SchoolUncheckedCreateWithoutDrivingLessonsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3473,6 +3532,7 @@ export type SchoolUpdateWithoutDrivingLessonsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -3524,6 +3584,7 @@ export type SchoolUncheckedUpdateWithoutDrivingLessonsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3575,6 +3636,7 @@ export type SchoolCreateWithoutSkillRatingsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -3626,6 +3688,7 @@ export type SchoolUncheckedCreateWithoutSkillRatingsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3693,6 +3756,7 @@ export type SchoolUpdateWithoutSkillRatingsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -3743,6 +3807,231 @@ export type SchoolUncheckedUpdateWithoutSkillRatingsInput = {
   theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
+  installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutSchoolNestedInput
+  messages?: Prisma.MessageLogUncheckedUpdateManyWithoutSchoolNestedInput
+  classRules?: Prisma.LicenseClassRuleUncheckedUpdateManyWithoutSchoolNestedInput
+  documentTypeRules?: Prisma.DocumentTypeRuleUncheckedUpdateManyWithoutSchoolNestedInput
+  messageTemplateRules?: Prisma.MessageTemplateRuleUncheckedUpdateManyWithoutSchoolNestedInput
+  regulations?: Prisma.RegulationSettingUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutDrivingCandidateCertificatesInput = {
+  id?: string
+  name: string
+  slug: string
+  city?: string | null
+  district?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  taxNumber?: string | null
+  taxOffice?: string | null
+  mebCode?: string | null
+  timezone?: string
+  currency?: string
+  status?: string
+  plan?: string
+  trialEndsAt?: Date | string | null
+  userLimit?: number
+  studentLimit?: number
+  approvedAt?: Date | string | null
+  kvkkAcceptedAt?: Date | string | null
+  settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  students?: Prisma.StudentCreateNestedManyWithoutSchoolInput
+  leads?: Prisma.LeadCreateNestedManyWithoutSchoolInput
+  instructors?: Prisma.InstructorCreateNestedManyWithoutSchoolInput
+  vehicles?: Prisma.VehicleCreateNestedManyWithoutSchoolInput
+  vehicleCosts?: Prisma.VehicleCostCreateNestedManyWithoutSchoolInput
+  theoryLessons?: Prisma.TheoryLessonCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
+  skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
+  paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
+  installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutSchoolInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutSchoolInput
+  messages?: Prisma.MessageLogCreateNestedManyWithoutSchoolInput
+  classRules?: Prisma.LicenseClassRuleCreateNestedManyWithoutSchoolInput
+  documentTypeRules?: Prisma.DocumentTypeRuleCreateNestedManyWithoutSchoolInput
+  messageTemplateRules?: Prisma.MessageTemplateRuleCreateNestedManyWithoutSchoolInput
+  regulations?: Prisma.RegulationSettingCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutDrivingCandidateCertificatesInput = {
+  id?: string
+  name: string
+  slug: string
+  city?: string | null
+  district?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  taxNumber?: string | null
+  taxOffice?: string | null
+  mebCode?: string | null
+  timezone?: string
+  currency?: string
+  status?: string
+  plan?: string
+  trialEndsAt?: Date | string | null
+  userLimit?: number
+  studentLimit?: number
+  approvedAt?: Date | string | null
+  kvkkAcceptedAt?: Date | string | null
+  settings?: string | null
+  netgsmUsername?: string | null
+  netgsmPassword?: string | null
+  netgsmHeader?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutSchoolInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutSchoolInput
+  instructors?: Prisma.InstructorUncheckedCreateNestedManyWithoutSchoolInput
+  vehicles?: Prisma.VehicleUncheckedCreateNestedManyWithoutSchoolInput
+  vehicleCosts?: Prisma.VehicleCostUncheckedCreateNestedManyWithoutSchoolInput
+  theoryLessons?: Prisma.TheoryLessonUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
+  skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
+  paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
+  installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutSchoolInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutSchoolInput
+  messages?: Prisma.MessageLogUncheckedCreateNestedManyWithoutSchoolInput
+  classRules?: Prisma.LicenseClassRuleUncheckedCreateNestedManyWithoutSchoolInput
+  documentTypeRules?: Prisma.DocumentTypeRuleUncheckedCreateNestedManyWithoutSchoolInput
+  messageTemplateRules?: Prisma.MessageTemplateRuleUncheckedCreateNestedManyWithoutSchoolInput
+  regulations?: Prisma.RegulationSettingUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutDrivingCandidateCertificatesInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+}
+
+export type SchoolUpsertWithoutDrivingCandidateCertificatesInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedCreateWithoutDrivingCandidateCertificatesInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutDrivingCandidateCertificatesInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutDrivingCandidateCertificatesInput, Prisma.SchoolUncheckedUpdateWithoutDrivingCandidateCertificatesInput>
+}
+
+export type SchoolUpdateWithoutDrivingCandidateCertificatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxOffice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  studentLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  students?: Prisma.StudentUpdateManyWithoutSchoolNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutSchoolNestedInput
+  instructors?: Prisma.InstructorUpdateManyWithoutSchoolNestedInput
+  vehicles?: Prisma.VehicleUpdateManyWithoutSchoolNestedInput
+  vehicleCosts?: Prisma.VehicleCostUpdateManyWithoutSchoolNestedInput
+  theoryLessons?: Prisma.TheoryLessonUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
+  skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
+  paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
+  installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutSchoolNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutSchoolNestedInput
+  messages?: Prisma.MessageLogUpdateManyWithoutSchoolNestedInput
+  classRules?: Prisma.LicenseClassRuleUpdateManyWithoutSchoolNestedInput
+  documentTypeRules?: Prisma.DocumentTypeRuleUpdateManyWithoutSchoolNestedInput
+  messageTemplateRules?: Prisma.MessageTemplateRuleUpdateManyWithoutSchoolNestedInput
+  regulations?: Prisma.RegulationSettingUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutDrivingCandidateCertificatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taxOffice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mebCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  trialEndsAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  userLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  studentLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  kvkkAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settings?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  netgsmHeader?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutSchoolNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutSchoolNestedInput
+  instructors?: Prisma.InstructorUncheckedUpdateManyWithoutSchoolNestedInput
+  vehicles?: Prisma.VehicleUncheckedUpdateManyWithoutSchoolNestedInput
+  vehicleCosts?: Prisma.VehicleCostUncheckedUpdateManyWithoutSchoolNestedInput
+  theoryLessons?: Prisma.TheoryLessonUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
+  skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3795,6 +4084,7 @@ export type SchoolCreateWithoutExamsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -3846,6 +4136,7 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3913,6 +4204,7 @@ export type SchoolUpdateWithoutExamsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -3964,6 +4256,7 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4016,6 +4309,7 @@ export type SchoolCreateWithoutPaymentPlansInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentCreateNestedManyWithoutSchoolInput
@@ -4067,6 +4361,7 @@ export type SchoolUncheckedCreateWithoutPaymentPlansInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4134,6 +4429,7 @@ export type SchoolUpdateWithoutPaymentPlansInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutSchoolNestedInput
@@ -4185,6 +4481,7 @@ export type SchoolUncheckedUpdateWithoutPaymentPlansInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4236,6 +4533,7 @@ export type SchoolCreateWithoutInstallmentsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentCreateNestedManyWithoutSchoolInput
@@ -4287,6 +4585,7 @@ export type SchoolUncheckedCreateWithoutInstallmentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4354,6 +4653,7 @@ export type SchoolUpdateWithoutInstallmentsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutSchoolNestedInput
@@ -4405,6 +4705,7 @@ export type SchoolUncheckedUpdateWithoutInstallmentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4456,6 +4757,7 @@ export type SchoolCreateWithoutPaymentsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -4507,6 +4809,7 @@ export type SchoolUncheckedCreateWithoutPaymentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4574,6 +4877,7 @@ export type SchoolUpdateWithoutPaymentsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -4625,6 +4929,7 @@ export type SchoolUncheckedUpdateWithoutPaymentsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4676,6 +4981,7 @@ export type SchoolCreateWithoutExpensesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -4727,6 +5033,7 @@ export type SchoolUncheckedCreateWithoutExpensesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4794,6 +5101,7 @@ export type SchoolUpdateWithoutExpensesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -4845,6 +5153,7 @@ export type SchoolUncheckedUpdateWithoutExpensesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4896,6 +5205,7 @@ export type SchoolCreateWithoutMessagesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -4947,6 +5257,7 @@ export type SchoolUncheckedCreateWithoutMessagesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5014,6 +5325,7 @@ export type SchoolUpdateWithoutMessagesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -5065,6 +5377,7 @@ export type SchoolUncheckedUpdateWithoutMessagesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5116,6 +5429,7 @@ export type SchoolCreateWithoutClassRulesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -5167,6 +5481,7 @@ export type SchoolUncheckedCreateWithoutClassRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5234,6 +5549,7 @@ export type SchoolUpdateWithoutClassRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -5285,6 +5601,7 @@ export type SchoolUncheckedUpdateWithoutClassRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5336,6 +5653,7 @@ export type SchoolCreateWithoutDocumentTypeRulesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -5387,6 +5705,7 @@ export type SchoolUncheckedCreateWithoutDocumentTypeRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5454,6 +5773,7 @@ export type SchoolUpdateWithoutDocumentTypeRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -5505,6 +5825,7 @@ export type SchoolUncheckedUpdateWithoutDocumentTypeRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5556,6 +5877,7 @@ export type SchoolCreateWithoutMessageTemplateRulesInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -5607,6 +5929,7 @@ export type SchoolUncheckedCreateWithoutMessageTemplateRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5674,6 +5997,7 @@ export type SchoolUpdateWithoutMessageTemplateRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -5725,6 +6049,7 @@ export type SchoolUncheckedUpdateWithoutMessageTemplateRulesInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5776,6 +6101,7 @@ export type SchoolCreateWithoutRegulationsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -5827,6 +6153,7 @@ export type SchoolUncheckedCreateWithoutRegulationsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5894,6 +6221,7 @@ export type SchoolUpdateWithoutRegulationsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -5945,6 +6273,7 @@ export type SchoolUncheckedUpdateWithoutRegulationsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5996,6 +6325,7 @@ export type SchoolCreateWithoutPaymentLinksInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -6047,6 +6377,7 @@ export type SchoolUncheckedCreateWithoutPaymentLinksInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6114,6 +6445,7 @@ export type SchoolUpdateWithoutPaymentLinksInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -6165,6 +6497,7 @@ export type SchoolUncheckedUpdateWithoutPaymentLinksInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6216,6 +6549,7 @@ export type SchoolCreateWithoutAuditLogsInput = {
   drivingLessons?: Prisma.DrivingLessonCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentCreateNestedManyWithoutSchoolInput
@@ -6267,6 +6601,7 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedCreateNestedManyWithoutSchoolInput
   skillRatings?: Prisma.SkillRatingUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedCreateNestedManyWithoutSchoolInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutSchoolInput
   paymentPlans?: Prisma.PaymentPlanUncheckedCreateNestedManyWithoutSchoolInput
   installments?: Prisma.InstallmentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6334,6 +6669,7 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   drivingLessons?: Prisma.DrivingLessonUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUpdateManyWithoutSchoolNestedInput
@@ -6385,6 +6721,7 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   drivingLessons?: Prisma.DrivingLessonUncheckedUpdateManyWithoutSchoolNestedInput
   skillRatings?: Prisma.SkillRatingUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  drivingCandidateCertificates?: Prisma.DrivingCandidateCertificateUncheckedUpdateManyWithoutSchoolNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutSchoolNestedInput
   paymentPlans?: Prisma.PaymentPlanUncheckedUpdateManyWithoutSchoolNestedInput
   installments?: Prisma.InstallmentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6415,6 +6752,7 @@ export type SchoolCountOutputType = {
   drivingLessons: number
   skillRatings: number
   exams: number
+  drivingCandidateCertificates: number
   documents: number
   paymentPlans: number
   installments: number
@@ -6441,6 +6779,7 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   drivingLessons?: boolean | SchoolCountOutputTypeCountDrivingLessonsArgs
   skillRatings?: boolean | SchoolCountOutputTypeCountSkillRatingsArgs
   exams?: boolean | SchoolCountOutputTypeCountExamsArgs
+  drivingCandidateCertificates?: boolean | SchoolCountOutputTypeCountDrivingCandidateCertificatesArgs
   documents?: boolean | SchoolCountOutputTypeCountDocumentsArgs
   paymentPlans?: boolean | SchoolCountOutputTypeCountPaymentPlansArgs
   installments?: boolean | SchoolCountOutputTypeCountInstallmentsArgs
@@ -6540,6 +6879,13 @@ export type SchoolCountOutputTypeCountSkillRatingsArgs<ExtArgs extends runtime.T
  */
 export type SchoolCountOutputTypeCountExamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ExamWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountDrivingCandidateCertificatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DrivingCandidateCertificateWhereInput
 }
 
 /**
@@ -6665,6 +7011,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   drivingLessons?: boolean | Prisma.School$drivingLessonsArgs<ExtArgs>
   skillRatings?: boolean | Prisma.School$skillRatingsArgs<ExtArgs>
   exams?: boolean | Prisma.School$examsArgs<ExtArgs>
+  drivingCandidateCertificates?: boolean | Prisma.School$drivingCandidateCertificatesArgs<ExtArgs>
   documents?: boolean | Prisma.School$documentsArgs<ExtArgs>
   paymentPlans?: boolean | Prisma.School$paymentPlansArgs<ExtArgs>
   installments?: boolean | Prisma.School$installmentsArgs<ExtArgs>
@@ -6780,6 +7127,7 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   drivingLessons?: boolean | Prisma.School$drivingLessonsArgs<ExtArgs>
   skillRatings?: boolean | Prisma.School$skillRatingsArgs<ExtArgs>
   exams?: boolean | Prisma.School$examsArgs<ExtArgs>
+  drivingCandidateCertificates?: boolean | Prisma.School$drivingCandidateCertificatesArgs<ExtArgs>
   documents?: boolean | Prisma.School$documentsArgs<ExtArgs>
   paymentPlans?: boolean | Prisma.School$paymentPlansArgs<ExtArgs>
   installments?: boolean | Prisma.School$installmentsArgs<ExtArgs>
@@ -6811,6 +7159,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     drivingLessons: Prisma.$DrivingLessonPayload<ExtArgs>[]
     skillRatings: Prisma.$SkillRatingPayload<ExtArgs>[]
     exams: Prisma.$ExamPayload<ExtArgs>[]
+    drivingCandidateCertificates: Prisma.$DrivingCandidateCertificatePayload<ExtArgs>[]
     documents: Prisma.$DocumentPayload<ExtArgs>[]
     paymentPlans: Prisma.$PaymentPlanPayload<ExtArgs>[]
     installments: Prisma.$InstallmentPayload<ExtArgs>[]
@@ -7256,6 +7605,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   drivingLessons<T extends Prisma.School$drivingLessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$drivingLessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DrivingLessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   skillRatings<T extends Prisma.School$skillRatingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$skillRatingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SkillRatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exams<T extends Prisma.School$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  drivingCandidateCertificates<T extends Prisma.School$drivingCandidateCertificatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$drivingCandidateCertificatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DrivingCandidateCertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documents<T extends Prisma.School$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paymentPlans<T extends Prisma.School$paymentPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$paymentPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   installments<T extends Prisma.School$installmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$installmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InstallmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7977,6 +8327,30 @@ export type School$examsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ExamScalarFieldEnum | Prisma.ExamScalarFieldEnum[]
+}
+
+/**
+ * School.drivingCandidateCertificates
+ */
+export type School$drivingCandidateCertificatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DrivingCandidateCertificate
+   */
+  select?: Prisma.DrivingCandidateCertificateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DrivingCandidateCertificate
+   */
+  omit?: Prisma.DrivingCandidateCertificateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DrivingCandidateCertificateInclude<ExtArgs> | null
+  where?: Prisma.DrivingCandidateCertificateWhereInput
+  orderBy?: Prisma.DrivingCandidateCertificateOrderByWithRelationInput | Prisma.DrivingCandidateCertificateOrderByWithRelationInput[]
+  cursor?: Prisma.DrivingCandidateCertificateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DrivingCandidateCertificateScalarFieldEnum | Prisma.DrivingCandidateCertificateScalarFieldEnum[]
 }
 
 /**

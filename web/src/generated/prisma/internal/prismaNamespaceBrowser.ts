@@ -63,6 +63,7 @@ export const ModelName = {
   Attendance: 'Attendance',
   DrivingLesson: 'DrivingLesson',
   SkillRating: 'SkillRating',
+  DrivingCandidateCertificate: 'DrivingCandidateCertificate',
   Exam: 'Exam',
   PaymentPlan: 'PaymentPlan',
   Installment: 'Installment',
@@ -326,6 +327,18 @@ export const SkillRatingScalarFieldEnum = {
 } as const
 
 export type SkillRatingScalarFieldEnum = (typeof SkillRatingScalarFieldEnum)[keyof typeof SkillRatingScalarFieldEnum]
+
+
+export const DrivingCandidateCertificateScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DrivingCandidateCertificateScalarFieldEnum = (typeof DrivingCandidateCertificateScalarFieldEnum)[keyof typeof DrivingCandidateCertificateScalarFieldEnum]
 
 
 export const ExamScalarFieldEnum = {

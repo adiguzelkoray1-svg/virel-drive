@@ -1,6 +1,7 @@
 import "server-only";
 import { prisma } from "./prisma";
 import { getRegulation, regInt } from "./regulation";
+import { countCertificatesNeedingAttention } from "./driving-certificate";
 
 export const startOfDay = (d = new Date()) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
 export const endOfDay = (d = new Date()) => { const x = new Date(d); x.setHours(23, 59, 59, 999); return x; };
@@ -110,6 +111,13 @@ export async function operationalAlerts(schoolId: string): Promise<Alert[]> {
       const days = Math.max(0, Math.round((v.inspectionUntil.getTime() - now.getTime()) / 86_400_000));
       alerts.push({ kind: "warning", icon: "car", title: `${v.plate} muayenesine ${days} gün kaldı`, detail: "Muayene tarihi geçerse araç eğitimde kullanılamaz.", action: "Görüntüle", href: "/app/araclar" });
     }
+  }
+
+  // 9. K Sınıfı Sürücü Aday Belgesi — süresi/hakkı biten ya da hiç düzenlenmemiş kursiyer,
+  // sınavda içeri alınmaz (bkz. lib/driving-certificate.ts).
+  const kCertAttention = await countCertificatesNeedingAttention(schoolId);
+  if (kCertAttention) {
+    alerts.push({ kind: "danger", icon: "shield", title: `${kCertAttention} kursiyerin K belgesi eksik/yenilenmeli`, detail: "Süresi/hakkı biten belgeyle sınava girilemez.", action: "İncele", href: "/app/kursiyerler?filtre=direksiyon" });
   }
 
   return alerts.slice(0, 8);

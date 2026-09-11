@@ -78,6 +78,17 @@ export type DrivingLesson = Prisma.DrivingLessonModel
  */
 export type SkillRating = Prisma.SkillRatingModel
 /**
+ * Model DrivingCandidateCertificate
+ * K Sınıfı Sürücü Aday Belgesi (Ek-5) — MTSK Yönetmeliği md.19: "G" sınıfı hariç tüm
+ * kursiyerlerin akan trafikte direksiyon eğitimi alabilmesi/sınava girebilmesi için kurs
+ * müdürlüğünce düzenlenen resmi belge. 6 ay geçerli; ilk 4 direksiyon sınavı hakkı
+ * tükendiğinde ya da süre dolduğunda YENİDEN düzenlenir — bu yüzden tek satır güncellenmez,
+ * her düzenleme yeni bir satır açar (defter tutulur, geçmiş dönemler kaybolmaz). Sınav
+ * komisyonu, sınavda bu belgenin süresinin dolup dolmadığını fiilen kontrol ediyor — süresi
+ * geçmiş kursiyer sınava alınmıyor, bu yüzden okulun bunu takip etmesi gerçek bir risktir.
+ */
+export type DrivingCandidateCertificate = Prisma.DrivingCandidateCertificateModel
+/**
  * Model Exam
  * 
  */

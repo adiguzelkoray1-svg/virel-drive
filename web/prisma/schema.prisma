@@ -55,6 +55,7 @@ model School {
   drivingLessons DrivingLesson[]
   skillRatings SkillRating[]
   exams        Exam[]
+  drivingCandidateCertificates DrivingCandidateCertificate[]
   documents    Document[]
   paymentPlans PaymentPlan[]
   installments Installment[]
@@ -126,6 +127,7 @@ model Student {
   attendances    Attendance[]
   drivingLessons DrivingLesson[]
   exams          Exam[]
+  drivingCandidateCertificates DrivingCandidateCertificate[]
   paymentPlan    PaymentPlan?
   payments       Payment[]
   messages       MessageLog[]
@@ -334,6 +336,27 @@ model SkillRating {
   createdAt DateTime @default(now())
 
   @@unique([lessonId, skill])
+}
+
+/// K Sınıfı Sürücü Aday Belgesi (Ek-5) — MTSK Yönetmeliği md.19: "G" sınıfı hariç tüm
+/// kursiyerlerin akan trafikte direksiyon eğitimi alabilmesi/sınava girebilmesi için kurs
+/// müdürlüğünce düzenlenen resmi belge. 6 ay geçerli; ilk 4 direksiyon sınavı hakkı
+/// tükendiğinde ya da süre dolduğunda YENİDEN düzenlenir — bu yüzden tek satır güncellenmez,
+/// her düzenleme yeni bir satır açar (defter tutulur, geçmiş dönemler kaybolmaz). Sınav
+/// komisyonu, sınavda bu belgenin süresinin dolup dolmadığını fiilen kontrol ediyor — süresi
+/// geçmiş kursiyer sınava alınmıyor, bu yüzden okulun bunu takip etmesi gerçek bir risktir.
+model DrivingCandidateCertificate {
+  id        String   @id @default(cuid())
+  schoolId  String
+  school    School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  startedAt DateTime // akan trafikte direksiyon eğitimine başlama tarihi
+  expiresAt DateTime // startedAt + 6 ay
+  createdAt DateTime @default(now())
+
+  @@index([schoolId, studentId])
+  @@index([schoolId, expiresAt])
 }
 
 // ---------- Sınavlar ----------

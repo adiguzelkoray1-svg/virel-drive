@@ -409,6 +409,7 @@ export const ModelName = {
   Attendance: 'Attendance',
   DrivingLesson: 'DrivingLesson',
   SkillRating: 'SkillRating',
+  DrivingCandidateCertificate: 'DrivingCandidateCertificate',
   Exam: 'Exam',
   PaymentPlan: 'PaymentPlan',
   Installment: 'Installment',
@@ -437,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "documentTypeRule" | "messageTemplateRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
+    modelProps: "school" | "user" | "student" | "lead" | "document" | "instructor" | "vehicle" | "vehicleCost" | "theoryLesson" | "attendance" | "drivingLesson" | "skillRating" | "drivingCandidateCertificate" | "exam" | "paymentPlan" | "installment" | "payment" | "expense" | "messageLog" | "licenseClassRule" | "documentTypeRule" | "messageTemplateRule" | "regulationSetting" | "paymentLink" | "auditLog" | "demoRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1326,6 +1327,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SkillRatingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SkillRatingCountAggregateOutputType> | number
+        }
+      }
+    }
+    DrivingCandidateCertificate: {
+      payload: Prisma.$DrivingCandidateCertificatePayload<ExtArgs>
+      fields: Prisma.DrivingCandidateCertificateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DrivingCandidateCertificateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DrivingCandidateCertificateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        findFirst: {
+          args: Prisma.DrivingCandidateCertificateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DrivingCandidateCertificateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        findMany: {
+          args: Prisma.DrivingCandidateCertificateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>[]
+        }
+        create: {
+          args: Prisma.DrivingCandidateCertificateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        createMany: {
+          args: Prisma.DrivingCandidateCertificateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DrivingCandidateCertificateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>[]
+        }
+        delete: {
+          args: Prisma.DrivingCandidateCertificateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        update: {
+          args: Prisma.DrivingCandidateCertificateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        deleteMany: {
+          args: Prisma.DrivingCandidateCertificateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DrivingCandidateCertificateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DrivingCandidateCertificateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>[]
+        }
+        upsert: {
+          args: Prisma.DrivingCandidateCertificateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DrivingCandidateCertificatePayload>
+        }
+        aggregate: {
+          args: Prisma.DrivingCandidateCertificateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDrivingCandidateCertificate>
+        }
+        groupBy: {
+          args: Prisma.DrivingCandidateCertificateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrivingCandidateCertificateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DrivingCandidateCertificateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrivingCandidateCertificateCountAggregateOutputType> | number
         }
       }
     }
@@ -2564,6 +2639,18 @@ export const SkillRatingScalarFieldEnum = {
 export type SkillRatingScalarFieldEnum = (typeof SkillRatingScalarFieldEnum)[keyof typeof SkillRatingScalarFieldEnum]
 
 
+export const DrivingCandidateCertificateScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type DrivingCandidateCertificateScalarFieldEnum = (typeof DrivingCandidateCertificateScalarFieldEnum)[keyof typeof DrivingCandidateCertificateScalarFieldEnum]
+
+
 export const ExamScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -3020,6 +3107,7 @@ export type GlobalOmitConfig = {
   attendance?: Prisma.AttendanceOmit
   drivingLesson?: Prisma.DrivingLessonOmit
   skillRating?: Prisma.SkillRatingOmit
+  drivingCandidateCertificate?: Prisma.DrivingCandidateCertificateOmit
   exam?: Prisma.ExamOmit
   paymentPlan?: Prisma.PaymentPlanOmit
   installment?: Prisma.InstallmentOmit

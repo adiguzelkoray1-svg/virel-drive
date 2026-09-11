@@ -10,6 +10,7 @@ import { listDocumentTypeRules } from "@/lib/document-types";
 import { date, fullName, maskNationalId, maskPhone, money, time } from "@/lib/format";
 import { can } from "@/lib/permissions";
 import { grantStudentAccessAction } from "@/app/actions/users";
+import { issueDrivingCertificateAction } from "@/app/actions/driving-certificates";
 import { AccessGrantForm } from "@/components/AccessGrantForm";
 
 export async function generateMetadata({ params }: PageProps<"/app/kursiyerler/[id]">): Promise<Metadata> {
@@ -52,6 +53,8 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
           Aday kaydından kursiyere dönüştürüldü. Süreç ön kayıt aşamasından başlar; sıradaki adım evrakların tamamlanması.
         </Notice>
       )}
+      {sp.kbelgesi === "duzenlendi" && <Notice kind="success">K Sınıfı Sürücü Aday Belgesi düzenlendi — 6 ay geçerli.</Notice>}
+      {sp.hata === "k-belgesi" && <Notice kind="danger">Başlangıç tarihini kontrol edin.</Notice>}
 
       <Card className="p-[22px]">
         <div className="flex items-start gap-[18px] flex-wrap">
@@ -271,6 +274,61 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
               })}
             </div>
           </Card>
+
+          {!d.kCertExempt && ["DRIVING", "DRIVING_EXAM", "GRADUATED"].includes(s.stage) && (
+            <Card id="k-belgesi">
+              <header className="flex items-center gap-2.5 px-5 pt-5">
+                <h2 className="h-card">K Sınıfı Sürücü Aday Belgesi</h2>
+                {d.kCert.state !== "NONE" && (
+                  <Badge kind={d.kCert.state === "ACTIVE" ? "success" : d.kCert.state === "EXPIRING" ? "warning" : "danger"} dot>
+                    {d.kCert.state === "RENEW" ? "Yenilenmeli" : `${d.kCert.daysLeft} gün kaldı`}
+                  </Badge>
+                )}
+                {d.latestCert && (
+                  <Link href={`/app/kursiyerler/${s.id}/k-belgesi/${d.latestCert.id}`} className="ml-auto text-[13px] font-semibold text-blue">Yazdır →</Link>
+                )}
+              </header>
+              <div className="px-5 pb-5 pt-2.5 flex flex-col gap-3">
+                {d.latestCert ? (
+                  <>
+                    <Row label="Başlangıç" value={date(d.latestCert.startedAt)} />
+                    <Row label="Geçerlilik sonu" value={date(d.latestCert.expiresAt)} tone={d.kCert.state === "RENEW" ? "text-danger" : ""} />
+                    <Row label="Kullanılan direksiyon sınavı hakkı" value={`${d.kCert.attemptsUsed} / 4`} tone={d.kCert.attemptsUsed >= 4 ? "text-danger" : ""} />
+                  </>
+                ) : (
+                  <p className="text-[13px] text-text-2">Henüz düzenlenmedi — akan trafikte direksiyon eğitimine başlamadan önce düzenlenmesi gerekir.</p>
+                )}
+
+                {showEdit && (d.kCert.state === "NONE" || d.kCert.state === "RENEW") && (
+                  <form action={issueDrivingCertificateAction} className="flex items-end gap-2 pt-1">
+                    <input type="hidden" name="studentId" value={s.id} />
+                    <label className="flex flex-col gap-1.5 grow">
+                      <span className="label">Eğitime başlama tarihi</span>
+                      <input type="date" name="startedAt" defaultValue={new Date().toISOString().slice(0, 10)} className="input" required />
+                    </label>
+                    <button className="btn btn-primary btn-sm shrink-0"><Icon name="shield" size={14} />{d.latestCert ? "Yenile" : "Düzenle"}</button>
+                  </form>
+                )}
+
+                {d.certificates.length > 1 && (
+                  <details className="text-[13px] text-text-2 pt-1">
+                    <summary className="cursor-pointer font-semibold text-text">Geçmiş dönemler ({d.certificates.length - 1})</summary>
+                    <div className="flex flex-col gap-1.5 pt-2">
+                      {d.certificates.slice(1).map((c) => (
+                        <div key={c.id} className="flex items-center gap-2 text-xs tabular">
+                          <Icon name="clock" size={13} className="text-muted" />{date(c.startedAt)} – {date(c.expiresAt)}
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                )}
+
+                <p className="text-xs text-muted leading-relaxed">
+                  MTSK Yönetmeliği md.19 — 6 ay geçerli, ilk 4 direksiyon sınavı hakkı bitince ya da süre dolunca yeniden düzenlenir. Sınav komisyonu bu belgenin geçerliliğini fiilen kontrol eder.
+                </p>
+              </div>
+            </Card>
+          )}
 
           <Card>
             <header className="flex items-center gap-2.5 px-5 pt-5">

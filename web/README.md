@@ -755,6 +755,46 @@ başvuru engellenir — bu VE hak sınırı, yetkili kullanıcının "yine de ka
 gösterilir. Sonuç PASSED olursa kursiyer süreci otomatik ilerler: e-Sınav → direksiyon eğitimi,
 direksiyon sınavı → mezuniyet (`nextStageAfter`).
 
+### K Sınıfı Sürücü Aday Belgesi hakkında
+
+**Rakip analizinden çıkan gerçek bir mevzuat boşluğu.** TABİM Bilişim'i araştırırken (bkz. pazar
+analizi) MEBBİS "entegrasyonu"nun aslında belgelenmemiş, kırılgan bir web-portalı otomasyonu
+olduğu (üçüncü taraf API'si yok, insan girişi + 2FA gerektiren bir devlet portalı) ortaya çıktı —
+o yüzden buna hiç girilmedi. Ama araştırma sırasında gerçek, düşük riskli, tamamen kursun kendi
+yetkisiyle düzenlenen bir belge bulundu: **K Sınıfı Sürücü Aday Belgesi (Ek-5)**. MTSK Yönetmeliği
+madde 19: "G" sınıfı hariç tüm kursiyerlerin karayollarındaki **akan trafikte** direksiyon eğitimi
+alabilmesi ve sınava girebilmesi için kurs müdürlüğünce düzenlenir; **6 ay geçerlidir**, ilk
+**4 direksiyon sınavı hakkı** tükendiğinde ya da süre dolduğunda **yeniden düzenlenir**. Sınav
+komisyonu bu belgenin geçerliliğini fiilen kontrol ediyor — süresi geçmiş ya da hiç düzenlenmemiş
+kursiyer sınava alınmıyor, yani bunu takip etmemek gerçek bir operasyonel risk.
+
+**Yeni bir tablo (`DrivingCandidateCertificate`), her düzenleme/yenileme yeni bir satır.**
+Belge kurallarındaki gibi tek satır güncellenmez — güncellenirse geçmiş dönemler kaybolur.
+Kurs personeli yalnızca "akan trafikte eğitime başlama tarihi"ni girer; bitiş tarihi (+6 ay) ve
+durum (`ACTIVE`/`EXPIRING`/`RENEW`/`NONE`) `lib/driving-certificate.ts`'te hesaplanır. Bu 4 hak
+sayısı **`LicenseClassRule.examAttempts`'ten kasıtlı olarak bağımsız** — o, okulun kendi
+belirlediği (değişebilen) toplam sınav hakkı sayısı; mevzuattaki "ilk dört hak" ise K belgesi
+yenileme kuralına özgü, okul tarafından değiştirilemeyen sabit bir sayı. İkisi genelde aynı
+değeri taşısa da kavramsal olarak ayrı tutuldu.
+
+**Kursiyer detayında bir kart, dashboard'da bir uyarı, yazdırılabilir bir Ek-5 formu.**
+`/app/kursiyerler/[id]`'de "G" sınıfı hariç ve direksiyon aşamasına ulaşmış (DRIVING/
+DRIVING_EXAM/GRADUATED) kursiyerlerde kart görünür; süresi/hakkı yakında dolacak/dolmuş
+kursiyerler dashboard'un "Dikkat gerektirenler" listesine düşer (`operationalAlerts`).
+`/app/kursiyerler/[id]/k-belgesi/[certId]` tamamen yeni bir desen: bu projedeki **ilk gerçek
+yazdırılabilir belge sayfası** — ayrı bir PDF kütüphanesi eklemek yerine, zaten var olan ama
+hiç kullanılmayan `@media print` CSS'i (`globals.css`, sidebar/header'ı otomatik gizler) ile
+tarayıcının kendi `window.print()`'i kullanıldı. Usta öğretici ve sınav komisyonu başkanı
+alanları bilerek boş satır olarak basılıyor — mevzuata göre (md.19/2) bunlar eğitim/sınav
+sırasında elle dolduruluyor, uygulamada bu granülerlikte bir kayıt tutulmuyor.
+
+**Mevcut kursiyerler için otomatik geriye dönük veri YOK — bilerek.** Belge kuralları/mesaj
+şablonlarındaki backfill script deseninin aksine, burada "doğru" bir varsayılan tarih yok:
+her kursiyerin akan trafiğe gerçekte ne zaman başladığı yalnızca okulun bileceği bir şey.
+Bu yüzden özellik canlıya alındığında mevcut direksiyon aşamasındaki tüm kursiyerler dashboard'da
+"eksik" görünecek — bu bir hata değil, personelin bir kereliğine gerçek tarihleri girmesi
+gereken, beklenen bir geçiş durumu.
+
 ### Ders formu
 
 Uygunluk sorgusu formu göndermez; `checkAvailabilityAction` doğrudan çağrılır. Sebebi:
