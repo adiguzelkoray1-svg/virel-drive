@@ -4,7 +4,10 @@ import { Icon } from "@/components/icons";
 import { expenseFormAction } from "@/app/actions/finance";
 import { emptyExpenseState } from "@/lib/finance-form";
 
-export function InstructorPaymentForm({ instructorId, today }: { instructorId: string; today: string }) {
+/** Eğitmen ve idari kullanıcı (Kullanıcılar) detay sayfaları arasında paylaşılır — ikisi de
+ *  aynı Expense satırını, yalnızca farklı bir kimlik alanına (instructorId/staffUserId)
+ *  bağlayarak yazıyor (bkz. actions/finance.ts::expenseFormAction). */
+export function StaffPaymentForm({ instructorId, staffUserId, today }: { instructorId?: string; staffUserId?: string; today: string }) {
   const [state, action, pending] = useActionState(expenseFormAction, emptyExpenseState);
   const back = state.values;
   const k = JSON.stringify(back ?? {});
@@ -12,7 +15,8 @@ export function InstructorPaymentForm({ instructorId, today }: { instructorId: s
   return (
     <form action={action} className="flex flex-col gap-3.5">
       <input type="hidden" name="category" value="SALARY" />
-      <input type="hidden" name="instructorId" value={instructorId} />
+      {instructorId && <input type="hidden" name="instructorId" value={instructorId} />}
+      {staffUserId && <input type="hidden" name="staffUserId" value={staffUserId} />}
 
       <div className="grid grid-cols-3 gap-3">
         <label className="flex flex-col gap-1.5">

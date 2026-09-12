@@ -20,6 +20,9 @@ export const ROLE_LABEL: Record<Role, string> = {
 export const SCHOOL_ROLES: Role[] = ["OWNER", "MANAGER", "SECRETARY", "THEORY_TEACHER", "DRIVING_INSTRUCTOR", "ACCOUNTANT"];
 export const MANAGER_ROLES: Role[] = ["OWNER", "MANAGER"];
 export const INSTRUCTOR_ROLES: Role[] = ["THEORY_TEACHER", "DRIVING_INSTRUCTOR"];
+/** Ayrı bir profili (Instructor gibi) olmayan idari roller — maaş/avans hesap ekstresi
+ *  bunlarda doğrudan User'a bağlanır; eğitmen rolleri kendi Eğitmenler sayfasını kullanır. */
+export const ADMIN_STAFF_ROLES: Role[] = ["OWNER", "MANAGER", "SECRETARY", "ACCOUNTANT"];
 
 export const SCHOOL_STATUS_LABEL: Record<string, { label: string; kind: BadgeKind }> = {
   PENDING: { label: "Onay bekliyor", kind: "neutral" },

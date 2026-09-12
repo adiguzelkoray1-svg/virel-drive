@@ -849,15 +849,18 @@ için sabit "bu ay" görünümü yanıltıcıydı.
 Bakıma alınan araç derse atanamaz (`lib/availability.ts` bunu zaten reddediyor); bakıma alma
 ekranı, o araca bağlı kaç planlı dersin taşınması gerektiğini söyler.
 
-**Eğitmen maaş/avans hesap ekstresi — üçüncü ve son TABİM karşılaştırması.** Yeni bir tablo
-değil: `Expense`'e `instructorId`/`subcategory` (MAAS/AVANS) eklendi. Genel Giderler ekranındaki
-"Personel" kategorisi zaten vardı (bağlı olmadan da girilebiliyordu) — eksik olan, TABİM'in
-sunduğu gibi **kişi bazlı** bir görünümdü. Eğitmen detayında (`/app/egitmenler/[id]`) artık bir
-"Maaş ve avans" kartı var: toplam ödenen maaş/avans + geçmiş + `finance.write` yetkisiyle yeni
-ödeme formu; kayıt Giderler'e de düşer, orada eğitmen adı ve rozetiyle (Maaş/Avans) görünür,
-eğitmene geri link verir. Bilerek yalnızca **eğitmenlere** kapsandı — OWNER/MANAGER/SECRETARY/
-ACCOUNTANT gibi idari roller için ayrı bir personel profili yok (yalnızca `User` satırı), o
-yüzden onlara bağlı bir hesap ekstresi şimdilik yok; gerçek talep gelirse ayrı bir iş.
+**Eğitmen + idari personel maaş/avans hesap ekstresi.** Yeni bir tablo değil: `Expense`'e
+`instructorId`/`staffUserId`/`subcategory` (MAAS/AVANS) eklendi — en fazla biri dolu olur. Genel
+Giderler ekranındaki "Personel" kategorisi zaten vardı (bağlı olmadan da girilebiliyordu) —
+eksik olan, TABİM'in sunduğu gibi **kişi bazlı** bir görünümdü. Eğitmenler kendi profiline
+(`instructorId`), OWNER/MANAGER/SECRETARY/ACCOUNTANT gibi ayrı bir personel profili olmayan
+idari roller ise doğrudan `User`'a (`staffUserId`) bağlanır — ikisi de aynı paylaşılan
+`StaffPaymentForm` bileşenini kullanır. Yeni `/app/ayarlar/kullanicilar/[id]` sayfası idari
+kullanıcılar için aynı "Maaş ve avans" kartını gösterir; Kullanıcılar listesinde yalnızca idari
+rol satırları bu sayfaya bağlanır (eğitmen/teorik öğretmen satırları bilerek bağlanmaz — onların
+tek doğru ekstresi Eğitmenler'deki kendi profilinde, aksi hâlde aynı kişi için iki kopuk kayıt
+defteri oluşurdu). Giderler listesinde kayıt hangisine bağlıysa ona ("Eğitmen →" / "Kullanıcı →")
+geri link verir.
 
 **Eğitmende MEB izin no, araçta Ceza gideri — pazar analizinden çıkan iki düşük efor ek.**
 `Instructor.mebLicenseNo` (opsiyonel) Özel MTSK Modülü'nde personel kaydının zorunlu bir alanı;

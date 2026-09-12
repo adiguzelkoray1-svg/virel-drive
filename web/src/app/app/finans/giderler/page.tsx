@@ -26,7 +26,7 @@ export default async function ExpensesPage({ searchParams }: PageProps<"/app/fin
   const to = new Date(from.getFullYear(), from.getMonth() + 1, 1);
 
   const [expenses, vehicleCosts] = await Promise.all([
-    prisma.expense.findMany({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, include: { instructor: true }, orderBy: { occurredAt: "desc" } }),
+    prisma.expense.findMany({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, include: { instructor: true, staffUser: true }, orderBy: { occurredAt: "desc" } }),
     // Araç giderleri ayrı tabloda tutuluyor; ay toplamında görünmezse tablo yanıltıcı olur.
     prisma.vehicleCost.aggregate({ where: { schoolId: user.schoolId, occurredAt: { gte: from, lt: to } }, _sum: { amount: true }, _count: true }),
   ]);
@@ -68,33 +68,40 @@ export default async function ExpensesPage({ searchParams }: PageProps<"/app/fin
             <EmptyState icon="wallet" title="Bu ay gider kaydı yok." desc="Kira, personel ve fatura giderlerini buradan girebilirsiniz." />
           ) : (
             <div className="px-5 pb-5">
-              {expenses.map((e) => (
-                <div key={e.id} className="flex items-center gap-3 py-3 border-t border-border">
-                  <span className="w-9 h-9 rounded-md bg-blue-050 text-blue flex items-center justify-center shrink-0"><Icon name="wallet" size={17} /></span>
-                  <span className="flex flex-col gap-0.5 min-w-0">
-                    <span className="text-sm font-semibold truncate">
-                      {e.instructor ? e.instructor.name : e.note || EXPENSE_CATEGORY_LABEL[e.category] || e.category}
+              {expenses.map((e) => {
+                const linked = e.instructor
+                  ? { name: e.instructor.name, href: `/app/egitmenler/${e.instructor.id}`, label: "Eğitmen →" }
+                  : e.staffUser
+                    ? { name: e.staffUser.name, href: `/app/ayarlar/kullanicilar/${e.staffUser.id}`, label: "Kullanıcı →" }
+                    : null;
+                return (
+                  <div key={e.id} className="flex items-center gap-3 py-3 border-t border-border">
+                    <span className="w-9 h-9 rounded-md bg-blue-050 text-blue flex items-center justify-center shrink-0"><Icon name="wallet" size={17} /></span>
+                    <span className="flex flex-col gap-0.5 min-w-0">
+                      <span className="text-sm font-semibold truncate">
+                        {linked ? linked.name : e.note || EXPENSE_CATEGORY_LABEL[e.category] || e.category}
+                      </span>
+                      <span className="text-xs text-muted">{date(e.occurredAt)}{linked && e.note ? ` · ${e.note}` : ""}</span>
                     </span>
-                    <span className="text-xs text-muted">{date(e.occurredAt)}{e.instructor && e.note ? ` · ${e.note}` : ""}</span>
-                  </span>
-                  {e.instructor ? (
-                    <>
-                      <Badge kind={e.subcategory === "AVANS" ? "warning" : "neutral"}>{EXPENSE_SUBCATEGORY_LABEL[e.subcategory ?? "MAAS"]}</Badge>
-                      <Link href={`/app/egitmenler/${e.instructor.id}`} className="text-xs font-semibold text-blue">Eğitmen →</Link>
-                    </>
-                  ) : (
-                    /* Açıklama yoksa başlık zaten kategori adı; rozeti tekrar etmeye gerek yok. */
-                    e.note && <Badge kind="neutral">{EXPENSE_CATEGORY_LABEL[e.category] ?? e.category}</Badge>
-                  )}
-                  <span className="ml-auto text-[13px] tabular font-semibold">{money(e.amount)}</span>
-                  {canWrite && (
-                    <form action={deleteExpenseAction}>
-                      <input type="hidden" name="expenseId" value={e.id} />
-                      <button className="btn btn-ghost btn-xs" aria-label="Gideri sil"><Icon name="trash" size={15} /></button>
-                    </form>
-                  )}
-                </div>
-              ))}
+                    {linked ? (
+                      <>
+                        <Badge kind={e.subcategory === "AVANS" ? "warning" : "neutral"}>{EXPENSE_SUBCATEGORY_LABEL[e.subcategory ?? "MAAS"]}</Badge>
+                        <Link href={linked.href} className="text-xs font-semibold text-blue">{linked.label}</Link>
+                      </>
+                    ) : (
+                      /* Açıklama yoksa başlık zaten kategori adı; rozeti tekrar etmeye gerek yok. */
+                      e.note && <Badge kind="neutral">{EXPENSE_CATEGORY_LABEL[e.category] ?? e.category}</Badge>
+                    )}
+                    <span className="ml-auto text-[13px] tabular font-semibold">{money(e.amount)}</span>
+                    {canWrite && (
+                      <form action={deleteExpenseAction}>
+                        <input type="hidden" name="expenseId" value={e.id} />
+                        <button className="btn btn-ghost btn-xs" aria-label="Gideri sil"><Icon name="trash" size={15} /></button>
+                      </form>
+                    )}
+                  </div>
+                );
+              })}
               <div className="flex items-center pt-3.5 mt-1 border-t-2 border-border">
                 <span className="text-[13px] font-bold">Toplam</span>
                 <span className="ml-auto text-[13px] font-bold tabular">{money(total)}</span>

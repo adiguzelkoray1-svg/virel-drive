@@ -1,10 +1,11 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { requirePermission } from "@/lib/auth";
 import { listSchoolUsers } from "@/lib/users";
 import { toggleUserActiveAction } from "@/app/actions/users";
 import { Badge, Notice, PersonAvatar } from "@/components/ui";
 import { Icon } from "@/components/icons";
-import { ROLE_LABEL, type Role } from "@/lib/constants";
+import { ADMIN_STAFF_ROLES, ROLE_LABEL, type Role } from "@/lib/constants";
 import { dateTime } from "@/lib/format";
 import { UserForm } from "./UserForm";
 
@@ -55,10 +56,17 @@ export default async function UsersPage({ searchParams }: PageProps<"/app/ayarla
             {users.map((u) => (
               <div key={u.id} className="flex items-center gap-3 py-2.5 border-t border-border first:border-0">
                 <PersonAvatar name={u.name} size={30} />
-                <span className="flex flex-col min-w-0">
-                  <span className="text-[13px] font-semibold truncate">{u.name}{u.id === admin.id && <span className="text-muted font-normal"> (siz)</span>}</span>
-                  <span className="text-xs text-muted truncate">{u.email}</span>
-                </span>
+                {ADMIN_STAFF_ROLES.includes(u.role as Role) ? (
+                  <Link href={`/app/ayarlar/kullanicilar/${u.id}`} className="flex flex-col min-w-0 hover:text-blue">
+                    <span className="text-[13px] font-semibold truncate">{u.name}{u.id === admin.id && <span className="text-muted font-normal"> (siz)</span>}</span>
+                    <span className="text-xs text-muted truncate">{u.email}</span>
+                  </Link>
+                ) : (
+                  <span className="flex flex-col min-w-0">
+                    <span className="text-[13px] font-semibold truncate">{u.name}</span>
+                    <span className="text-xs text-muted truncate">{u.email}</span>
+                  </span>
+                )}
                 <Badge kind={u.role === "OWNER" ? "brand" : "neutral"}>{ROLE_LABEL[u.role as Role] ?? u.role}</Badge>
                 {!u.isActive && <Badge kind="danger">Pasif</Badge>}
                 <span className="ml-auto text-xs text-muted hidden sm:inline">{u.lastLoginAt ? `Son giriş ${dateTime(u.lastLoginAt)}` : "Hiç giriş yapmadı"}</span>

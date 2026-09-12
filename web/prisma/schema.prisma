@@ -92,6 +92,7 @@ model User {
   student      Student?
   auditLogs    AuditLog[]
   paymentLinks PaymentLink[]
+  staffExpenses Expense[]
 
   @@index([schoolId, role])
 }
@@ -439,13 +440,14 @@ model Expense {
   schoolId     String
   school       School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   category     String      // RENT | SALARY | VEHICLE | UTILITY | MARKETING | OTHER
-  /// category=SALARY iken belirli bir eğitmene bağlanabilir — eğitmen detayındaki "Maaş ve
-  /// avans" hesap ekstresi bu alanla filtrelenir. Boş bırakılırsa genel/dağıtılmamış personel
-  /// gideri sayılır (önceki davranış korunur). Yönetici rolleri (OWNER/MANAGER/SECRETARY/
-  /// ACCOUNTANT) için ayrı bir profil kaydı yok, bu yüzden şimdilik yalnızca Instructor'a
-  /// bağlanabiliyor — en büyük ve en operasyonel personel grubu bu.
+  /// category=SALARY iken belirli bir personele bağlanabilir — hesap ekstresi bu alanlarla
+  /// filtrelenir. En fazla biri dolu olur: eğitmenler Instructor'a, idari roller (OWNER/
+  /// MANAGER/SECRETARY/ACCOUNTANT — bunların ayrı bir profili yok) doğrudan User'a bağlanır.
+  /// İkisi de boşsa genel/dağıtılmamış personel gideri sayılır (önceki davranış korunur).
   instructorId String?
   instructor   Instructor? @relation(fields: [instructorId], references: [id], onDelete: SetNull)
+  staffUserId  String?
+  staffUser    User?       @relation(fields: [staffUserId], references: [id], onDelete: SetNull)
   /// Yalnızca category=SALARY iken anlamlı: MAAS | AVANS.
   subcategory  String?
   amount       Int
@@ -455,6 +457,7 @@ model Expense {
 
   @@index([schoolId, occurredAt])
   @@index([schoolId, instructorId])
+  @@index([schoolId, staffUserId])
 }
 
 // ---------- Mesaj ----------

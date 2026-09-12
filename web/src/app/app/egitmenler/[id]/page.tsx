@@ -12,7 +12,7 @@ import { can } from "@/lib/permissions";
 import { toggleInstructorActiveAction } from "@/app/actions/instructors";
 import { grantInstructorAccessAction } from "@/app/actions/users";
 import { AccessGrantForm } from "@/components/AccessGrantForm";
-import { InstructorPaymentForm } from "./InstructorPaymentForm";
+import { StaffPaymentForm } from "@/components/StaffPaymentForm";
 
 export async function generateMetadata({ params }: PageProps<"/app/egitmenler/[id]">): Promise<Metadata> {
   const { id } = await params;
@@ -219,7 +219,7 @@ export default async function InstructorDetailPage({ params, searchParams }: Pag
 
             {canPay && (
               <div className="border-t border-border pt-3.5">
-                <InstructorPaymentForm instructorId={instructor.id} today={new Date().toISOString().slice(0, 10)} />
+                <StaffPaymentForm instructorId={instructor.id} today={new Date().toISOString().slice(0, 10)} />
               </div>
             )}
 
