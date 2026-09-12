@@ -709,6 +709,13 @@ dört bin beş yüz altmış yedi"). "Fatura" değil bilerek "makbuz" deniyor: K
 fatura alanları şemada tutulmuyor, bu kapsam dışı bırakıldı — gerçek bir e-Fatura/e-Arşiv
 entegrasyonu ayrı, çok daha büyük bir iştir.
 
+**Aynı desen üçüncü kez: kursiyer kimlik kartı.** TABİM'in "Sinet/Etiket" modülünün
+karşılığı — `/app/kursiyerler/[id]/kimlik-karti`, kursiyer kartındaki "Kimlik kartı"
+düğmesinden açılır. Gerçek bir fotoğraf yok (`Student.photoUrl` hiçbir yerde
+doldurulmuyor, bkz. "Belgeler hakkında" — gerçek dosya yükleme bu sürümde yok); onun yerine
+uygulamanın her yerinde kullanılan `PersonAvatar` baş harf rozeti basılıyor — sahte bir
+fotoğraf göstermek yerine dürüst bir seçim.
+
 ### Fiyat ve ödeme hakkında
 
 **Yeni bir tablo değil — `LicenseClassRule`'a üç alan.** Belge kuralları/mesaj şablonlarından

@@ -78,6 +78,7 @@ export default async function StudentDetailPage({ params, searchParams }: PagePr
           </div>
           <div className="ml-auto flex gap-2 items-center">
             {showEdit && <Link href={`/app/kursiyerler/yeni?duzenle=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="edit" size={15} />Düzenle</Link>}
+            <Link href={`/app/kursiyerler/${s.id}/kimlik-karti`} className="btn btn-secondary btn-sm"><Icon name="badge-id" size={15} />Kimlik kartı</Link>
             <Link href={`/app/mesajlar/${s.id}`} className="btn btn-secondary btn-sm"><Icon name="message" size={15} />Mesaj</Link>
             {showFinance && <Link href={`/app/finans/tahsilat?kursiyer=${s.id}`} className="btn btn-secondary btn-sm"><Icon name="wallet" size={15} />Tahsilat</Link>}
             <Link href={`/app/dersler/yeni?kursiyer=${s.id}`} className="btn btn-primary btn-sm"><Icon name="plus" size={15} />Ders planla</Link>
